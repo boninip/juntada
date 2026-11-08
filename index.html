@@ -222,4 +222,20 @@ const qaAddPlace=addPlace;addPlace=function(){const n=places.length;qaAddPlace()
 const qaRsvp=rsvp;rsvp=function(...args){const result=qaRsvp(...args);persistJuntada();return result};
 const qaConfirmDate=confirmDate;confirmDate=function(...args){const result=qaConfirmDate(...args);persistJuntada();return result};
 const qaOpenJuntada=openJuntada;openJuntada=function(id){qaOpenJuntada(id);localVotes={};response='';renderGuestPreview()};
+
+const SB_URL='https://sswgtcpaayisecwxskp.supabase.co';
+const SB_KEY='sb_publishable_a8hB04TzAhc9NLwrCDtozg_FwVk377j';
+let remoteEvent=null, remoteInvite=null, isGuestLink=false;
+async function rpc(fn,args){const r=await fetch(SB_URL+'/rest/v1/rpc/'+fn,{method:'POST',headers:{apikey:SB_KEY,'Content-Type':'application/json'},body:JSON.stringify(args)});const data=await r.json();if(!r.ok)throw Error(data.message||'Error de conexión');return data}
+const createLocal=create;
+create=async function(){const prev=saved;createLocal();if(saved===prev||!saved.name)return;remoteEvent=null;try{remoteEvent=await rpc('juntada_crear',{p_nombre:saved.name,p_descripcion:saved.desc||'',p_fecha:saved.date||'',p_hora:saved.time||'',p_lugar:saved.place||'',p_modalidad_fecha:saved.dateMode||'fixed',p_opciones_fecha:saved.candidates||[],p_gastos:saved.expense||''});localStorage.setItem('juntada_remote_'+currentJuntadaId,JSON.stringify(remoteEvent));toast('¡Juntada publicada online!')}catch(e){toast('No se pudo publicar online: '+e.message)}};
+copyInvite=async function(){if(!remoteEvent){toast('Esta juntada no está publicada online');return}const link=location.origin+location.pathname+'?invite='+remoteEvent.codigo;const msg=['¡Te invito a '+saved.name+'!',displayDate(),saved.place,link].join(String.fromCharCode(10));try{await navigator.clipboard.writeText(msg);toast('Invitación copiada')}catch(e){prompt('Copiá el enlace:',msg)}};
+const goLocal=go;
+go=function(id){if(id==='share'&&!remoteEvent){toast('Primero hay que publicar la juntada online');return}goLocal(id);if(id==='event'&&remoteEvent&&!isGuestLink)loadResponses()};
+const rsvpLocal=rsvp;
+rsvp=async function(value,btn){if(!remoteInvite){toast('Abrí el enlace de invitación para responder');return}const name=document.querySelector('#guestName').value.trim();if(!name){toast('Escribí tu nombre');return}btn.disabled=true;try{await rpc('juntada_responder',{p_codigo:remoteInvite,p_nombre:name,p_asistencia:{'Voy':'voy','Tal vez':'tal_vez','No puedo':'no_puedo'}[value]});document.querySelector('#rsvpStatus').textContent='¡Respuesta enviada!';toast('Confirmación guardada online')}catch(e){toast('No se pudo enviar: '+e.message)}finally{btn.disabled=false}};
+async function loadResponses(){if(!remoteEvent)return;try{const arr=await rpc('juntada_respuestas_organizador',{p_juntada:remoteEvent.id,p_organizador:remoteEvent.organizador});guestResponses={};for(const x of arr){if(!guestResponses[x.nombre])guestResponses[x.nombre]={voy:'Voy',tal_vez:'Tal vez',no_puedo:'No puedo'}[x.asistencia]}renderOrganizer()}catch(e){toast('No se pudieron cargar respuestas: '+e.message)}}
+const openLocal=openJuntada;
+openJuntada=function(id){openLocal(id);try{remoteEvent=JSON.parse(localStorage.getItem('juntada_remote_'+id)||'null')}catch(e){remoteEvent=null}isGuestLink=false;remoteInvite=null;if(remoteEvent)loadResponses()};
+(function(){const code=new URLSearchParams(location.search).get('invite');if(!code)return;remoteInvite=code;isGuestLink=true;remoteEvent=null;rpc('juntada_ver',{p_codigo:code}).then(d=>{saved={name:d.nombre,desc:d.descripcion||'',dateMode:d.modalidad_fecha||'fixed',date:d.fecha||'',time:d.hora||'',place:d.lugar||'',candidates:d.opciones_fecha||[],expense:d.gastos||''};go('invite');document.querySelector('#rsvpStatus').textContent='Escribí tu nombre y confirmá asistencia.'}).catch(e=>toast('No se pudo abrir la invitación: '+e.message))})();
 </script></body></html>
