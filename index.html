@@ -214,4 +214,11 @@ const oldRemovePlaceV9=removePlace;removePlace=function(id){oldRemovePlaceV9(id)
 function demoInviteUrl(){const data={name:saved.name,desc:saved.desc,dateMode:saved.dateMode,date:saved.date,candidates:saved.candidates,time:saved.time,place:saved.place,expense:saved.expense};const bytes=new TextEncoder().encode(JSON.stringify(data));let binary='';bytes.forEach(b=>binary+=String.fromCharCode(b));return location.origin+location.pathname+'?preview='+encodeURIComponent(btoa(binary).split('+').join('-').split('/').join('_').replace(/=+$/,''))}
 copyInvite=async function(){if(!saved.name){toast('Creá una juntada primero');return}const url=demoInviteUrl();const msg=['¡Te invito a '+saved.name+'!',displayDate(),saved.place,url,'Vista previa: las respuestas todavía no se sincronizan.'].join(String.fromCharCode(10));try{await navigator.clipboard.writeText(msg);toast('Invitación de vista previa copiada')}catch(e){prompt('Copiá la invitación:',msg)}};
 (function initPreview(){try{const p=new URLSearchParams(location.search).get('preview');if(!p)return;const b=atob(p.replace(/-/g,'+').replace(/_/g,'/'));const bytes=Uint8Array.from(b,c=>c.charCodeAt(0));const v=JSON.parse(new TextDecoder().decode(bytes));if(!v.name)return;saved={name:String(v.name),desc:String(v.desc||''),dateMode:v.dateMode||'pending',date:v.date||'',candidates:Array.isArray(v.candidates)?v.candidates:[],time:v.time||'',place:v.place||'Lugar a confirmar',expense:v.expense||''};go('invite');toast('Vista previa: sin votos compartidos todavía')}catch(e){}})();
+
+/* V10 QA: persistir modificaciones y votos simulados en el dispositivo organizador. */
+const qaSaveOrganizer=saveOrganizerDetails;saveOrganizerDetails=function(){qaSaveOrganizer();persistJuntada()};
+const qaAddPlace=addPlace;addPlace=function(){const n=places.length;qaAddPlace();if(places.length!==n)persistJuntada()};
+const qaRsvp=rsvp;rsvp=function(...args){const result=qaRsvp(...args);persistJuntada();return result};
+const qaConfirmDate=confirmDate;confirmDate=function(...args){const result=qaConfirmDate(...args);persistJuntada();return result};
+const qaOpenJuntada=openJuntada;openJuntada=function(id){qaOpenJuntada(id);localVotes={};response='';renderGuestPreview()};
 </script></body></html>
