@@ -221,11 +221,20 @@ function showMyEvents(){
  const list=document.getElementById('myEventsList'),all=getJuntadas();
  list.innerHTML=all.length?all.map(x=>{
   const canceled=!!x.cancelada;
-  return '<div style="background:white;border:1px solid '+(canceled?'#e6c5cc':'#d9e6ed')+';border-radius:16px;padding:14px 16px;margin:12px 0">'+
-  '<button type="button" data-open-id="'+escapeHTML(x.id)+'" style="display:block;width:100%;text-align:left;background:transparent;border:0;padding:4px 0 12px;color:#24518b"><strong>'+escapeHTML(x.saved.name)+'</strong><span style="float:right;font-size:12px;font-weight:700;color:'+(canceled?'#a63242':'#287a60')+'">'+(canceled?'Cancelada':'Guardada')+'</span><div style="color:#64778b;margin-top:6px">'+escapeHTML(x.saved.date||'Fecha pendiente')+' · '+escapeHTML(x.saved.place||'Lugar a confirmar')+'</div></button>'+
-  '<div style="display:flex;justify-content:flex-end;border-top:1px solid #edf1f5;padding-top:10px"><button type="button" data-delete-id="'+escapeHTML(x.id)+'" style="background:transparent;color:#a63242;border:1px solid #e6c5cc;border-radius:10px;padding:9px 14px;font-weight:700">Eliminar</button></div></div>'
+  const date=x.saved.date?x.saved.date.split('-').reverse().join('/'):'Fecha pendiente';
+  return '<div style="position:relative;display:flex;align-items:center;gap:8px;background:white;border:1px solid #d9e6ed;border-radius:15px;padding:10px 12px;margin:9px 0;min-height:65px">'+
+  '<button type="button" data-open-id="'+escapeHTML(x.id)+'" style="flex:1;min-width:0;text-align:left;background:transparent;border:0;padding:3px 0;color:#24518b"><strong style="display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+escapeHTML(x.saved.name)+'</strong><span style="display:block;color:#64778b;font-size:13px;margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+escapeHTML(date)+' · '+escapeHTML(x.saved.place||'Lugar a confirmar')+'</span></button>'+
+  '<button type="button" data-menu-id="'+escapeHTML(x.id)+'" aria-label="Opciones de '+escapeHTML(x.saved.name)+'" aria-expanded="false" style="flex:none;border:0;background:#eef6fa;color:#24518b;border-radius:10px;width:38px;height:38px;font-size:24px;line-height:1">⋮</button>'+
+  '<div data-options-id="'+escapeHTML(x.id)+'" hidden style="position:absolute;right:12px;top:52px;z-index:10;background:white;border:1px solid #d9e6ed;box-shadow:0 5px 20px #1234;border-radius:12px;padding:5px;min-width:155px"><button type="button" data-delete-id="'+escapeHTML(x.id)+'" style="width:100%;text-align:left;background:transparent;border:0;border-radius:8px;padding:11px;color:#a63242;font-weight:700">Eliminar de la lista</button></div></div>'
  }).join(''):'<div class="card">Todavía no creaste ninguna juntada en este navegador.</div>';
  list.querySelectorAll('[data-open-id]').forEach(b=>b.onclick=()=>openJuntada(b.dataset.openId));
+ list.querySelectorAll('[data-menu-id]').forEach(b=>b.onclick=()=>{
+  const menu=list.querySelector('[data-options-id="'+b.dataset.menuId+'"]');
+  const opening=menu.hidden;
+  list.querySelectorAll('[data-options-id]').forEach(m=>m.hidden=true);
+  list.querySelectorAll('[data-menu-id]').forEach(m=>m.setAttribute('aria-expanded','false'));
+  menu.hidden=!opening;b.setAttribute('aria-expanded',String(opening));
+ });
  list.querySelectorAll('[data-delete-id]').forEach(b=>b.onclick=()=>deleteLocalJuntada(b.dataset.deleteId));
  go('myEvents');
 }
