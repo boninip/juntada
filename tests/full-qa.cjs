@@ -1,7 +1,8 @@
-const {chromium}=require('playwright');const assert=require('node:assert/strict');
+const {chromium,webkit,devices}=require('playwright');const assert=require('node:assert/strict');
 (async()=>{
- const browser=await chromium.launch({executablePath:'/usr/bin/google-chrome'});
- const page=await browser.newPage({acceptDownloads:true,viewport:{width:390,height:844}});
+ const ios=process.env.JUNTADA_BROWSER==='webkit';
+ const browser=ios?await webkit.launch():await chromium.launch({executablePath:'/usr/bin/google-chrome'});
+ const page=await browser.newPage(ios?{...devices[process.env.JUNTADA_DEVICE||'iPhone 13'],acceptDownloads:true}:{acceptDownloads:true,viewport:{width:390,height:844}});
  const errors=[];const checks=[];page.on('pageerror',e=>errors.push(e.message));
  const check=(name,fn)=>checks.push(Promise.resolve().then(fn).then(()=>console.log('PASS',name)));
  const open=async id=>page.evaluate(id=>go(id),id);
