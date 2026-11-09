@@ -1,0 +1,30 @@
+const {chromium}=require('playwright');const assert=require('node:assert/strict');
+(async()=>{
+ const browser=await chromium.launch({executablePath:'/usr/bin/google-chrome'});
+ const page=await browser.newPage({acceptDownloads:true,viewport:{width:390,height:844}});
+ const errors=[];const checks=[];page.on('pageerror',e=>errors.push(e.message));
+ const check=(name,fn)=>checks.push(Promise.resolve().then(fn).then(()=>console.log('PASS',name)));
+ const open=async id=>page.evaluate(id=>go(id),id);
+ const input=async(id,value)=>page.locator('#'+id).fill(value);
+ const storage=async key=>page.evaluate(k=>JSON.parse(localStorage.getItem(k)||'[]'),key);
+ const button=async(id)=>page.locator('#'+id+' button.btn').last().click();
+ await page.goto('http://127.0.0.1:8765/');
+ await page.evaluate(()=>localStorage.clear());await page.reload();
+ assert.equal(await page.locator('.screen.active').getAttribute('id'),'home');console.log('PASS home initial');
+ assert.equal(await page.locator('#home .juntada-home-list-item').count(),4);console.log('PASS navigation rows');
+ for(const id of ['create','accounts','balances','myEvents','quickExpense','newExpenseGroup']){await open(id);assert.equal(await page.locator('.screen.active').getAttribute('id'),id);console.log('PASS screen '+id)}
+ await open('newExpenseGroup');await input('expenseGroupName','QA Viaje');await input('expenseGroupPeople','Yo, Ana, Ger');await button('newExpenseGroup');
+ assert.equal((await storage('juntada_expense_groups_v1')).length,1);console.log('PASS group creation');
+ await open('quickExpense');await input('quickExpenseName','Cena');await input('quickExpenseAmount','600');await input('quickExpensePayer','Yo');await input('quickExpensePeople','Yo, Ana, Ger');
+ await page.locator('#juntadaExpenseGroupSelect').selectOption({label:'QA Viaje'});await page.locator('#juntadaSplitMode').selectOption('custom');await input('juntadaCustomAmounts','100; 200; 300');await button('quickExpense');
+ let expenses=await storage('juntada_expenses_v1');assert.deepEqual(expenses[0].shares.map(x=>x.cents),[10000,20000,30000]);console.log('PASS custom split');
+ assert.match(await page.locator('#juntadaExpenseBalances').innerText(),/ana/i);console.log('PASS balances');
+ page.once('dialog',d=>d.accept('100'));await page.locator('[data-settle="ana"]').click();assert.equal((await storage('juntada_settlements_v1')).length,1);console.log('PASS partial settlement');
+ await page.reload();await open('balances');assert.equal((await storage('juntada_settlements_v1')).length,1);console.log('PASS reload persistence');
+ await open('quickExpense');await input('quickExpenseName','Inválido');await input('quickExpenseAmount','100');await input('quickExpensePayer','Yo');await input('quickExpensePeople','Yo, yo');await button('quickExpense');assert.equal((await storage('juntada_expenses_v1')).length,1);console.log('PASS duplicate validation');
+ await input('quickExpensePeople','Yo, Ana');await page.locator('#juntadaSplitMode').selectOption('custom');await input('juntadaCustomAmounts','40; 50');await button('quickExpense');assert.equal((await storage('juntada_expenses_v1')).length,1);console.log('PASS sum validation');
+ await page.locator('#juntadaSplitMode').selectOption('equal');await input('quickExpensePeople','Yo, Ana');await button('quickExpense');assert.equal((await storage('juntada_expenses_v1')).length,2);console.log('PASS equal split');
+ await open('accounts');const downloadPromise=page.waitForEvent('download');await page.getByRole('button',{name:'Exportar mis gastos'}).click();const download=await downloadPromise;assert.match(download.suggestedFilename(),/juntada-gastos/);console.log('PASS backup export');
+ assert.equal(errors.length,0,'Browser runtime errors: '+errors.join(' | '));
+ await browser.close();console.log('FULL LOCAL QA PASS');
+})().catch(e=>{console.error(e);process.exit(1)});
