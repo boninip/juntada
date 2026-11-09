@@ -388,7 +388,7 @@ const oldRemovePlaceOnline=removePlace;
 removePlace=function(id){oldRemovePlaceOnline(id);if(remoteEvent)updateRemoteEvent({p_lugares:places,p_lugar:saved.place})};
 async function cancelOnlineEvent(){
  if(!remoteEvent||!remoteEvent.organizador){toast('Este evento no tiene administración online');return}
- if(!confirm('¿Cancelar esta juntada? El enlace dejará de funcionar.'))return;
- try{await rpc('juntada_actualizar',{p_juntada:remoteEvent.id,p_organizador:remoteEvent.organizador,p_cancelada:true});const all=getJuntadas();const entry=all.find(x=>x.id===currentJuntadaId);if(entry){entry.cancelada=true;entry.updated=Date.now();localStorage.setItem(JSTORE,JSON.stringify(all))}showMyEvents();toast('Juntada cancelada. La invitación dejó de funcionar.')}catch(e){toast('No se pudo cancelar: '+e.message)}
+ if(!confirm('¿Cancelar definitivamente esta juntada? La invitación dejará de funcionar y desaparecerá de Mis juntadas. Esta acción no se puede deshacer.'))return;
+ try{await rpc('juntada_actualizar',{p_juntada:remoteEvent.id,p_organizador:remoteEvent.organizador,p_cancelada:true});const all=getJuntadas();const entry=all.find(x=>x.id===currentJuntadaId);if(entry){localStorage.setItem(JSTORE,JSON.stringify(all.filter(x=>x.id!==currentJuntadaId)));localStorage.removeItem('juntada_remote_'+currentJuntadaId)}currentJuntadaId=null;remoteEvent=null;showMyEvents();toast('Juntada cancelada y quitada de Mis juntadas.')}catch(e){toast('No se pudo cancelar: '+e.message)}
 }
 </script></body></html>
