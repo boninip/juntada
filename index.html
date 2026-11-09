@@ -226,9 +226,18 @@ const qaOpenJuntada=openJuntada;openJuntada=function(id){qaOpenJuntada(id);local
 const SB_URL='https://sswgtcpaayisecwxskp.supabase.co';
 const SB_KEY='sb_publishable_a8hB04TzAhc9NLwrCDtozg_FwVk377j';
 let remoteEvent=null, remoteInvite=null, isGuestLink=false;
-async function rpc(fn,args){const r=await fetch(SB_URL+'/rest/v1/rpc/'+fn,{method:'POST',headers:{apikey:SB_KEY,'Content-Type':'application/json'},body:JSON.stringify(args)});const data=await r.json();if(!r.ok)throw Error(data.message||'Error de conexión');return data}
+async function rpc(fn,args){
+ const base=localStorage.getItem('juntada_supabase_url')||SB_URL;
+ let r;
+ try{r=await fetch(base+'/rest/v1/rpc/'+fn,{method:'POST',headers:{apikey:SB_KEY,'Content-Type':'application/json'},body:JSON.stringify(args)})}
+ catch(e){throw Error('No se pudo conectar con Supabase. Revisá la URL del proyecto. ('+e.message+')')}
+ const raw=await r.text();let data;
+ try{data=JSON.parse(raw)}catch(e){throw Error('Respuesta inesperada de Supabase (HTTP '+r.status+')')}
+ if(!r.ok)throw Error((data.message||'Error de API')+' (HTTP '+r.status+')');
+ return data
+}
 const createLocal=create;
-create=async function(){const prev=saved;createLocal();if(saved===prev||!saved.name)return;remoteEvent=null;document.querySelector('#ready h1').textContent='Publicando tu juntada…';const publishBtn=document.querySelector('#ready .green');if(publishBtn){publishBtn.disabled=true;publishBtn.textContent='Publicando online…'}try{remoteEvent=await rpc('juntada_crear',{p_nombre:saved.name,p_descripcion:saved.desc||'',p_fecha:saved.date||'',p_hora:saved.time||'',p_lugar:saved.place||'',p_modalidad_fecha:saved.dateMode||'fixed',p_opciones_fecha:saved.candidates||[],p_gastos:saved.expense||''});localStorage.setItem('juntada_remote_'+currentJuntadaId,JSON.stringify(remoteEvent));document.querySelector('#ready h1').textContent='¡Tu juntada está publicada!';toast('¡Juntada publicada online!')}catch(e){document.querySelector('#ready h1').textContent='No se pudo publicar';let err=document.getElementById('publishError');if(!err){err=document.createElement('div');err.id='publishError';err.className='card';err.style.cssText='margin:14px 0;color:#9b2430;text-align:left;overflow-wrap:anywhere';document.querySelector('#ready .pad').prepend(err)}err.textContent='No se pudo guardar online: '+e.message;let retry=document.getElementById('retryPublish');if(!retry){retry=document.createElement('button');retry.id='retryPublish';retry.className='btn';retry.textContent='Reintentar publicación';retry.onclick=()=>publishSavedOnline();err.after(retry)}console.error('Juntada publish failed',e)}finally{if(publishBtn){publishBtn.disabled=false;publishBtn.textContent='Compartir por WhatsApp'}}};
+create=async function(){const prev=saved;createLocal();if(saved===prev||!saved.name)return;remoteEvent=null;document.querySelector('#ready h1').textContent='Publicando tu juntada…';const publishBtn=document.querySelector('#ready .green');if(publishBtn){publishBtn.disabled=true;publishBtn.textContent='Publicando online…'}try{remoteEvent=await rpc('juntada_crear',{p_nombre:saved.name,p_descripcion:saved.desc||'',p_fecha:saved.date||'',p_hora:saved.time||'',p_lugar:saved.place||'',p_modalidad_fecha:saved.dateMode||'fixed',p_opciones_fecha:saved.candidates||[],p_gastos:saved.expense||''});localStorage.setItem('juntada_remote_'+currentJuntadaId,JSON.stringify(remoteEvent));document.querySelector('#ready h1').textContent='¡Tu juntada está publicada!';toast('¡Juntada publicada online!')}catch(e){document.querySelector('#ready h1').textContent='No se pudo publicar';let err=document.getElementById('publishError');if(!err){err=document.createElement('div');err.id='publishError';err.className='card';err.style.cssText='margin:14px 0;color:#9b2430;text-align:left;overflow-wrap:anywhere';document.querySelector('#ready .pad').prepend(err)}err.textContent='No se pudo guardar online: '+e.message;let config=document.getElementById('configureSupabase');if(!config){config=document.createElement('button');config.id='configureSupabase';config.className='btn secondary';config.textContent='Revisar conexión con Supabase';config.onclick=configureSupabase;err.after(config)}let retry=document.getElementById('retryPublish');if(!retry){retry=document.createElement('button');retry.id='retryPublish';retry.className='btn';retry.textContent='Reintentar publicación';retry.onclick=()=>publishSavedOnline();err.after(retry)}console.error('Juntada publish failed',e)}finally{if(publishBtn){publishBtn.disabled=false;publishBtn.textContent='Compartir por WhatsApp'}}};
 copyInvite=async function(){if(!remoteEvent){toast('Esta juntada no está publicada online');return}const link=location.origin+location.pathname+'?invite='+remoteEvent.codigo;const msg=['¡Te invito a '+saved.name+'!',displayDate(),saved.place,link].join(String.fromCharCode(10));try{await navigator.clipboard.writeText(msg);toast('Invitación copiada')}catch(e){prompt('Copiá el enlace:',msg)}};
 const goLocal=go;
 go=function(id){if(id==='share'&&!remoteEvent){toast('No se puede compartir: esta juntada no está publicada online');return}goLocal(id);if(id==='event'&&!isGuestLink){if(!remoteEvent&&currentJuntadaId){try{remoteEvent=JSON.parse(localStorage.getItem('juntada_remote_'+currentJuntadaId)||'null')}catch(e){remoteEvent=null}}if(remoteEvent)loadResponses()}if(id==='invite'){const preview=!isGuestLink;const status=document.getElementById('rsvpStatus');if(status)status.textContent=preview?'Vista previa: las confirmaciones se hacen desde el enlace compartido.':'Escribí tu nombre y confirmá asistencia.';document.querySelectorAll('#invite .rsvp button').forEach(b=>{b.disabled=preview;b.style.opacity=preview?'0.45':'1'});const name=document.getElementById('guestName');if(name)name.disabled=preview;const detail=document.querySelector('#invite .btn.secondary:last-child');if(detail)detail.classList.toggle('hide',isGuestLink);if(preview){const card=document.getElementById('guestPreview');if(card)card.innerHTML='<p class="sub">Las confirmaciones reales aparecen en el panel de la organizadora.</p>'}}};
@@ -242,6 +251,18 @@ openJuntada=function(id){openLocal(id);try{remoteEvent=JSON.parse(localStorage.g
 const voteV1=saveVote;saveVote=function(){toast('La votación de fechas online todavía no está disponible')};
 const placeVoteV1=savePlaceVotes;savePlaceVotes=function(){toast('La votación de lugares online todavía no está disponible')};
 
+function configureSupabase(){
+ const current=localStorage.getItem('juntada_supabase_url')||SB_URL;
+ const input=prompt('Pegá la Project URL desde Supabase > Project Settings > Data API:',current);
+ if(input===null)return;
+ let value=input.trim();
+ while(value.endsWith('/'))value=value.slice(0,-1);
+ let parsed;
+ try{parsed=new URL(value)}catch(e){toast('URL inválida');return}
+ if(parsed.protocol!=='https:'||!parsed.hostname.endsWith('.supabase.co')||parsed.pathname!=='/'){toast('La URL debe ser https://proyecto.supabase.co');return}
+ localStorage.setItem('juntada_supabase_url',value);
+ toast('URL guardada. Reintentá la publicación.');
+}
 async function publishSavedOnline(){
  if(!saved.name)return;
  const btn=document.getElementById('retryPublish');if(btn){btn.disabled=true;btn.textContent='Reintentando…'}
@@ -251,7 +272,7 @@ async function publishSavedOnline(){
   if(!currentJuntadaId)persistJuntada();
   localStorage.setItem('juntada_remote_'+currentJuntadaId,JSON.stringify(result));
   document.querySelector('#ready h1').textContent='¡Tu juntada está publicada!';
-  document.getElementById('publishError')?.remove();btn?.remove();
+  document.getElementById('publishError')?.remove();document.getElementById('configureSupabase')?.remove();btn?.remove();
   toast('¡Publicada! Ya podés compartirla.');
  }catch(e){const el=document.getElementById('publishError');if(el)el.textContent='No se pudo guardar online: '+e.message;toast('La publicación falló');console.error(e)}
  finally{if(btn){btn.disabled=false;btn.textContent='Reintentar publicación'}}
