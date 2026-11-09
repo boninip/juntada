@@ -223,11 +223,11 @@ const qaRsvp=rsvp;rsvp=function(...args){const result=qaRsvp(...args);persistJun
 const qaConfirmDate=confirmDate;confirmDate=function(...args){const result=qaConfirmDate(...args);persistJuntada();return result};
 const qaOpenJuntada=openJuntada;openJuntada=function(id){qaOpenJuntada(id);localVotes={};response='';renderGuestPreview()};
 
-const SB_URL='https://sswgtcpaayisecwxskp.supabase.co';
+const SB_URL='https://sswgtcpaayisecwxxskp.supabase.co';
 const SB_KEY='sb_publishable_a8hB04TzAhc9NLwrCDtozg_FwVk377j';
 let remoteEvent=null, remoteInvite=null, isGuestLink=false;
 async function rpc(fn,args){
- const base=localStorage.getItem('juntada_supabase_url')||SB_URL;
+ const base=SB_URL;
  let r;
  try{r=await fetch(base+'/rest/v1/rpc/'+fn,{method:'POST',headers:{apikey:SB_KEY,'Content-Type':'application/json'},body:JSON.stringify(args)})}
  catch(e){throw Error('No se pudo conectar con Supabase. Revisá la URL del proyecto. ('+e.message+')')}
