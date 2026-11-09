@@ -1,0 +1,1097 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#ffffff"><title>Juntada · Organizá y compartí</title><style>
+:root{--navy:#24518b;--sky:#75c9e8;--cream:#fff5e8;--coral:#ef8069;--pale:#d9eff9;--ink:#173659;--muted:#64778b}*{box-sizing:border-box}body{margin:0;background:#e9edf1;color:var(--ink);font:16px/1.45 system-ui,-apple-system,Segoe UI,sans-serif}.app{max-width:460px;margin:auto;background:#fffdf9;min-height:100dvh;position:relative;padding-bottom:85px}.screen{display:none;animation:in .2s ease}.screen.active{display:block}@keyframes in{from{opacity:.6;transform:translateY(5px)}to{opacity:1;transform:none}}header{height:67px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;background:#fffdf9;position:sticky;top:0;z-index:4;border-bottom:1px solid #f0e9df}.logo{font-size:30px;letter-spacing:-1.5px;font-weight:850;color:var(--navy)}.logo span{color:var(--coral)}.back{background:none;border:0;color:var(--navy);font-size:27px;cursor:pointer;padding:3px 12px 3px 0}.headleft{display:flex;align-items:center;gap:7px}h1{font-size:26px;line-height:1.15;margin:18px 0 10px;color:var(--navy);letter-spacing:-.5px}h2{font-size:19px;color:var(--navy);margin:19px 0 10px}p{margin:6px 0 15px}.sub{color:var(--muted);font-size:14px}.pad{padding:0 20px 22px}.hero{height:205px;background:linear-gradient(0deg,#142d4a70,#142d4a05),url('https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=900&q=80') center/cover;display:flex;align-items:end;padding:18px;color:white}.hero.mate{background-image:linear-gradient(0deg,#142d4a90,#142d4a05),url('https://images.unsplash.com/photo-1511988617509-a57c8a288659?auto=format&fit=crop&w=900&q=80')}.hero h1{color:#fff;margin:0;font-size:28px}.option{width:100%;display:flex;align-items:center;gap:13px;text-align:left;border:1px solid #e5e5e3;background:#fff;border-radius:16px;padding:14px;margin:9px 0;cursor:pointer;color:var(--ink);box-shadow:0 2px 7px #102d4910}.option:active,.btn:active{transform:scale(.99)}.option.selected{border:2px solid var(--coral);background:#fff7f0}.option .copy{flex:1}.option strong{display:block;font-size:15px}.option small{display:block;color:var(--muted);font-size:12px}.ico{display:grid;place-items:center;min-width:43px;height:43px;border-radius:12px;background:var(--pale);color:var(--navy)}svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}.chev{font-size:24px;color:var(--navy)}label{display:block;font-weight:700;font-size:14px;margin:14px 0 5px}input,textarea,select{width:100%;border:1px solid #d9e0e5;border-radius:12px;padding:13px 12px;background:white;color:var(--ink);font:inherit;outline-color:var(--sky)}textarea{min-height:85px;resize:vertical}.cover{height:158px;border-radius:18px;background:linear-gradient(0deg,#142d4a20,#142d4a00),url('https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=900&q=80') center/cover;margin-top:16px}.btn{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;border:0;border-radius:13px;padding:15px 13px;background:var(--navy);color:white;font-size:15px;font-weight:750;cursor:pointer;margin:12px 0}.btn.secondary{background:#e4f2f9;color:var(--navy)}.btn.green{background:#178b52}.btn.outline{background:#fff;border:1px solid #c6d9e8;color:var(--navy)}.btn:disabled{opacity:.5}.note{font-size:12px;color:var(--muted);text-align:center;margin:8px 0}.card{background:white;border:1px solid #e9e4dd;border-radius:19px;padding:16px;margin:12px 0;box-shadow:0 3px 12px #102d4908}.soft{background:var(--cream);border-radius:20px;padding:17px;margin:17px 0}.detail{display:flex;align-items:center;gap:11px;margin:12px 0}.detail svg{color:var(--navy)}.detail b{font-weight:650}.status{background:var(--pale);border-radius:12px;padding:11px 13px;font-size:13px}.banner{height:200px;background:url('https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=900&q=80') center/cover}.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:16px 0}.seg button{border:1px solid #d8e3eb;border-radius:11px;padding:12px 4px;background:#fff;font-weight:700;color:var(--navy)}.seg button.on{background:var(--pale);border-color:var(--navy)}.rsvp{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.rsvp button{border:1px solid transparent;border-radius:12px;padding:13px 4px;font-weight:700;color:var(--ink);background:#e6f3e9}.rsvp button:nth-child(2){background:#fff0c7}.rsvp button:nth-child(3){background:#f9d9d3}.rsvp button.on{outline:3px solid var(--navy)}.toast{position:fixed;bottom:92px;left:50%;transform:translateX(-50%);background:var(--ink);color:white;padding:12px 18px;border-radius:12px;font-size:13px;display:none;max-width:90%;z-index:10}.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);max-width:460px;width:100%;display:grid;grid-template-columns:repeat(2,1fr);background:#fffdf9;border-top:1px solid #e8e6e1;padding:10px 3px max(10px,env(safe-area-inset-bottom));z-index:3}.nav button{background:none;border:0;color:var(--muted);font-size:11px;display:grid;place-items:center;gap:3px}.nav button.active{color:var(--navy);font-weight:800}.nav svg{width:21px;height:21px}.hide{display:none!important}.tiny{font-size:12px;color:var(--muted)}.check{display:flex;gap:10px;align-items:center;margin:11px 0}.check svg{color:#238358}.screen-title{font-size:19px;font-weight:800;color:var(--navy)}.share-preview{border:1px solid #d9e4da;background:#eff8ef;border-radius:17px;padding:16px}.share-preview .card{margin-bottom:0}.pill{font-size:12px;border-radius:99px;background:#d9eff9;color:var(--navy);padding:5px 9px;display:inline-block}.avatar{width:35px;height:35px;border-radius:50%;background:#d9eff9;display:grid;place-items:center;color:var(--navy);font-weight:800}.row{display:flex;align-items:center;gap:9px}.row .copy{flex:1}.no-emoji{font-size:0} @media(min-width:600px){.app{box-shadow:0 0 45px #142d4a18}}
+
+/* Iteración visual 2: más fiel al mockup aprobado */
+:root{--navy:#103d79;--ink:#122d50;--muted:#64748b;--coral:#d96f4d;--cream:#fff7ed;--pale:#e7f3fa}
+body{background:#e9edf2;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:-.12px}
+.app{background:#fffefa}
+header{height:73px;border-bottom:0;padding:0 24px;background:#fffefa}
+.logo{font-size:33px;font-weight:850;letter-spacing:-1.8px}
+.pad{padding:0 23px 28px}
+h1{font-size:27px;letter-spacing:-.85px;margin:18px 0 13px;font-weight:800}
+h2{font-size:19px;letter-spacing:-.35px}
+.hero{height:218px;border-radius:0;background-position:center 43%}
+.hero.mate{background-image:linear-gradient(0deg,#0d2949a8,#142d4a00 78%),url('https://images.unsplash.com/photo-1511988617509-a57c8a288659?auto=format&fit=crop&w=900&q=85')}
+.hero h1{font-size:28px;margin:8px 0 0;max-width:300px;line-height:1.12}
+.hero-kicker{font-size:10px;font-weight:850;letter-spacing:2px;color:#fff2d9}
+.option{border-radius:15px;min-height:72px;margin:8px 0;padding:12px 14px;box-shadow:0 3px 12px #1c38500a;border-color:#e8e3de;gap:13px}
+.option strong{font-size:14.5px;line-height:1.28;font-weight:750}
+.option small{font-size:11.8px;margin-top:3px;line-height:1.35}
+.option.selected{border:1.5px solid #e99c73;background:#fff6ec}
+.ico{min-width:43px;width:43px;height:43px;border-radius:12px;background:#eaf4fa}
+.option.selected .ico{background:#ffe9d9;color:#b95c37}
+.chev{font-size:24px;font-weight:300}
+.cover{height:164px;border-radius:16px;margin-top:12px;position:relative;box-shadow:0 5px 15px #20334a16}
+.camera{position:absolute;bottom:12px;right:12px;border:0;background:#fff;color:var(--navy);height:37px;width:37px;display:grid;place-items:center;border-radius:50%;box-shadow:0 3px 12px #0002}
+label{font-size:13px;margin:15px 0 5px;font-weight:750}
+input,textarea,select{font-size:14px;border-color:#e1ded9;border-radius:12px;padding:12px 13px;background:#fff}
+textarea{min-height:84px}
+.date-time{display:grid;grid-template-columns:1.4fr 1fr;gap:10px}.date-time input{font-size:12.5px;padding:12px 8px;min-width:0}
+.expense-wrap{background:#eaf5fc;padding:12px 12px 9px;border-radius:15px;margin-top:18px}
+.expense-wrap label{margin:0 0 8px;font-size:13px}
+.expense-select{display:flex;align-items:center;background:white;border:1.5px solid #88bfe0;border-radius:12px;padding:4px 10px;gap:8px}
+.expense-select .ico{background:#fff4e8;min-width:35px;width:35px;height:35px}
+.expense-select select{border:0;flex:1;padding:9px 4px;outline:0;background:transparent;font-weight:750;color:var(--navy);min-width:0}
+.btn{border-radius:12px;min-height:52px;box-shadow:0 4px 12px #1c385012;margin-top:14px}
+.btn.green{background:#159250}
+.soft{border:1px solid #f2e2cf;background:#fff6ea}
+.ready-card{overflow:hidden;padding:0 16px 15px}
+.ready-photo{height:125px;background:url('https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=900&q=80') center/cover;margin:0 -16px}
+.ready-card h2{margin:5px 0 14px;font-size:24px}
+.ready-card .detail{padding:8px 4px;margin:0;border-bottom:1px solid #e8dccc;text-align:left;font-size:14px}
+.ready-card .detail:last-child{border-bottom:0}
+.banner{height:205px}
+.card{border-radius:17px;box-shadow:0 4px 16px #193a5410}
+.rsvp button{min-height:52px;font-size:13px}
+.nav{background:#fffefa;padding-top:10px;border-top-color:#eee8e1}
+.nav button{cursor:pointer}
+.share-preview{background:#eaf7ed;border:0}
+@media(min-width:600px){.app{margin:20px auto;min-height:calc(100dvh - 40px);border-radius:26px;overflow:hidden}.nav{border-radius:0 0 26px 26px}}
+
+/* V3: full-bleed photo on creation screen, consistent with Home */
+#create .create-cover{width:100%;height:205px;margin:0;border-radius:0;box-shadow:none;background-position:center 43%;}
+#create .create-cover .camera{right:19px;bottom:14px;}
+#create .pad{padding-top:5px;}
+#create .expense-select select:has(option[value=""]:checked){font-weight:500;color:#65788b;}
+
+/* V4: fecha flexible, sin selección automática */
+.date-section{margin-top:16px}.date-section>label{margin-bottom:9px}.date-choices{display:grid;gap:8px}.date-choice{margin:0;display:flex;align-items:center;gap:11px;background:#fff;border:1.5px solid #e0e7eb;border-radius:13px;padding:13px 12px;cursor:pointer;color:var(--navy);font-size:13.5px;font-weight:650}.date-choice input{accent-color:#24518b;width:18px;height:18px;margin:0;flex-shrink:0}.date-choice.chosen{background:#eaf5fc;border-color:#75c9e8}.date-fields{background:#f4f9fc;border-radius:13px;padding:12px;margin-top:10px}.date-fields label{margin-top:0}.date-fields input{width:100%;box-sizing:border-box}.field-hint{font-size:12px;color:#60768b;line-height:1.5;margin:5px 0 9px}.vote-inputs{display:grid;gap:8px}.add-date{background:#fff;color:#24518b;border:1px solid #b4d9ea;border-radius:11px;padding:10px 12px;display:flex;align-items:center;gap:8px;margin-top:9px;font-weight:650}.add-date svg{width:18px;height:18px}.vote-option{border-bottom:1px solid #e7e9e9;padding:11px 0}.vote-option:last-child{border-bottom:0}.vote-buttons{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-top:8px}.vote-buttons button{background:#f2f6f9;border:1px solid #d7e4ec;color:#24518b;padding:10px 3px;border-radius:9px;font-size:11px;font-weight:650}.vote-buttons button.on{background:#d9eff9;border:2px solid #24518b}.vote-buttons button[data-vote="yes"].on{background:#d3eedd}.vote-buttons button[data-vote="maybe"].on{background:#f9e9b9}.vote-buttons button[data-vote="no"].on{background:#f8d5cf}
+
+/* V5 · identidad celeste y blanca, estados seleccionados en azul */
+:root{--navy:#24518B;--sky:#75C9E8;--cream:#F4FAFE;--coral:#F6C65B;--pale:#E5F3FA;--ink:#173659;--muted:#5B7085}
+body{background:#e3eff6}
+.app,header,.nav{background:#fff}
+header{border-bottom:1px solid #eaf3f9}
+.logo span{color:#F6C65B}
+.hero-kicker{color:#fff}
+.option{border-color:#dcecf5;box-shadow:0 3px 14px #24518b0a}
+.option.selected,.date-choice.chosen{background:#E5F3FA;border:2px solid #24518B;color:#24518B}
+.option.selected .ico{background:#D0EAF8;color:#24518B}
+.option.selected strong{color:#24518B}
+.date-choice input{accent-color:#24518B}
+.date-fields{background:#f0f8fd}
+.cover{box-shadow:none}
+.expense-wrap{background:#eaf5fc}
+.expense-select{border-color:#bddbeb}
+.expense-select:focus-within{border:2px solid #24518B}
+.expense-select .ico{background:#e5f3fa;color:#24518B}
+input:focus,textarea:focus,select:focus{outline:2px solid #75C9E8;outline-offset:1px;border-color:#24518B}
+.soft{background:#edf7fd;border-color:#d9eff9}
+.ready-card .detail{border-bottom-color:#d9eaf5}
+.card{border-color:#e2eef5}
+.share-preview{background:#eaf6fc;border:1px solid #d9eff9}
+.btn.green{background:#24518B}
+.btn.secondary{background:#d9eff9;color:#24518B}
+.seg button.on{background:#e5f3fa;border:2px solid #24518B}
+.rsvp button,.rsvp button:nth-child(2),.rsvp button:nth-child(3){background:#f1f7fb;border:1px solid #d9e8f1;color:#24518B}
+.rsvp button.on{background:#d9eff9;border:2px solid #24518B;outline:none}
+.vote-buttons button[data-vote="yes"].on{background:#d9eff9;border:2px solid #24518B}
+.vote-buttons button[data-vote="maybe"].on{background:#f9e9b9;border:2px solid #24518B}
+.vote-buttons button[data-vote="no"].on{background:#e9edf3;border:2px solid #24518B}
+.status,.pill{background:#e5f3fa;color:#24518B}
+.nav{border-top-color:#dcecf5}
+.nav button.active{color:#24518B}
+/* small gold accents reserved for decorative highlights */
+.hero-kicker:before{content:'';display:inline-block;width:7px;height:7px;border-radius:50%;background:#F6C65B;margin-right:8px;vertical-align:middle}
+
+/* V6 — compact mobile event creation, blue selected state */
+#create .pad{padding-top:10px}
+#create .details-group{margin-top:17px}
+#create .date-section{margin:0}
+#create .date-section>label{display:block;margin:0 0 10px;font-size:15px;color:#173659}
+#create .date-choices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;padding:5px;background:#EAF5FB;border-radius:14px}
+#create .date-choice{border:1px solid transparent;background:transparent;border-radius:10px;padding:12px 2px;min-height:44px;display:flex;justify-content:center;text-align:center;align-items:center;gap:0;margin:0;font-size:13px;line-height:1.15;color:#24518B;font-weight:650}
+#create .date-choice input{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none}
+#create .date-choice.chosen{background:#fff;border:2px solid #24518B;box-shadow:0 2px 6px #24518b18;color:#24518B}
+#create .date-choice:focus-within{outline:2px solid #75C9E8;outline-offset:1px}
+#create .date-fields{margin-top:10px;background:#F4FAFE;border-radius:12px;padding:13px}
+#create .date-help{display:flex;align-items:center;gap:8px;color:#24518B;font-size:13px;line-height:1.3}
+#create .date-help svg{width:20px;height:20px;flex-shrink:0}
+#create .optional-details{margin-top:20px}
+#create .optional-title{font-size:15px;font-weight:750;color:#173659;margin-bottom:5px}
+#create .optional-title span{font-size:11px;font-weight:500;color:#62788c;margin-left:5px}
+#create .optional-details label{font-size:12.5px;margin:11px 0 5px}
+#create .expense-row{margin-top:18px;background:#fff;border:1px solid #DCE8EF;border-radius:15px;overflow:hidden}
+#create .expense-trigger{width:100%;display:flex;align-items:center;gap:12px;padding:13px;background:#fff;border:0;text-align:left;color:#24518B;font:inherit;cursor:pointer}
+#create .expense-trigger .ico{width:41px;min-width:41px;height:41px;display:grid;place-items:center;background:#E5F3FA;border-radius:12px}
+#create .expense-text{display:flex;flex-direction:column;gap:3px;flex:1;min-width:0}
+#create .expense-text strong{font-size:14px}
+#create .expense-text small{font-size:11px;color:#6c8194;font-weight:500;margin-left:4px}
+#create .expense-text>span{font-size:12px;color:#62788c}
+#create .expense-arrow{font-size:23px;color:#24518B;line-height:1}
+#create .expense-body{padding:0 13px 13px}
+#create .expense-body label{font-size:12px;margin:0 0 7px;display:block}
+#create .expense-body select{width:100%;font-weight:500;background:#F7FBFE;color:#24518B}
+#create .expense-body.hide{display:none}
+#create .btn{margin-top:16px}
+
+/* V7 — progressive disclosure of optional event details */
+#create .optional-details{margin-top:18px;border-top:1px solid #E1EBF2;padding-top:14px}
+#create .more-trigger{display:flex;align-items:center;gap:12px;width:100%;background:#fff;border:0;padding:10px 1px;text-align:left;color:#24518B;font:inherit;cursor:pointer;min-height:64px}
+#create .more-icon{width:39px;height:39px;border-radius:12px;background:#E5F3FA;display:grid;place-items:center;flex-shrink:0}
+#create .more-icon svg,#create .more-chevron svg{width:22px;height:22px;stroke:#24518B;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#create .more-copy{flex:1;display:flex;flex-direction:column;gap:4px;min-width:0}
+#create .more-copy strong{font-size:15px;color:#24518B}
+#create .more-copy small{font-size:12px;color:#647C8F;font-weight:450;line-height:1.35;overflow-wrap:anywhere}
+#create .more-chevron{width:24px;height:24px;display:grid;place-items:center;flex-shrink:0}
+#create .more-body{background:#F4FAFD;border-radius:14px;padding:13px 14px 16px;margin:8px 0 3px}
+#create .more-body.hide{display:none}
+#create .more-field{margin:0 0 13px}
+#create .more-field:last-child{margin-bottom:0}
+#create .more-field label{display:block;margin:0 0 7px;font-size:13px;font-weight:700;color:#24518B}
+#create .more-field input,#create .more-field select{background:#fff;width:100%;margin:0}
+#create .btn{margin-top:16px}
+.guest-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #e9f0f5}.guest-row:last-child{border-bottom:0}.guest-row b{flex:1;font-size:14px}.guest-avatar{height:32px;width:32px;display:grid;place-items:center;border-radius:50%;background:#d9eff9;color:#24518b;font-weight:800}.guest-badge{font-size:12px;font-weight:750;padding:5px 9px;border-radius:99px}.guest-badge.attending{background:#d5f2e2;color:#146842}.guest-badge.maybe{background:#fff0bc;color:#775600}.guest-badge.declined{background:#e9edf3;color:#51647b}.rsvp button{background:#f2f6f9!important;border:1px solid #e2eaf0}.rsvp button.on{outline:none;border:2px solid #24518b;background:#e4f2fa!important}.rsvp button:first-child.on{background:#d5f2e2!important;border-color:#19835a}.rsvp button:nth-child(2).on{background:#fff0bc!important;border-color:#b18a1d}.result-row{display:flex;flex-direction:column;gap:5px;border-bottom:1px solid #e6edf3;padding:13px 0}.result-row small{color:#65798b}.mini-btn{align-self:flex-start;border:1px solid #24518b;background:#e6f3fb;color:#24518b;border-radius:9px;padding:8px 12px;font-weight:750}.mini-btn.confirmed{background:#d5f2e2;border-color:#19835a;color:#146842}#event .card h2{font-size:17px}#event .btn.secondary{margin-bottom:0} 
+/* V9 · votación de lugares y jerarquía de la invitación */
+#invite .pad > h1.js-name{margin:25px 0 24px;line-height:1.15}
+#invite .pad > .detail{margin:0 0 16px;min-height:28px}
+#invite .pad > .detail + .card{margin-top:24px}
+#event .pad > h1.js-name{margin-bottom:23px}
+.place-list{display:grid;gap:10px;margin-top:16px}
+.place-option{border:1px solid #dce9f1;border-radius:14px;padding:13px;background:#fff}
+.place-option.is-winner{border:2px solid #24518B;background:#eaf5fb}
+.place-option h3{font-size:15px;color:#24518B;margin:0 0 4px}
+.place-option small{display:block;color:#60768b;overflow-wrap:anywhere;margin:3px 0}
+.place-option .place-meta{font-size:12px;color:#60768b;margin-top:7px}
+.place-actions{display:flex;gap:8px;margin-top:10px}
+.place-actions button{flex:1;border-radius:10px;padding:10px 8px;border:1px solid #bdd6e7;background:#eaf5fb;color:#24518B;font-weight:700;font-size:12px}
+.place-actions button.confirmed{background:#dceee5;border-color:#7fb79b;color:#1b6849}
+.place-add{border-top:1px solid #e4edf2;margin-top:17px;padding-top:10px}
+.place-add label{margin-top:10px}
+.place-confirmed{background:#e8f5ed;border-radius:12px;padding:12px;color:#1d674c;font-weight:700;margin-top:13px}
+.place-vote-label{display:flex;align-items:center;gap:12px;padding:13px;border:1px solid #dae8f0;border-radius:12px;margin:9px 0;font-size:14px}
+.place-vote-label input{width:20px;height:20px;accent-color:#24518B;margin:0;flex:none}
+.place-vote-label span{flex:1;min-width:0}
+.place-vote-label small{display:block;color:#657b8d;font-weight:400}
+.place-vote-label:has(input:checked){background:#eaf5fb;border-color:#24518B}
+.v1-beta-note{margin:20px 0;padding:15px 16px;border-radius:15px;background:#F0F8FD;border:1px solid #D4E9F6;color:#24518B;display:flex;flex-direction:column;gap:6px;font-size:12px;line-height:1.5}.v1-beta-note strong{font-size:13px}.v1-beta-note span{color:#5B7085}
+.event-details-card .row{margin-bottom:20px}.event-details-card label{margin-top:16px;display:block}.event-details-card input{margin-top:8px}.event-details-card .btn{margin-top:20px}.event-share-btn{margin-top:16px;display:flex;align-items:center;justify-content:center;gap:10px}.event-share-btn [data-icon]{display:inline-flex;width:23px;height:23px}.place-add{margin-top:18px}.place-add .btn{margin-top:18px}#placesCard>.btn.outline{margin-top:12px}
+/* RSVP: breathing room between guest name and choices */
+#invite #guestName{margin-bottom:18px}
+#invite .rsvp{margin-top:0;gap:10px}
+
+/* Mobile UX refinement: RSVP and compact organizer details */
+#invite #guestName{margin-bottom:22px}
+#invite .rsvp{margin-top:0;gap:10px}
+#invite #rsvpStatus{margin-top:16px;padding:12px 14px;font-size:14px;line-height:1.45}
+#invite #guestPreview[hidden]{display:none!important}
+.event-details-card{padding:22px 20px}
+.event-details-card .row{margin-bottom:14px}
+.event-details-card label{margin-top:12px}
+.event-details-card input{margin-top:6px}
+.event-details-card .btn{margin-top:18px}
+@media(max-width:420px){.event-details-card{padding:20px 18px}}
+
+/* RSVP visual grouping: distinct from the event description */
+#invite .rsvp-section{margin-top:30px;padding:22px 18px 18px;background:#f5fbff;border:1px solid #d9eaf4;border-radius:22px}
+#invite .rsvp-section h2{margin:0 0 18px;font-size:23px}
+#invite .rsvp-section label{display:block;margin-bottom:9px}
+#invite .rsvp-section #guestName{display:block;width:100%;margin:0 0 24px}
+#invite .rsvp-section .rsvp{gap:9px}
+#invite .rsvp-section .rsvp button{min-height:54px;border-radius:14px}
+#invite .rsvp-section #rsvpStatus{margin-top:14px}
+.event-details-card .event-details-fields{display:grid;grid-template-columns:1fr 1.3fr;column-gap:12px;align-items:end}
+.event-details-card .event-details-fields label{margin:0 0 6px}
+.event-details-card .event-details-fields input{margin:0;min-width:0;width:100%}
+.event-details-card .event-details-fields .btn{grid-column:1/-1;margin-top:16px;min-height:52px}
+@media(max-width:360px){.event-details-card .event-details-fields{grid-template-columns:1fr}}
+
+/* Align button content consistently and keep SVG icons visible */
+#event .btn{display:flex;align-items:center;justify-content:center;text-align:center;gap:12px}
+#event .btn [data-icon]{display:inline-flex;align-items:center;justify-content:center;flex:0 0 22px;width:22px;height:22px}
+#event .btn [data-icon] svg{display:block;width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+#event .event-details-fields{display:flex;flex-direction:column;gap:10px;align-items:stretch}
+#event .event-details-fields label[for="organizerTime"]{grid-area:timeLabel}
+#event .event-details-fields #organizerTime{grid-area:time}
+#event .event-details-fields label[for="organizerPlace"]{grid-area:placeLabel}
+#event .event-details-fields #organizerPlace{grid-area:place}
+#event .event-details-fields .btn{margin-top:15px}
+
+#event .event-details-fields label{margin-top:8px!important;margin-bottom:0!important}#event .event-details-fields input{width:100%;min-height:48px}#event .btn [data-icon] svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2}#invite #guestName{margin-bottom:24px!important}#invite .rsvp{margin-top:12px!important}
+
+/* Guest invitation: focused, compact RSVP UX */
+#invite .pad{padding-top:22px}
+#invite .pad>h1{margin:0 0 18px;font-size:30px;line-height:1.16}
+#invite .pad>.detail{margin:11px 0}
+#invite .pad>.js-description{margin-top:22px;margin-bottom:24px;padding:17px 19px;line-height:1.5}
+#invite .rsvp-section{background:#fff;border:1px solid #dbe8ef;border-radius:20px;padding:22px 18px 20px;margin-top:24px;box-shadow:0 5px 22px rgba(32,76,115,.055)}
+#invite .rsvp-section h2{font-size:24px;margin:0 0 5px}
+#invite .rsvp-emoji{font-size:21px}
+#invite .rsvp-intro{color:#687b8c;font-size:14px;margin:0 0 22px}
+#invite .rsvp-section label{margin-bottom:8px;font-weight:700}
+#invite .rsvp-section #guestName{margin:0 0 20px!important;min-height:52px}
+#invite .rsvp-section .rsvp{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:0!important}
+#invite .rsvp-section .rsvp button{min-width:0;min-height:58px;padding:10px 5px;font-size:14px;font-weight:700;border-radius:13px}
+#invite #rsvpStatus{margin-top:17px;padding:12px 14px;font-size:14px;border-radius:12px;line-height:1.45}
+#invite #guestPreview{display:none!important}
+#invite .rsvp-section+.btn{display:none!important}
+@media(max-width:360px){#invite .rsvp-section .rsvp{gap:6px}#invite .rsvp-section .rsvp button{font-size:13px}}
+#invite .rsvp-section{background:#f5fbff!important;border-color:#dceaf2!important}#invite .rsvp-intro{margin:0 0 20px!important;font-size:15px;color:#526e84}#invite .rsvp-section #guestName{margin-bottom:22px!important}#invite .rsvp-section .rsvp{margin-top:0!important}#invite #rsvpStatus[hidden]{display:none!important}#invite #guestPreview{display:none!important}#invite .rsvp-section+.btn{display:none!important}
+
+/* Votación compacta: jerarquía y resultados comparables */
+#inviteVoting .vote-option{padding:12px 0;border-bottom:1px solid #e5edf2;margin:0}#inviteVoting .vote-option:last-child{border-bottom:0}#inviteVoting .vote-option>b{display:block;margin-bottom:9px;font-size:15px}#inviteVoting .vote-buttons{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}#inviteVoting .vote-buttons button{min-width:0;padding:11px 4px;font-size:13px}#dateResults .compact-result{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:7px 12px;align-items:center;padding:14px 0;border-bottom:1px solid #e4edf2}#dateResults .result-heading{display:flex;align-items:center;flex-wrap:wrap;gap:8px;grid-column:1/-1}#dateResults .result-best{font-size:11px;font-weight:700;color:#24518B;background:#e3f4fb;padding:4px 8px;border-radius:20px}#dateResults .result-meter{height:8px;border-radius:12px;background:#e9eff4;overflow:hidden;grid-column:1/-1}#dateResults .result-meter span{display:block;height:100%;background:#75C9E8;border-radius:12px}#dateResults .compact-result small{font-size:12px;color:#526a7c}#dateResults .compact-result .mini-btn{justify-self:end;margin:0;white-space:nowrap}@media(max-width:380px){#dateResults .compact-result{grid-template-columns:1fr}#dateResults .compact-result .mini-btn{justify-self:start}}
+.guest-identity{padding:20px 22px}.guest-identity label{display:block;margin-bottom:10px}.guest-identity input{margin-bottom:6px}.guest-identity .field-hint{margin:6px 0 0;font-size:13px}#inviteVoting .field-hint{margin-top:12px}#voteFields .vote-date-tools{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}#voteFields .vote-tool{border:1px solid #d3e4ed;border-radius:12px;background:#fff;color:#24518b;padding:10px 12px;font-weight:700;display:inline-flex;align-items:center;gap:6px}#voteFields .vote-tool.active{background:#e2f3fb;border:2px solid #24518b}#voteFields .vote-tool svg{width:18px;height:18px} .round-manager{margin:12px 0 20px;padding:15px;border:1px solid #d5e8f1;border-radius:16px;background:#f8fcff}.round-title{display:flex;justify-content:space-between;align-items:center;gap:8px;color:#24518b;font-weight:800}.round-title small{font-size:11px;color:#61798c;font-weight:500}.round-tip{background:#e5f5fc;padding:12px;border-radius:12px;margin:12px 0;color:#24518b}.round-tip p{font-size:13px;margin:5px 0 0}.round-finalists{display:grid;gap:8px;margin:12px 0}.round-finalists label{display:flex;align-items:center;gap:7px;padding:9px;background:white;border-radius:9px;font-size:13px}.round-finalists input{width:auto;flex:none;accent-color:#24518b}.round-finalists small{margin-left:auto;font-size:11px;color:#61798c}.round-dialog-backdrop{position:fixed;inset:0;z-index:10010;background:rgba(20,37,58,.5);display:flex;align-items:center;justify-content:center;padding:20px}.round-dialog{width:100%;max-width:390px;background:#fff;border-radius:24px;padding:28px 24px 24px;box-shadow:0 22px 55px #12294238;text-align:center;color:#24518b}.round-dialog-icon{width:66px;height:66px;border-radius:22px;background:#e5f5fb;margin:0 auto 16px;display:grid;place-items:center}.round-dialog-icon svg{width:32px;height:32px;stroke:#24518b}.round-dialog h2{font-size:24px;line-height:1.2;margin:0 0 13px}.round-dialog p{font-size:15px;line-height:1.6;color:#607487;margin:0}.round-dialog-actions{display:flex;gap:10px;margin-top:25px}.round-dialog-actions button{flex:1;padding:14px 8px;border-radius:13px;border:1px solid #d7e4eb;background:white;color:#24518b;font-weight:700;font-size:14px}.round-dialog-actions button:last-child{background:#24518b;color:white;border-color:#24518b} .event-accordion{margin:0}.event-accordion>summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;padding:3px 0;min-height:52px}.event-accordion>summary::-webkit-details-marker{display:none}.event-accordion>summary .acc-main{display:flex;align-items:center;gap:12px;min-width:0;flex:1}.event-accordion>summary .acc-text{min-width:0}.event-accordion>summary .acc-text strong{display:block;color:#24518b;font-size:17px}.event-accordion>summary .acc-text small{display:block;color:#65788a;font-size:12px;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:280px}.event-accordion>summary .acc-arrow{width:22px;height:22px;flex:none;color:#24518b;transition:transform .2s}.event-accordion[open]>summary .acc-arrow{transform:rotate(180deg)}.event-accordion .acc-content{padding-top:12px;border-top:1px solid #e6edf2;margin-top:10px}.event-accordion:focus-visible{outline:2px solid #24518b}.compact-voting{margin-top:14px;background:#fff;border:1px solid #dce9f0;border-radius:13px;padding:10px 13px}.compact-voting>summary{padding:0;min-height:48px}.compact-voting .acc-content{padding-top:12px}.round-manager .round-finalists{margin-top:6px}.round-manager .round-finalists label{margin:0} .organizer-card-fold>summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:48px}.organizer-card-fold>summary::-webkit-details-marker{display:none}.fold-heading{display:block;min-width:0}.fold-heading strong{display:block;color:#24518b;font-size:19px;line-height:1.35}.fold-heading small{display:block;color:#697d8b;font-size:13px;line-height:1.45;margin-top:5px}.fold-chevron{width:24px;height:24px;flex:none;transition:transform .2s;color:#24518b}.organizer-card-fold[open] .fold-chevron{transform:rotate(180deg)}.organizer-fold-body{padding-top:16px;margin-top:16px;border-top:1px solid #e7eef2}.organizer-fold-body>.row:first-child{display:none}.organizer-fold-body>h2:first-child{display:none}.organizer-fold-body>.sub:first-of-type{margin-top:0}.organizer-card-fold:not([open]) .organizer-fold-body{display:none} .organizer-collapsible{padding:18px 20px!important}.organizer-card-fold{margin:0!important}.organizer-card-fold>summary{padding:0!important}.organizer-card-fold:not([open]){min-height:62px}.organizer-card-fold .organizer-fold-body>.row:first-child{display:none}.organizer-card-fold .organizer-fold-body>h2:first-child{display:none}.organizer-card-fold .organizer-fold-body{padding-top:14px;margin-top:14px}.organizer-card-fold .fold-heading strong{font-size:18px}.organizer-card-fold .fold-heading small{font-size:13px} .organizer-save-btn{margin-top:15px!important;width:100%}.organizer-card-fold .fold-heading small{display:inline-flex!important;align-items:center;background:#e8f5fb;color:#24518b!important;border-radius:20px;padding:5px 10px;font-weight:650;font-size:12px!important;max-width:100%;white-space:normal}.organizer-card-fold>summary{gap:10px}.organizer-card-fold .fold-heading{flex:1}.organizer-card-fold .fold-heading strong{margin-bottom:4px} .organizer-actions{display:flex;flex-direction:column;gap:11px;margin:14px 0 14px}.organizer-actions .btn{width:100%;margin:0!important}.organizer-actions .organizer-save-btn{background:#d8eef9;color:#24518b}.organizer-actions .btn.outline{background:#fff}.organizer-collapsible .organizer-fold-body .btn.outline{margin-top:10px} .organizer-collapsible{padding:13px 15px!important;margin-bottom:9px!important;border-radius:16px!important;box-shadow:0 2px 10px rgba(29,64,92,.035)!important}.organizer-card-fold>summary{display:flex!important;align-items:center!important;gap:12px!important;min-height:52px!important}.organizer-card-fold .fold-icon{height:43px;width:43px;flex:none;border-radius:12px;background:#e7f4fb;display:grid;place-items:center;color:#24518b}.organizer-card-fold .fold-icon svg{height:22px;width:22px}.organizer-card-fold .fold-heading{flex:1;min-width:0}.organizer-card-fold .fold-heading strong{font-size:16px!important;margin:0 0 2px!important}.organizer-card-fold .fold-heading small{background:none!important;padding:0!important;border-radius:0!important;font-size:12px!important;font-weight:500!important;color:#667d8e!important;margin:0!important}.organizer-card-fold .fold-chevron{height:19px;width:19px}.organizer-card-fold:not([open]){min-height:0!important}.organizer-card-fold .organizer-fold-body{padding-top:13px;margin-top:12px}.organizer-actions{display:grid!important;grid-template-columns:1fr!important;margin:8px 0!important}.organizer-actions .btn{padding:12px!important;font-size:14px!important}.organizer-actions .organizer-save-btn.hide{display:none!important}.event-share-btn{margin-top:10px!important}.organizer-collapsible .organizer-fold-body>h2:first-child,.organizer-collapsible .organizer-fold-body>.row:first-child{display:none!important} .organizer-actions .organizer-save-btn:disabled{opacity:.58;cursor:default}.organizer-actions .organizer-save-btn:not(:disabled){opacity:1}.organizer-card-fold .fold-icon svg{display:block;width:23px;height:23px;stroke:#24518b} #organizerSaveAction{display:flex!important;visibility:visible!important;opacity:1!important;align-items:center;justify-content:center;gap:8px}#organizerSaveAction.hide{display:flex!important}.organizer-actions{display:flex!important;flex-direction:column!important} /* Minimalista A: filas discretas, pendientes concisos y acciones secundarias */
+#event .organizer-todo{padding:12px 17px!important;margin-bottom:14px!important}
+#event .organizer-todo .check{padding:7px 0!important;font-size:14px!important;gap:10px}
+#event .organizer-todo .check:first-child{display:none!important}
+#event .organizer-todo .check svg{height:19px;width:19px}
+#event #antes>h2:first-child{font-size:19px!important;margin-bottom:9px!important}
+#event .organizer-collapsible{padding:10px 13px!important;margin-bottom:7px!important;border-radius:14px!important}
+#event .organizer-card-fold>summary{min-height:47px!important;gap:11px!important}
+#event .organizer-card-fold .fold-icon{height:35px!important;width:35px!important;border-radius:10px!important}
+#event .organizer-card-fold .fold-icon svg{height:20px!important;width:20px!important}
+#event .organizer-card-fold .fold-heading strong{font-size:15px!important}
+#event .organizer-card-fold .fold-heading small{font-size:12px!important}
+#event .organizer-minimal-actions{display:grid!important;grid-template-columns:1fr 1fr!important;gap:8px!important;margin:13px 0!important}
+#event .organizer-minimal-actions .btn{min-width:0!important;font-size:12px!important;padding:10px 4px!important;border-radius:12px!important;box-shadow:none!important;gap:5px!important}
+#event .organizer-minimal-actions .btn svg{width:17px!important;height:17px!important}
+#event .organizer-minimal-actions .btn.outline{border:0!important;background:transparent!important}
+#event .event-share-btn{margin-top:8px!important}
+@media(max-width:370px){#event .organizer-minimal-actions .btn{font-size:11px!important}}
+
+/* V11 · Vista invitado como botón secundario visible */
+#event .organizer-minimal-actions .btn.outline{background:#fff!important;border:1.5px solid #A8CDE3!important;color:#24518B!important;box-shadow:none!important;min-height:52px!important}
+#event .organizer-minimal-actions .btn.secondary{min-height:52px!important}
+#event .organizer-minimal-actions .btn{width:100%!important;margin:0!important;display:flex!important;align-items:center!important;justify-content:center!important}
+#event .organizer-minimal-actions .btn.outline:focus-visible{outline:2px solid #75C9E8;outline-offset:2px}
+/* Prueba reversible: navegación Organizar / Cerrar cuentas */
+#event .juntada-two-tabs{display:grid;grid-template-columns:1fr 1fr}
+#event .juntada-close-intro{padding:6px 1px 10px}
+#event .juntada-close-intro h2{margin:9px 0 6px;color:#24518B}
+#event .juntada-close-intro p{font-size:13px;line-height:1.55;color:#62758a;margin:0}
+#event .juntada-preview-tag{display:inline-block;background:#eaf5fb;color:#24518B;font-size:10px;font-weight:700;border-radius:20px;padding:6px 10px}
+#event .juntada-close-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+#event .juntada-close-stat{margin:0!important;padding:15px 12px!important;display:flex;flex-direction:column;gap:8px;min-width:0}
+#event .juntada-close-stat:first-child{background:#eaf5fb}
+#event .juntada-close-stat small{color:#62758a;font-size:11px}
+#event .juntada-close-stat strong{color:#24518B;font-size:25px}
+#event .juntada-close-stat span{color:#62758a;font-size:10px;line-height:1.4}
+#event .juntada-close-option{display:flex;align-items:center;gap:11px;padding:14px 11px!important;margin:9px 0!important}
+#event .juntada-close-option>div{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+#event .juntada-close-option b{font-size:13px}
+#event .juntada-close-option small{font-size:11px;color:#62758a;line-height:1.4}
+#event .juntada-close-icon{color:#24518B;background:#eaf5fb;border-radius:10px;padding:9px;display:flex}
+#event .juntada-close-icon svg{width:19px;height:19px}
+#event .juntada-soon{font-size:9px;color:#637d98;white-space:nowrap}
+#event .juntada-close-note{font-size:12px;line-height:1.5;color:#62758a;background:#f5f9fc;padding:13px!important}
+#event .juntada-disabled-action{opacity:.55;cursor:not-allowed}
+#accounts .accounts-hub{padding-bottom:100px}
+#accounts .accounts-hub h1{margin:12px 0 5px;color:#24518B}
+#accounts .accounts-hub h2{font-size:17px;color:#24518B;margin:23px 0 11px}
+#accounts .accounts-hub>.sub{margin-bottom:18px}
+#accounts .accounts-inline-link{border:1px solid #A8CDE3;border-radius:10px;background:#eaf5fb;color:#24518B;padding:8px 12px;font-weight:700;cursor:pointer}
+/* Inicio V13: planes y gastos, con dos caminos principales */
+#home .juntada-home-vnext{padding-top:14px}
+#home .juntada-home-vnext .option{margin-bottom:12px}
+#home .juntada-home-shortcuts{margin-top:21px;border-top:1px solid #e2ebf1;padding-top:7px}
+#home .juntada-home-link{display:flex;align-items:center;width:100%;text-align:left;gap:13px;background:transparent;border:0;border-bottom:1px solid #e2ebf1;padding:17px 5px;color:#24518B;cursor:pointer;font:inherit}
+#home .juntada-home-link>svg{width:22px;height:22px;flex-shrink:0}
+#home .juntada-home-link>span:not([data-icon]){flex:1;font-size:14px;font-weight:750}
+#home .juntada-home-link small{display:block;font-size:11px;color:#64778b;font-weight:400;margin-top:3px}
+#home .juntada-home-link>b{font-size:23px;font-weight:400}
+#home .hero h1{max-width:380px}
+#accounts .accounts-hub .option{margin:14px 0}
+.accounts-hub .juntada-flow-hint{margin-top:25px;font-size:12px;color:#64778b;line-height:1.5}
+.accounts-hub textarea{min-height:85px}
+.accounts-hub label{display:block;margin-top:16px}
+.accounts-hub .juntada-disabled-action{margin-top:14px}
+/* V15 · Inicio moderno: lista uniforme sin menú inferior */
+#nav.nav{display:none!important}
+.app{padding-bottom:max(22px,env(safe-area-inset-bottom))}
+#home .juntada-home-list{padding:13px 21px 28px}
+#home .juntada-home-list-item{width:100%;display:flex;align-items:center;gap:14px;text-align:left;background:transparent;border:0;border-bottom:1px solid #e5edf2;padding:18px 3px;cursor:pointer;color:#24518B;font:inherit;min-height:85px}
+#home .juntada-home-list-item:last-child{border-bottom:0}
+#home .juntada-home-list-icon{width:45px;height:45px;min-width:45px;display:flex;align-items:center;justify-content:center;background:#eaf5fb;border-radius:13px;color:#24518B}
+#home .juntada-home-list-icon svg{width:22px;height:22px}
+#home .juntada-home-list-copy{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+#home .juntada-home-list-copy strong{font-size:15px;font-weight:750;line-height:1.25;color:#24518B}
+#home .juntada-home-list-copy small{font-size:12px;color:#64778b;line-height:1.4}
+#home .juntada-home-list-arrow{font-size:25px;font-weight:300;color:#7895ab;line-height:1}
+#home .juntada-home-list-item:focus-visible{outline:2px solid #75C9E8;outline-offset:2px;border-radius:12px}
+/* Menú de opciones: mismo patrón visual en todas las pantallas de navegación */
+.juntada-options-menu{margin-top:12px}
+.juntada-options-menu .juntada-home-list-item{width:100%;display:flex;align-items:center;gap:14px;text-align:left;background:transparent;border:0;border-bottom:1px solid #e5edf2;padding:18px 3px;cursor:pointer;color:#24518B;font:inherit;min-height:85px}
+.juntada-options-menu .juntada-home-list-item:last-child{border-bottom:0}
+.juntada-options-menu .juntada-home-list-icon{width:45px;height:45px;min-width:45px;display:flex;align-items:center;justify-content:center;background:#eaf5fb;border-radius:13px;color:#24518B}
+.juntada-options-menu .juntada-home-list-icon svg{width:22px;height:22px}
+.juntada-options-menu .juntada-home-list-copy{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.juntada-options-menu .juntada-home-list-copy strong{font-size:15px;font-weight:750;line-height:1.25;color:#24518B}
+.juntada-options-menu .juntada-home-list-copy small{font-size:12px;color:#64778b;line-height:1.4}
+.juntada-options-menu .juntada-home-list-arrow{font-size:25px;font-weight:300;color:#7895ab;line-height:1}
+.juntada-options-menu .juntada-home-list-item:focus-visible{outline:2px solid #75C9E8;outline-offset:2px;border-radius:12px}
+/* Los encuentros existentes son elementos de una lista, no tarjetas independientes */
+#myEventsList [data-sort-id]{border:0!important;border-bottom:1px solid #e5edf2!important;border-radius:0!important;box-shadow:none!important;margin:0!important;padding:13px 3px!important}
+#myEventsList [data-sort-id]:last-child{border-bottom:0!important}
+</style></head><body><div class="app">
+<section id="home" class="screen active"><header><div class="logo">Juntada<span>.</span></div><div class="avatar">P</div></header><div class="hero mate"><div><div class="hero-kicker">QUE NO QUEDE EN LA NADA</div><h1>Tus planes y tus cuentas, en un solo lugar.</h1></div></div><div class="pad juntada-home-list"><button class="juntada-home-list-item" onclick="go('create')"><span class="juntada-home-list-icon" data-icon="calendar-plus"></span><span class="juntada-home-list-copy"><strong>Organizar una juntada</strong><small>Fecha, lugar, invitados y gastos.</small></span><span class="juntada-home-list-arrow">›</span></button><button class="juntada-home-list-item" onclick="go('accounts')"><span class="juntada-home-list-icon" data-icon="wallet"></span><span class="juntada-home-list-copy"><strong>Compartir gastos</strong><small>Un gasto rápido o un grupo de amigos.</small></span><span class="juntada-home-list-arrow">›</span></button><button class="juntada-home-list-item" onclick="showMyEvents()"><span class="juntada-home-list-icon" data-icon="calendar"></span><span class="juntada-home-list-copy"><strong>Mis planes y grupos</strong><small>Tus encuentros y cuentas compartidas.</small></span><span class="juntada-home-list-arrow">›</span></button><button class="juntada-home-list-item" onclick="go('balances')"><span class="juntada-home-list-icon" data-icon="sliders"></span><span class="juntada-home-list-copy"><strong>Mi balance general</strong><small>Cuánto debés y cuánto te deben.</small></span><span class="juntada-home-list-arrow">›</span></button></div></section>
+<section id="create" class="screen"><header><div class="headleft"><button class="back" onclick="go('home')">‹</button><span class="screen-title">Crear evento</span></div></header><div class="create-cover cover"><button class="camera" type="button" onclick="toast('En la próxima versión vas a poder elegir una foto de portada')" aria-label="Cambiar foto"><span data-icon="camera"></span></button></div><div class="pad"><label for="eventName">Nombre del evento</label><input id="eventName" value="Mi cumple" maxlength="60"><label for="eventDesc">Descripción (opcional)</label><textarea id="eventDesc">Quiero festejar con ustedes, con buena comida, charlas y muchas risas.</textarea><div class="details-group"><div class="date-section"><label>¿Cuándo nos juntamos?</label><div class="date-choices" role="radiogroup" aria-label="Cómo definir la fecha"><label class="date-choice"><input type="radio" name="dateMode" value="fixed" onchange="setDateMode(this.value)"><span>Fecha fija</span></label><label class="date-choice"><input type="radio" name="dateMode" value="vote" onchange="setDateMode(this.value)"><span>Votamos</span></label><label class="date-choice"><input type="radio" name="dateMode" value="pending" onchange="setDateMode(this.value)"><span>Después</span></label></div><div id="fixedFields" class="date-fields hide"><label for="eventDate">Fecha del encuentro</label><input id="eventDate" type="date"></div><div id="voteFields" class="date-fields hide"><div class="date-help"><span data-icon="calendar"></span><strong>Definamos la fecha entre todos</strong></div><p class="field-hint">Elegí al menos dos fechas candidatas para que tus invitados voten.</p><div class="vote-date-tools"><button type="button" class="vote-tool active" id="dateSingleMode" onclick="setCandidateInputMode('single')"><span data-icon="calendar"></span> Fechas sueltas</button><button type="button" class="vote-tool" id="dateRangeMode" onclick="setCandidateInputMode('range')"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M8 14h3m2 0h3m-8 4h3"/></svg> Rango de días</button></div><div id="dateRangePicker" class="hide" style="background:#f0f8fc;padding:14px;border-radius:14px;margin:12px 0"><label for="rangeFrom">Desde</label><input type="date" id="rangeFrom" onchange="addCandidateRange()" oninput="addCandidateRange()"><label for="rangeTo">Hasta</label><input type="date" id="rangeTo" onchange="addCandidateRange()" oninput="addCandidateRange()"><label style="margin-top:12px">¿Qué días querés incluir?</label><div id="rangeWeekdays" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin:9px 0 14px"><label><input type="checkbox" value="1" checked onchange="addCandidateRange()"> Lun</label><label><input type="checkbox" value="2" checked onchange="addCandidateRange()"> Mar</label><label><input type="checkbox" value="3" checked onchange="addCandidateRange()"> Mié</label><label><input type="checkbox" value="4" checked onchange="addCandidateRange()"> Jue</label><label><input type="checkbox" value="5" checked onchange="addCandidateRange()"> Vie</label><label><input type="checkbox" value="6" checked onchange="addCandidateRange()"> Sáb</label><label><input type="checkbox" value="0" checked onchange="addCandidateRange()"> Dom</label></div><p class="field-hint" style="margin-bottom:0">Elegí un período y los días de la semana que te interesan. Se incluirán solamente esos días.</p><p id="rangeSelectedDates" class="field-hint" style="color:#24518b;font-weight:700"></p></div><div id="candidateSingleFields"><div class="vote-inputs"><input type="date" class="candidate" aria-label="Primera fecha candidata"><input type="date" class="candidate" aria-label="Segunda fecha candidata"></div><button type="button" class="add-date" onclick="addCandidate()"><span data-icon="calendar-plus"></span> Agregar otra fecha</button></div><p class="field-hint">Cada persona podrá elegir «Puedo», «Me acomodo» o «No puedo».</p></div><div id="pendingFields" class="date-fields hide"><div class="date-help"><span data-icon="clock"></span><span>La fecha quedará pendiente.</span></div></div></div><div class="optional-details"><button type="button" class="more-trigger" id="moreTrigger" aria-expanded="false" onclick="toggleMore()"><span class="more-icon" data-icon="sliders"></span><span class="more-copy"><strong>Agregar más detalles</strong><small id="moreSummary">Hora, lugar y gastos · Opcional</small></span><span class="more-chevron" id="moreChevron" data-icon="chevron-down"></span></button><div class="more-body hide" id="moreBody"><div class="more-field"><label for="eventTime">Hora</label><input id="eventTime" type="time" onchange="updateMoreSummary()"></div><div class="more-field"><label for="eventPlace">Lugar</label><input id="eventPlace" placeholder="Ej. En casa, restaurante..." oninput="updateMoreSummary()"></div><div class="more-field"><label for="expenseSelect">Gastos</label><select id="expenseSelect" onchange="chooseExpense(this.value)"><option value="" selected>Seleccionar una opción</option><option value="host">Yo invito</option><option value="split">Dividimos entre todos</option><option value="each">Cada uno paga lo suyo</option><option value="later">Lo vemos después</option></select></div></div></div><button class="btn" onclick="create()">Crear juntada <span>→</span></button></div></section>
+<section id="ready" class="screen"><header><div class="headleft"><button class="back" onclick="go('create')">‹</button><span class="logo">Juntada<span>.</span></span></div></header><div class="pad" style="text-align:center"><div style="padding:30px 0 5px;color:var(--navy)"><span data-icon="check-circle" style="display:inline-block;transform:scale(2);margin:15px"></span></div><h1>¡Tu juntada está lista!</h1><div class="soft ready-card"><div class="ready-photo"></div><div class="ico" style="margin:-28px auto 8px;width:58px;height:58px;position:relative;background:#fff5e8;border:4px solid white" data-icon="cake"></div><h2 class="js-name" style="font-size:26px"></h2><div class="detail"><span data-icon="calendar"></span><b class="js-date"></b></div><div class="detail"><span data-icon="pin"></span><b class="js-place"></b></div><div class="detail"><span data-icon="gift"></span><b class="js-expense"></b></div><div class="detail js-vote-detail hide"><span data-icon="calendar"></span><b>Votación de fechas pendiente</b></div></div><button class="btn green" onclick="go('share')"><span data-icon="message"></span> Compartir por WhatsApp</button><button class="btn secondary" onclick="copyInvite()"><span data-icon="link"></span> Copiar enlace de invitación</button><button class="btn outline" onclick="openGuestTest()">Probar como invitado</button><div class="note">Las invitaciones online necesitan una publicación exitosa.</div></div></section>
+<section id="share" class="screen"><header><div class="headleft"><button class="back" onclick="go('ready')">‹</button><span class="screen-title">Compartir invitación</span></div></header><div class="pad"><h1>¡Que se arme!</h1><p class="sub">Compartí el enlace para que tus invitados confirmen desde su celular.</p><div class="share-preview"><b>Mensaje para el grupo</b><p>Tu invitación incluye el nombre, la fecha, el lugar y un enlace único para confirmar.</p><div class="card"><div class="cover" style="height:105px;margin:0 0 12px"></div><b>Juntada. · <span class="js-name"></span></b><div class="detail"><span data-icon="calendar"></span><span class="js-date"></span></div><div class="detail"><span data-icon="pin"></span><span class="js-place"></span></div><div class="detail"><span data-icon="gift"></span><span class="js-expense"></span></div><span class="pill">Confirmar asistencia</span></div></div><button class="btn" onclick="sendWhatsApp()">Compartir por WhatsApp</button><button class="btn secondary" onclick="copyInvite()">Copiar invitación</button><button class="btn outline" onclick="openGuestTest()">Probar como invitado</button><p class="note">La prueba abre el enlace real de invitación en otra pestaña. Las respuestas se guardan online.</p></div></section>
+<section id="invite" class="screen"><header><div class="headleft"><button class="back" onclick="leaveInvitation()" aria-label="Volver">‹</button><span class="logo">Juntada<span>.</span></span></div><div style="display:flex;align-items:center;gap:5px"><button type="button" id="inviteShareButton" onclick="shareCurrentInvitation()" aria-label="Compartir invitación" title="Compartir invitación" style="border:0;background:transparent;color:#24518b;padding:8px;display:inline-flex;align-items:center"><span data-icon="share-2"></span></button><button type="button" onclick="closeGuestInvitation()" aria-label="Cerrar invitación" title="Cerrar invitación" style="border:0;background:transparent;color:#24518b;padding:8px;display:inline-flex;align-items:center"><span data-icon="x"></span></button></div></header><div class="banner"></div><div class="pad"><h1 class="js-name"></h1><div class="detail"><span data-icon="calendar"></span><b class="js-date"></b></div><div class="detail"><span data-icon="pin"></span><b class="js-place"></b></div><div class="detail"><span data-icon="gift"></span><b class="js-expense"></b></div><div class="card js-description"></div><div class="card guest-identity"><label for="guestName">Tu nombre</label><input id="guestName" oninput="renderGuestPlaces()" placeholder="Ej. Sofi" maxlength="35" autocomplete="off"><p class="field-hint">Usaremos este nombre para registrar tus respuestas.</p></div><div id="inviteVoting" class="card hide"><h2>¿Qué días podés?</h2><p class="sub">Elegí tu disponibilidad para cada fecha.</p><div id="voteOptions"></div><button class="btn" onclick="saveVote()">Guardar disponibilidad</button><p class="field-hint" id="voteStatus">Abrí el enlace compartido para registrar tu voto online.</p></div><div class="card hide" id="guestPlaces"><h2 style="margin-top:0">¿Dónde preferís juntarte?</h2><p class="sub">Podés votar más de una opción. Escribí tu nombre para guardar la selección.</p><div id="guestPlaceOptions"></div><button class="btn secondary" onclick="savePlaceVotes()">Guardar votos de lugares</button><p class="field-hint" id="placeVoteStatus">Abrí el enlace compartido para registrar tu voto online.</p></div><div class="rsvp-section"><h2>¿Vas a venir?</h2><p class="rsvp-intro">Elegí una opción para confirmar tu asistencia.</p><div class="rsvp"><button onclick="rsvp('Voy',this)">Voy</button><button onclick="rsvp('Tal vez',this)">Tal vez</button><button onclick="rsvp('No puedo',this)">No puedo</button></div><div class="status" id="rsvpStatus" aria-live="polite" hidden></div><div id="guestPreview" hidden aria-live="polite"></div></div><button class="btn secondary" onclick="go('event')">Ver detalle del evento</button></div></section>
+<section id="event" class="screen"><header><div class="headleft"><button class="back" onclick="showMyEvents()" aria-label="Volver a Mis juntadas">‹</button><span class="logo">Juntada<span>.</span></span></div></header><div class="banner"></div><div class="pad"><h1 class="js-name"></h1><div class="seg juntada-two-tabs"><button class="on" onclick="tab('antes',this)">Organizar</button><button onclick="tab('despues',this)">Cerrar cuentas</button></div><div id="antes" class="tab"><h2>Por resolver</h2><div class="card organizer-todo"><div class="check"><span data-icon="check-circle"></span> Evento creado</div><div class="check" id="dateChecklist"><span data-icon="clock"></span> Fecha pendiente</div><div class="check" id="placeChecklist"><span data-icon="clock"></span> Lugar pendiente</div><div class="check" id="rsvpChecklist"><span data-icon="clock"></span> Esperando confirmaciones</div></div><div class="card organizer-collapsible"><details class="organizer-card-fold" data-fold="guests"><summary><span class="fold-icon"><span data-icon="users"></span></span><span class="fold-heading"><strong>Invitados</strong><small data-fold-summary="guests">Ver participantes y respuestas</small></span><svg class="fold-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary><div class="organizer-fold-body"><div class="row"><span class="ico" data-icon="users"></span><div class="copy"><b>Respuestas de invitados</b><div class="tiny" id="guestSummary">Todavía no hay respuestas</div></div></div><div id="guestList" style="margin-top:12px"></div><p class="field-hint" id="syncStatus" role="status" aria-live="polite">Las respuestas se sincronizan automáticamente.</p></div></details></div><div class="card organizer-collapsible" id="organizerDates"><details class="organizer-card-fold" data-fold="dates"><summary><span class="fold-icon"><span data-icon="calendar-days"></span></span><span class="fold-heading"><strong>Fecha</strong><small data-fold-summary="dates">Votación de fechas en curso</small></span><svg class="fold-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary><div class="organizer-fold-body"><h2 style="margin-top:0">Definir la fecha</h2><p class="sub" id="dateOrganizerHint">Podés confirmarla cuando estén de acuerdo.</p><div id="dateResults"></div><div id="dateConfirmControl"></div></div></details></div><div class="card organizer-collapsible" id="placesCard"><details class="organizer-card-fold" data-fold="places"><summary><span class="fold-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg></span><span class="fold-heading"><strong>Lugar</strong><small data-fold-summary="places">Lugar pendiente</small></span><svg class="fold-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary><div class="organizer-fold-body"><div class="row"><span class="ico" data-icon="pin"></span><div class="copy"><h2 style="margin:0">¿Dónde nos juntamos?</h2><p class="sub" style="margin:2px 0 0">Proponé lugares y decidamos entre todos.</p></div></div><div id="placeConfirmedBanner" class="place-confirmed hide"></div><div id="placeProposals" class="place-list"></div><div class="place-add"><label for="placeName">Agregar una opción</label><input id="placeName" placeholder="Ej. Parrilla del barrio" maxlength="70"><label for="placeInfo">Dirección o enlace (opcional)</label><input id="placeInfo" placeholder="Ej. Av. Rivadavia 9000" maxlength="160"><button class="btn secondary" type="button" onclick="addPlace()"><span data-icon="plus"></span> Agregar opción</button></div></div></details></div><div class="card event-details-card organizer-collapsible"><details class="organizer-card-fold" data-fold="details"><summary><span class="fold-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><span class="fold-heading"><strong>Detalles</strong><small data-fold-summary="details">Nombre, horario y lugar</small></span><svg class="fold-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary><div class="organizer-fold-body"><div class="row"><span class="ico" data-icon="clock"></span><div class="copy"><h2 style="margin:0">Detalles del encuentro</h2><p class="sub" style="margin:2px 0 0">Definí la hora y el lugar.</p></div></div><div class="event-details-fields"><label for="organizerEventName" style="grid-column:1/-1">Nombre de la juntada</label><input id="organizerEventName" maxlength="60" style="grid-column:1/-1" placeholder="Nombre de la juntada"><label for="organizerTime">Horario</label><input id="organizerTime" type="time"><label for="organizerPlace">Lugar confirmado</label><input id="organizerPlace" placeholder="Ej. En casa"></div></div></details></div><div class="organizer-actions organizer-minimal-actions"><button id="organizerSaveAction" class="btn secondary organizer-save-btn" onclick="saveOrganizerDetails()"><span data-icon="check"></span> Guardar cambios</button><button class="btn outline" type="button" onclick="openGuestTest()"><span data-icon="eye"></span> Vista invitado</button></div><button class="btn event-share-btn" onclick="go('share')"><span data-icon="share-2"></span> Compartir invitación</button></div><div id="despues" class="tab hide"><div class="juntada-close-intro"><span class="juntada-preview-tag">Vista previa · Diseño en prueba</span><h2>Cerrar cuentas</h2><p>Todo lo que gastaron, claro y entre amigos. Podés registrar gastos desde el inicio y saldar después.</p></div><div class="juntada-close-grid"><div class="card juntada-close-stat"><small>Total de esta juntada</small><strong>—</strong><span>Sin gastos registrados</span></div><div class="card juntada-close-stat"><small>Tu balance</small><strong>—</strong><span>Se calculará automáticamente</span></div></div><div class="card juntada-close-option"><span class="juntada-close-icon" data-icon="wallet"></span><div><b>Gastos compartidos</b><small>Quién pagó y cómo se divide cada gasto</small></div><span class="juntada-soon">Próximamente</span></div><div class="card juntada-close-option"><span class="juntada-close-icon" data-icon="users"></span><div><b>Quién le debe a quién</b><small>Transferencias sugeridas para saldar cuentas</small></div><span class="juntada-soon">Próximamente</span></div><div class="card juntada-close-option"><span class="juntada-close-icon" data-icon="calendar"></span><div><b>Balance entre amigos</b><small>Deudas acumuladas de distintas juntadas</small></div><span class="juntada-soon">Próximamente</span></div><div class="card juntada-close-note" id="afterCopy">Estamos probando este diseño. La carga y el cálculo de gastos todavía no están habilitados.</div><button class="btn juntada-disabled-action" type="button" disabled><span data-icon="plus"></span> Agregar gasto · Próximamente</button></div></div></section>
+<section class="screen" id="accounts"><header><div class="headleft"><button class="back" onclick="go('home')" aria-label="Volver al inicio">‹</button><span class="logo">Juntada<span>.</span></span></div></header><div class="pad accounts-hub"><span class="juntada-preview-tag">Vista previa · Diseño en prueba</span><h1>Compartir gastos</h1><p class="sub">¿Cómo querés compartir gastos?</p><div class="juntada-options-menu"><button class="juntada-home-list-item" onclick="go('quickExpense')"><span class="juntada-home-list-icon" data-icon="wallet"></span><span class="juntada-home-list-copy"><strong>Gasto rápido</strong><small>Dividí una cuenta sin crear un grupo.</small></span><span class="juntada-home-list-arrow">›</span></button><button class="juntada-home-list-item" onclick="go('newExpenseGroup')"><span class="juntada-home-list-icon" data-icon="users"></span><span class="juntada-home-list-copy"><strong>Crear grupo de gastos</strong><small>Para viajes, amigos o gastos recurrentes.</small></span><span class="juntada-home-list-arrow">›</span></button></div><p class="juntada-flow-hint">Los gastos de grupos y juntadas se reflejarán en tu balance general.</p></div></section>
+<section class="screen" id="quickExpense"><header><div class="headleft"><button class="back" onclick="go('accounts')" aria-label="Volver a compartir gastos">‹</button><span class="screen-title">Gasto rápido</span></div></header><div class="pad accounts-hub"><span class="juntada-preview-tag">Vista previa · Sin guardar datos</span><h1>Dividí una cuenta</h1><p class="sub">Cargá un gasto en unos pocos pasos, sin crear un grupo.</p><label for="quickExpenseName">¿En qué gastaron?</label><input id="quickExpenseName" placeholder="Ej. Cena del viernes"><label for="quickExpenseAmount">Importe total ($)</label><input id="quickExpenseAmount" type="number" min="0" step="0.01" placeholder="Ej. 60000"><label for="quickExpensePayer">¿Quién pagó?</label><input id="quickExpensePayer" placeholder="Ej. Yo"><label for="quickExpensePeople">¿Entre quiénes se divide?</label><textarea id="quickExpensePeople" placeholder="Ej. Yo, Ger, Ana y Nico"></textarea><div class="card juntada-close-note">En la versión funcional vas a poder elegir participantes, dividir en partes iguales o personalizadas y registrar el gasto.</div><button class="btn juntada-disabled-action" type="button" disabled>Guardar gasto · Próximamente</button></div></section>
+<section class="screen" id="newExpenseGroup"><header><div class="headleft"><button class="back" onclick="go('accounts')" aria-label="Volver a compartir gastos">‹</button><span class="screen-title">Nuevo grupo de gastos</span></div></header><div class="pad accounts-hub"><span class="juntada-preview-tag">Vista previa · Sin guardar datos</span><h1>Crear grupo de gastos</h1><p class="sub">Un espacio para compartir gastos sin tener que organizar una juntada.</p><label for="expenseGroupName">Nombre del grupo</label><input id="expenseGroupName" placeholder="Ej. Viaje a Mendoza"><label for="expenseGroupPeople">Participantes</label><textarea id="expenseGroupPeople" placeholder="Ej. Yo, Ger, Ana y Nico"></textarea><div class="card juntada-close-note">Después podrás agregar gastos, consultar balances y vincular una juntada al grupo sin perder su historial.</div><button class="btn juntada-disabled-action" type="button" disabled>Crear grupo · Próximamente</button></div></section>
+<section class="screen" id="balances"><header><div class="headleft"><button class="back" onclick="go('home')" aria-label="Volver al inicio">‹</button><span class="screen-title">Mi balance general</span></div></header><div class="pad accounts-hub"><span class="juntada-preview-tag">Vista previa · Diseño en prueba</span><h1>Mi balance general</h1><p class="sub">Cuánto debés y cuánto te deben entre todos tus amigos.</p><div class="juntada-close-grid"><div class="card juntada-close-stat"><small>Te deben</small><strong>—</strong><span>Sin movimientos registrados</span></div><div class="card juntada-close-stat"><small>Debés</small><strong>—</strong><span>Sin movimientos registrados</span></div></div><h2>Balances por persona</h2><div class="card juntada-close-note">Acá vas a ver los saldos acumulados de gastos rápidos, grupos y juntadas, con opción de saldar cada deuda.</div><button class="btn secondary" type="button" onclick="go('accounts')">Compartir un gasto</button></div></section>
+<section class="screen" id="myEvents"><header><button class="back" onclick="go('home')">‹</button><span class="logo">Mis planes<span>.</span></span><span></span></header><div style="padding:24px 20px"><h2>Mis planes y grupos</h2><p class="sub">Tus juntadas se guardan en este navegador. Los grupos de gastos estarán disponibles próximamente.</p><div id="myEventsList"></div><button style="margin-top:20px;padding:14px 18px;background:#24518b;color:white;border:0;border-radius:14px;font-weight:700" onclick="go('create')">+ Crear otra juntada</button></div></section><nav class="nav" id="nav"><button class="active" onclick="go('home')"><span data-icon="home"></span>Inicio</button><button onclick="showMyEvents()"><span data-icon="calendar"></span>Mis planes y grupos</button></nav><div class="toast" id="toast"></div></div>
+<script>
+const icons={"calendar-plus":'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18M12 13v6M9 16h6"/>',calendar:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/>',pin:'<path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/>',sparkles:'<path d="m12 3 1.9 6.1L20 11l-6.1 1.9L12 19l-1.9-6.1L4 11l6.1-1.9L12 3ZM19 18l.7 1.3L21 20l-1.3.7L19 22l-.7-1.3L17 20l1.3-.7L19 18Z"/>',wallet:'<rect x="3" y="6" width="18" height="15" rx="2"/><path d="M3 10h18M16 15h2M5 6V4h13"/>',gift:'<rect x="3" y="9" width="18" height="12" rx="2"/><path d="M12 9v12M3 13h18M12 9c-6 0-7-6-3-6 2 0 3 3 3 6Zm0 0c6 0 7-6 3-6-2 0-3 3-3 6Z"/>',users:'<circle cx="9" cy="8" r="3"/><path d="M3 20v-2a6 6 0 0 1 12 0v2M17 5a3 3 0 0 1 0 6M17 14a5 5 0 0 1 4 5v1"/>',clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>','camera':'<path d="M4 7h4l2-3h4l2 3h4v13H4z"/><circle cx="12" cy="13" r="3.5"/>','check-circle':'<circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/>',cake:'<path d="M4 12h16v9H4zM3 12c0-2 2-3 4-2s3 1 5 0 3-1 5 0 4 0 4 2M8 7V4M12 7V4M16 7V4"/>',message:'<path d="M21 11.5a8.5 8.5 0 0 1-12 7.7L3 21l1.8-6A8.5 8.5 0 1 1 21 11.5Z"/>',link:'<path d="M10 13a5 5 0 0 0 7 .3l3-3a5 5 0 0 0-7-7l-1.7 1.7M14 11a5 5 0 0 0-7-.3l-3 3a5 5 0 0 0 7 7l1.7-1.7"/>',share:'<path d="M12 16V3m0 0-4 4m4-4 4 4M5 14v6h14v-6"/>',home:'<path d="m3 11 9-8 9 8v10H3zM9 21v-7h6v7"/>',lightbulb:'<path d="M9 18h6M10 21h4M9 15c-3-2-4-4-4-7a7 7 0 0 1 14 0c0 3-1 5-4 7v2H9z"/>','sliders':'<path d="M4 7h16M4 17h16M9 4v6M15 14v6"/><circle cx="9" cy="7" r="2"/><circle cx="15" cy="17" r="2"/>','chevron-down':'<path d="m6 9 6 6 6-6"/>',user:'<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>'};icons['calendar-days']=icons.calendar;icons['info']='<circle cx="12" cy="12" r="9"/><path d="M12 11v5m0-8h.01"/>';icons['x']='<path d="M18 6 6 18M6 6l12 12"/>';icons['share-2']='<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m9 11 6-5M9 13l6 5"/>';icons['check']='<path d="m5 12 5 5L20 7"/>';icons['plus']='<path d="M12 5v14M5 12h14"/>';icons['eye']='<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>';function renderIcons(){document.querySelectorAll('[data-icon]').forEach(el=>{el.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true">'+(icons[el.dataset.icon]||'')+'</svg>'})}renderIcons();let expense='',saved={},response='',dateMode='fixed',localVotes={};let guestResponses={},guestVotes={},confirmedDate='';let places=[],placeVotes={},confirmedPlace='',placeCounter=0;const names={host:'Yo invito',split:'Dividimos entre todos',each:'Cada uno paga lo suyo',later:'Lo vemos después'};function go(id){document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('active',s.id===id));document.querySelector('.nav').classList.add('hide');window.scrollTo(0,0);if(['ready','share','invite','event'].includes(id))sync();if(id==='event')renderOrganizer()}function setDateMode(mode){dateMode=mode;['fixed','vote','pending'].forEach(m=>document.getElementById(m+'Fields').classList.toggle('hide',m!==mode));document.querySelectorAll('.date-choice').forEach(e=>e.classList.toggle('chosen',e.querySelector('input').value===mode));/* Time remains optional for every date mode */}function addCandidate(){const wrap=document.querySelector('.vote-inputs');if(wrap.children.length>=8){toast('Podés proponer hasta 8 fechas');return}const i=document.createElement('input');i.type='date';i.className='candidate';i.setAttribute('aria-label','Otra fecha candidata');wrap.appendChild(i)}let candidateInputMode='single';
+function setCandidateInputMode(mode){
+ candidateInputMode=mode;
+ document.getElementById('dateRangePicker').classList.toggle('hide',mode!=='range');
+ document.getElementById('candidateSingleFields').classList.toggle('hide',mode!=='single');
+ document.getElementById('dateSingleMode').classList.toggle('active',mode==='single');
+ document.getElementById('dateRangeMode').classList.toggle('active',mode==='range');
+ // Las modalidades son alternativas: nunca combinar opciones sin avisar.
+ if(mode==='range'){addCandidateRange();document.getElementById('dateRangePicker').scrollIntoView({block:'nearest',behavior:'smooth'});}
+}
+function addCandidateRange(){
+ const from=document.getElementById('rangeFrom').value,to=document.getElementById('rangeTo').value;
+ const summary=document.getElementById('rangeSelectedDates'),wrap=document.querySelector('.vote-inputs');
+ const clear=message=>{summary.textContent=message;wrap.innerHTML=''};
+ if(!from||!to){clear('Elegí ambas fechas para ver las opciones.');return}
+ if(to<from){clear('La fecha final debe ser posterior a la inicial.');return}
+ const start=new Date(from+'T12:00:00'),end=new Date(to+'T12:00:00');
+ const days=Math.round((end-start)/86400000)+1;
+ if(days>366){clear('Elegí un período de hasta un año.');return}
+ const weekdays=new Set([...document.querySelectorAll('#rangeWeekdays input:checked')].map(x=>Number(x.value)));
+ if(!weekdays.size){clear('Seleccioná al menos un día de la semana.');return}
+ const dates=[];
+ for(let i=0;i<days;i++){const d=new Date(start);d.setDate(start.getDate()+i);if(weekdays.has(d.getDay()))dates.push(d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'))}
+ if(dates.length<2){clear('Se necesitan al menos dos fechas para votar.');return}
+ if(dates.length>8){clear('Encontramos '+dates.length+' fechas. Acortá el período o elegí menos días de la semana (máximo 8 opciones).');return}
+ wrap.innerHTML='';
+ dates.forEach(date=>{const input=document.createElement('input');input.type='date';input.className='candidate';input.value=date;wrap.appendChild(input)});
+ summary.textContent=dates.length+' fechas seleccionadas: '+dates.map(d=>formatDate(d,'')).join(' · ');
+}
+function chooseExpense(v){expense=v;document.querySelector('#expenseSelect').value=v;updateMoreSummary()}
+function toggleMore(){const body=document.getElementById('moreBody');const open=body.classList.toggle('hide')===false;document.getElementById('moreTrigger').setAttribute('aria-expanded',String(open));document.getElementById('moreChevron').setAttribute('data-icon',open?'chevron-up':'chevron-down');document.getElementById('moreChevron').innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="'+(open?'m6 15 6-6 6 6':'m6 9 6 6 6-6')+'"/></svg>'}
+function updateMoreSummary(){const bits=[];const t=document.getElementById('eventTime').value;const p=document.getElementById('eventPlace').value.trim();if(t)bits.push(t);if(p)bits.push(p);if(expense)bits.push(names[expense]);document.getElementById('moreSummary').textContent=bits.length?bits.join(' · '):'Hora, lugar y gastos · Opcional'}
+function formatDate(v,t){if(!v)return 'Fecha a confirmar';const d=new Date(v+'T12:00:00');return d.toLocaleDateString('es-AR',{weekday:'short',day:'numeric',month:'short'})+(t?' · '+t:'')}function create(){if(!dateMode){toast('Elegí cómo querés definir la fecha');document.querySelector('.date-section').scrollIntoView({behavior:'smooth',block:'center'});return}const candidates=[...document.querySelectorAll('.candidate')].map(e=>e.value).filter(Boolean);if(dateMode==='vote'&&candidateInputMode==='range'&&(!document.getElementById('rangeFrom').value||!document.getElementById('rangeTo').value||candidates.length<2)){toast('Ajustá el rango para tener entre 2 y 8 fechas');return}if(dateMode==='vote'&&new Set(candidates).size!==candidates.length){toast('Hay fechas repetidas. Elegí días distintos');return}if(dateMode==='vote'&&new Set(candidates).size<2){toast('Elegí al menos dos fechas distintas');return}saved={name:document.querySelector('#eventName').value.trim()||'Mi juntada',desc:document.querySelector('#eventDesc').value.trim(),dateMode,date:dateMode==='fixed'?document.querySelector('#eventDate').value:'',candidates:[...new Set(candidates)],time:document.querySelector('#eventTime').value,place:document.querySelector('#eventPlace').value.trim()||'Lugar a confirmar',expense};localVotes={};guestResponses={};guestVotes={};confirmedDate='';response='';places=[];placeVotes={};confirmedPlace='';placeCounter=0;if(saved.place!=='Lugar a confirmar'){places.push({id:++placeCounter,name:saved.place,info:''});confirmedPlace=places[0].id}go('ready')}
+function displayDate(){return saved.dateMode==='vote'?(confirmedDate?formatDate(confirmedDate,saved.time):'Fecha a definir por votación'):formatDate(saved.date,saved.time)}
+function sync(){if(!saved.name){saved={name:'Mi cumple',desc:'Quiero festejar con ustedes.',dateMode:'pending',date:'',candidates:[],time:'',place:'Lugar a confirmar',expense:''}}document.querySelectorAll('.js-name').forEach(e=>e.textContent=saved.name);document.querySelectorAll('.js-date').forEach(e=>e.textContent=displayDate());document.querySelectorAll('.js-place').forEach(e=>e.textContent=saved.place);document.querySelectorAll('.js-expense').forEach(e=>{e.textContent=names[saved.expense]||'';const row=e.closest('.detail');if(row)row.classList.toggle('hide',!saved.expense)});document.querySelectorAll('.js-vote-detail').forEach(e=>e.classList.toggle('hide',saved.dateMode!=='vote'));renderGuestPreview();renderGuestPlaces();document.querySelector('.js-description').textContent=saved.desc||'¡Nos juntamos!';document.querySelector('#afterCopy').textContent='Estamos probando este diseño. La carga y el cálculo de gastos todavía no están habilitados.';document.querySelector('#dateChecklist').innerHTML='<span data-icon="'+((saved.dateMode==='fixed'&&saved.date||confirmedDate)?'check-circle':'clock')+'"></span> '+((saved.dateMode==='fixed'&&saved.date||confirmedDate)?'Fecha definida':saved.dateMode==='vote'?'Esperando votación de fechas':'Fecha pendiente');document.querySelector('#placeChecklist').innerHTML='<span data-icon="'+(saved.place==='Lugar a confirmar'?'clock':'check-circle')+'"></span> '+(saved.place==='Lugar a confirmar'?'Lugar pendiente':'Lugar definido');const voting=document.querySelector('#inviteVoting');const awaitingDate=saved.dateMode==='vote'&&!confirmedDate;voting.classList.toggle('hide',!awaitingDate);document.querySelector('#invite .rsvp-section')?.classList.toggle('hide',awaitingDate);if(awaitingDate){document.querySelector('#voteOptions').innerHTML=(Array.isArray(saved.finalists)&&saved.finalists.length?saved.finalists:saved.candidates).map((date,i)=>'<div class="vote-option"><b>'+formatDate(date,'')+'</b><div class="vote-buttons">'+[['yes','Puedo'],['maybe','Me acomodo'],['no','No puedo']].map(([val,label])=>'<button type="button" data-date="'+date+'" data-vote="'+val+'" class="'+(localVotes[date]===val?'on':'')+'" onclick="voteDate(this)">'+label+'</button>').join('')+'</div></div>').join('')}renderIcons()}
+function voteDate(btn){const date=btn.dataset.date;localVotes[date]=localVotes[date]===btn.dataset.vote?'':btn.dataset.vote;document.querySelectorAll('.vote-option button[data-date="'+date+'"]').forEach(e=>e.classList.toggle('on',e.dataset.vote===localVotes[date]))}function saveVote(){const total=Object.values(localVotes).filter(Boolean).length;if(!total){toast('Marcá al menos una fecha');return}const name=(document.querySelector('#guestName').value||'Invitado').trim();guestVotes[name]={...localVotes};document.querySelector('#voteStatus').textContent='Disponibilidad registrada para '+name+' en este celular.';toast('Disponibilidad guardada en la demo')}
+function toast(msg){let e=document.querySelector('#toast');e.textContent=msg;e.style.display='block';clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>e.style.display='none',2900)}function rsvp(v,btn){const name=(document.querySelector('#guestName').value||'Invitado').trim();response=v;guestResponses[name]=v;document.querySelectorAll('.rsvp button').forEach(e=>e.classList.toggle('on',e===btn));document.querySelector('#rsvpStatus').textContent=name+': '+v+'. Respuesta guardada solo en esta demo.';renderGuestPreview();toast('Respuesta registrada para '+name)}
+function renderGuestPreview(){const el=document.querySelector('#guestPreview');if(!el)return;const entries=Object.entries(guestResponses);el.innerHTML=entries.length?entries.map(([n,v])=>'<div class="guest-row"><span class="guest-avatar">'+escapeHTML(n[0].toUpperCase())+'</span><b>'+escapeHTML(n)+'</b><span class="guest-badge '+(v==='Voy'?'attending':v==='Tal vez'?'maybe':'declined')+'">'+v+'</span></div>').join(''):'<p class="sub">Todavía no hay confirmaciones.</p>'}
+function escapeHTML(t){return String(t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function renderOrganizer(){const entries=Object.entries(guestResponses);const yes=entries.filter(e=>e[1]==='Voy').length,maybe=entries.filter(e=>e[1]==='Tal vez').length,no=entries.filter(e=>e[1]==='No puedo').length;document.querySelector('#guestSummary').textContent=yes+' voy · '+maybe+' tal vez · '+no+' no puedo';document.querySelector('#guestList').innerHTML=entries.length?entries.map(([n,v])=>'<div class="guest-row"><span class="guest-avatar">'+escapeHTML(n[0].toUpperCase())+'</span><b>'+escapeHTML(n)+'</b><span class="guest-badge '+(v==='Voy'?'attending':v==='Tal vez'?'maybe':'declined')+'">'+v+'</span></div>').join(''):'<p class="sub">Todavía no hay respuestas.</p>';document.querySelector('#rsvpChecklist').innerHTML='<span data-icon="'+(entries.length?'check-circle':'clock')+'"></span> '+(entries.length?entries.length+' respuesta(s) recibida(s)':'Esperando confirmaciones');const card=document.querySelector('#organizerDates');card.classList.toggle('hide',saved.dateMode==='fixed'&&!!saved.date);const hint=document.querySelector('#dateOrganizerHint');const results=document.querySelector('#dateResults');const control=document.querySelector('#dateConfirmControl');if(saved.dateMode==='vote'){hint.textContent=confirmedDate?'Fecha confirmada. Podés modificarla.':'Revisá los votos y confirmá una de las fechas candidatas.';const stats=(Array.isArray(saved.finalists)&&saved.finalists.length?saved.finalists:saved.candidates).map(d=>{let y=0,m=0,n=0;Object.values(guestVotes).forEach(v=>{if(v[d]==='yes')y++;if(v[d]==='maybe')m++;if(v[d]==='no')n++});return {d,y,m,n}}).sort((a,b)=>b.y-a.y||b.m-a.m);results.innerHTML=stats.map((x,i)=>{const total=x.y+x.m+x.n;const pct=total?Math.round(100*(x.y+x.m*.5)/total):0;const best=stats.length>1&&i===0&&total>0&&x.y+x.m>0;return '<div class="result-row compact-result"><div class="result-heading"><b>'+formatDate(x.d,'')+'</b>'+(best?'<span class="result-best">Más elegida</span>':'')+'</div><div class="result-meter" role="img" aria-label="'+x.y+' pueden, '+x.m+' se acomodan y '+x.n+' no pueden"><span style="width:'+pct+'%"></span></div><small>'+x.y+' puedo · '+x.m+' me acomodo · '+x.n+' no puedo</small><button class="mini-btn '+(confirmedDate===x.d?'confirmed':'')+'" data-date="'+x.d+'" onclick="confirmDate(this.dataset.date)">'+(confirmedDate===x.d?'Confirmada':'Confirmar fecha')+'</button></div>'}).join('');control.innerHTML=''}else{hint.textContent=saved.date?'Fecha confirmada: '+formatDate(saved.date,''):'Todavía no definiste la fecha.';results.innerHTML='';control.innerHTML='<label for="organizerDate">Elegir fecha</label><input id="organizerDate" type="date" value="'+(saved.date||'')+'"><button class="btn secondary" onclick="confirmOrganizerDate()">Confirmar fecha</button>'}document.querySelector('#organizerTime').value=saved.time||'';document.querySelector('#organizerPlace').value=saved.place==='Lugar a confirmar'?'':saved.place;renderPlaces();renderIcons()}
+function confirmDate(d){if(!d){toast('Elegí una fecha primero');return}if(saved.dateMode==='vote')confirmedDate=d;else{saved.date=d;saved.dateMode='fixed'}sync();renderOrganizer();toast('Fecha confirmada')}
+function confirmOrganizerDate(){confirmDate(document.getElementById("organizerDate").value)}
+function saveOrganizerDetails(){const newName=document.getElementById('organizerEventName').value.trim();if(!newName){toast('Escribí el nombre de la juntada');return}saved.name=newName;saved.time=document.querySelector('#organizerTime').value;saved.place=document.querySelector('#organizerPlace').value.trim()||'Lugar a confirmar';confirmedPlace='';sync();renderOrganizer();toast('Detalles actualizados')}
+function addPlace(){const name=document.getElementById('placeName').value.trim();const info=document.getElementById('placeInfo').value.trim();if(!name){toast('Escribí el nombre del lugar');return}if(places.length>=10){toast('Podés proponer hasta 10 lugares');return}if(places.some(p=>p.name.toLowerCase()===name.toLowerCase())){toast('Ese lugar ya está propuesto');return}places.push({id:++placeCounter,name,info});document.getElementById('placeName').value='';document.getElementById('placeInfo').value='';renderPlaces();renderGuestPlaces();toast('Lugar agregado a la votación')}
+function placeTally(id){return Object.values(placeVotes).filter(ids=>ids.includes(id)).length}
+function renderPlaces(){const list=document.getElementById('placeProposals');if(!list)return;const ordered=[...places].sort((a,b)=>placeTally(b.id)-placeTally(a.id));list.innerHTML=ordered.length?ordered.map(p=>'<div class="place-option '+(confirmedPlace===p.id?'is-winner':'')+'"><h3>'+escapeHTML(p.name)+'</h3>'+(p.info?'<small>'+escapeHTML(p.info)+'</small>':'')+'<div class="place-meta">'+placeTally(p.id)+' voto(s)'+(confirmedPlace===p.id?' · Lugar confirmado':'')+'</div><div class="place-actions"><button class="'+(confirmedPlace===p.id?'confirmed':'')+'" onclick="confirmPlace('+p.id+')">'+(confirmedPlace===p.id?'Confirmado':'Confirmar lugar')+'</button><button onclick="removePlace('+p.id+')">Quitar</button></div></div>').join(''):'<p class="sub">Todavía no hay lugares propuestos. Agregá el primero para empezar.</p>';const banner=document.getElementById('placeConfirmedBanner');const chosen=places.find(p=>p.id===confirmedPlace);banner.classList.toggle('hide',!chosen);banner.textContent=chosen?'Lugar confirmado: '+chosen.name:''}
+function removePlace(id){places=places.filter(p=>p.id!==id);if(confirmedPlace===id){confirmedPlace='';saved.place='Lugar a confirmar'}Object.keys(placeVotes).forEach(n=>placeVotes[n]=placeVotes[n].filter(x=>x!==id));sync();renderOrganizer()}
+function confirmPlace(id){const p=places.find(x=>x.id===id);if(!p)return;confirmedPlace=id;saved.place=p.name;sync();renderOrganizer();toast('Lugar confirmado: '+p.name)}
+function renderGuestPlaces(){const box=document.getElementById('guestPlaces');if(!box)return;box.classList.toggle('hide',places.length===0);const name=(document.getElementById('guestName')?.value||'').trim();const voted=placeVotes[name]||[];document.getElementById('guestPlaceOptions').innerHTML=places.map(p=>'<label class="place-vote-label"><input type="checkbox" class="place-vote" value="'+p.id+'" '+(voted.includes(p.id)?'checked':'')+'><span><b>'+escapeHTML(p.name)+'</b>'+(p.info?'<small>'+escapeHTML(p.info)+'</small>':'')+'</span></label>').join('')}
+function savePlaceVotes(){const name=(document.getElementById('guestName').value||'').trim();if(!name){toast('Escribí tu nombre antes de votar');document.getElementById('guestName').focus();return}const selected=[...document.querySelectorAll('.place-vote:checked')].map(e=>Number(e.value));if(!selected.length){toast('Elegí al menos un lugar');return}placeVotes[name]=selected;document.getElementById('placeVoteStatus').textContent='Votos registrados para '+name+' en esta demo.';toast('Preferencias guardadas');renderPlaces()}
+function tab(id,btn){document.querySelectorAll('.tab').forEach(e=>e.classList.toggle('hide',e.id!==id));document.querySelectorAll('.seg button').forEach(e=>e.classList.toggle('on',e===btn))}async function copyInvite(){const msg=`¡Chicos! Los invito a ${saved.name}. ¿Se suman?\n${displayDate()}\n${saved.place}\n${saved.expense?names[saved.expense]+'\n':''}\nInvitación de demostración de Juntada (sin enlace público todavía).`;try{await navigator.clipboard.writeText(msg);toast('Texto de prueba copiado')}catch(e){toast('En este navegador no se pudo copiar el texto')}}
+document.querySelector('input[name="dateMode"][value="fixed"]').checked=true;setDateMode('fixed');
+
+/* V10: guardado local y enlaces de vista previa. Sin sincronización remota. */
+const JSTORE='juntada_v10_events';
+let currentJuntadaId=null;
+function getJuntadas(){try{const entries=JSON.parse(localStorage.getItem(JSTORE)||'[]');return Array.isArray(entries)?entries:[]}catch(e){return []}}
+function persistJuntada(){if(!saved.name)return;try{const all=getJuntadas();if(!currentJuntadaId)currentJuntadaId='j'+Date.now().toString(36);const prior=all.find(x=>x.id===currentJuntadaId)||{};const entry={...prior,id:currentJuntadaId,updated:Date.now(),saved:{...saved},confirmedDate,confirmedPlace,places:JSON.parse(JSON.stringify(places)),guestResponses:{...guestResponses},guestVotes:{...guestVotes},placeVotes:{...placeVotes}};const idx=all.findIndex(x=>x.id===entry.id);if(idx<0)all.unshift(entry);else all[idx]=entry;localStorage.setItem(JSTORE,JSON.stringify(all))}catch(e){toast('No se pudo guardar en este navegador')}}
+function openJuntada(id){const entry=getJuntadas().find(x=>x.id===id);if(!entry)return;currentJuntadaId=id;saved={...entry.saved};confirmedDate=entry.confirmedDate||'';confirmedPlace=entry.confirmedPlace||'';places=entry.places||[];guestResponses=entry.guestResponses||{};guestVotes=entry.guestVotes||{};placeVotes=entry.placeVotes||{};placeCounter=Math.max(0,...places.map(p=>Number(p.id)||0));go('event')}
+function deleteLocalJuntada(id){
+ const item=getJuntadas().find(x=>x.id===id);if(!item)return;
+ document.getElementById('deleteJuntadaDialog')?.remove();
+ const overlay=document.createElement('div');
+ overlay.id='deleteJuntadaDialog';
+ overlay.style.cssText='position:fixed;inset:0;z-index:10002;background:rgba(20,37,58,.48);display:flex;align-items:center;justify-content:center;padding:20px';
+ const dialog=document.createElement('section');
+ dialog.setAttribute('role','alertdialog');dialog.setAttribute('aria-modal','true');dialog.setAttribute('aria-labelledby','deleteDialogTitle');dialog.setAttribute('aria-describedby','deleteDialogDesc');
+ dialog.style.cssText='width:100%;max-width:390px;background:white;border-radius:24px;padding:30px 24px 24px;box-shadow:0 22px 55px rgba(18,41,66,.22);text-align:center;color:#24518b';
+ dialog.innerHTML='<div aria-hidden="true" style="width:68px;height:68px;border-radius:22px;background:#fcecf0;margin:0 auto 18px;display:grid;place-items:center"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#a63242" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2m3 0-1 14H6L5 6m5 4v7m4-7v7"/></svg></div><h2 id="deleteDialogTitle" style="font-size:25px;line-height:1.2;margin:0 0 14px"></h2><p id="deleteDialogDesc" style="font-size:16px;line-height:1.55;color:#65788a;margin:0"></p><div style="display:flex;gap:10px;margin-top:28px"><button type="button" data-choice="no" style="flex:1;padding:15px 8px;border-radius:14px;border:1px solid #d7e4eb;background:white;color:#24518b;font-weight:700;font-size:16px">Volver</button><button type="button" data-choice="yes" style="flex:1;padding:15px 8px;border-radius:14px;border:0;background:#a63242;color:white;font-weight:700;font-size:16px">Eliminar</button></div>';
+ dialog.querySelector('#deleteDialogTitle').textContent='¿Eliminamos «'+item.saved.name+'»?';
+ const hasOnline=!!localStorage.getItem('juntada_remote_'+id);
+ dialog.querySelector('#deleteDialogDesc').textContent=hasOnline?'Esta acción es definitiva: el enlace dejará de funcionar y la juntada desaparecerá de tu lista. Si solo querés pausarla, elegí Suspender.':'Esta juntada se quitará de este navegador. No vas a poder recuperarla desde la lista.';
+ overlay.appendChild(dialog);document.body.appendChild(overlay);
+ const previous=document.activeElement;
+ const close=()=>{document.removeEventListener('keydown',onKey);overlay.remove();if(previous?.isConnected)previous.focus()};
+ const onKey=e=>{if(e.key==='Escape'){e.preventDefault();close()}};
+ document.addEventListener('keydown',onKey);
+ overlay.addEventListener('click',e=>{if(e.target===overlay)close()});
+ dialog.querySelector('[data-choice="no"]').onclick=close;
+ dialog.querySelector('[data-choice="yes"]').onclick=async()=>{
+  const btn=dialog.querySelector('[data-choice="yes"]');btn.disabled=true;btn.textContent='Eliminando…';
+  try{
+   let credential=null;try{credential=JSON.parse(localStorage.getItem('juntada_remote_'+id)||'null')}catch(e){}
+   if(credential?.id&&credential?.organizador){
+    await rpc('juntada_actualizar',{p_juntada:credential.id,p_organizador:credential.organizador,p_cancelada:true});
+   }else if(hasOnline){throw Error('No se encontró el acceso de organizadora. No se eliminó la juntada')}
+   const updated=getJuntadas().filter(x=>x.id!==id);
+   localStorage.setItem(JSTORE,JSON.stringify(updated));
+   localStorage.removeItem('juntada_remote_'+id);
+   if(currentJuntadaId===id){currentJuntadaId=null;remoteEvent=null}
+   close();showMyEvents();toast('Juntada eliminada. El enlace ya no está disponible.');
+  }catch(e){btn.disabled=false;btn.textContent='Eliminar';toast('No se pudo eliminar: '+e.message)}
+ };
+ dialog.querySelector('[data-choice="no"]').focus();
+}
+function confirmJuntadaState(item,pausing){
+ return new Promise(resolve=>{
+  document.getElementById('juntadaStateDialog')?.remove();
+  const overlay=document.createElement('div');
+  overlay.id='juntadaStateDialog';
+  overlay.style.cssText='position:fixed;inset:0;z-index:10001;background:rgba(20,37,58,.48);display:flex;align-items:center;justify-content:center;padding:20px';
+  const panel=document.createElement('section');
+  panel.setAttribute('role','alertdialog');panel.setAttribute('aria-modal','true');panel.setAttribute('aria-labelledby','stateDialogTitle');panel.setAttribute('aria-describedby','stateDialogDesc');
+  panel.style.cssText='width:100%;max-width:390px;background:white;border-radius:24px;padding:30px 24px 24px;box-shadow:0 22px 55px rgba(18,41,66,.22);text-align:center;color:#24518b';
+  panel.innerHTML='<div aria-hidden="true" style="width:68px;height:68px;border-radius:22px;background:#e5f5fb;margin:0 auto 18px;display:grid;place-items:center"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#24518b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">'+(pausing?'<circle cx="12" cy="12" r="9"/><path d="M10 8v8m4-8v8"/>':'<circle cx="12" cy="12" r="9"/><path d="m10 8 6 4-6 4z"/>')+'</svg></div><h2 id="stateDialogTitle" style="font-size:25px;line-height:1.2;margin:0 0 14px"></h2><p id="stateDialogDesc" style="font-size:16px;line-height:1.55;color:#65788a;margin:0"></p><div style="display:flex;gap:10px;margin-top:28px"><button type="button" data-choice="no" style="flex:1;padding:15px 8px;border-radius:14px;border:1px solid #d7e4eb;background:white;color:#24518b;font-weight:700;font-size:16px">Volver</button><button type="button" data-choice="yes" style="flex:1;padding:15px 8px;border-radius:14px;border:0;background:#24518b;color:white;font-weight:700;font-size:16px"></button></div>';
+  panel.querySelector('#stateDialogTitle').textContent=(pausing?'¿Suspendemos ':'¿Reactivamos ')+'«'+item.saved.name+'»?';
+  panel.querySelector('#stateDialogDesc').textContent=pausing?'La invitación dejará de estar disponible temporalmente. No perderás las confirmaciones y podrás reactivarla cuando quieras.':'Tus invitados podrán volver a entrar desde el mismo enlace. Las confirmaciones anteriores se mantienen.';
+  panel.querySelector('[data-choice="yes"]').textContent=pausing?'Suspender':'Reactivar';
+  overlay.appendChild(panel);document.body.appendChild(overlay);
+  const previous=document.activeElement;
+  const close=value=>{document.removeEventListener('keydown',onKey);overlay.remove();if(previous?.isConnected)previous.focus();resolve(value)};
+  const onKey=e=>{if(e.key==='Escape'){e.preventDefault();close(false)}};
+  document.addEventListener('keydown',onKey);
+  overlay.addEventListener('click',e=>{if(e.target===overlay)close(false)});
+  panel.querySelector('[data-choice="no"]').onclick=()=>close(false);
+  panel.querySelector('[data-choice="yes"]').onclick=()=>close(true);
+  panel.querySelector('[data-choice="no"]').focus();
+ });
+}
+async function toggleSuspension(id){
+ const item=getJuntadas().find(x=>x.id===id);if(!item)return;
+ let credentials=null;try{credentials=JSON.parse(localStorage.getItem('juntada_remote_'+id)||'null')}catch(e){}
+ if(!credentials?.id||!credentials?.organizador){toast('Esta juntada no tiene una publicación online válida');return}
+ const next=!item.suspendida;
+ if(!await confirmJuntadaState(item,next))return;
+ const button=document.querySelector('[data-action="pause"][data-event-id="'+CSS.escape(id)+'"]');
+ if(button){button.disabled=true;button.setAttribute('aria-busy','true')}
+ try{
+  const result=await rpc('juntada_suspender',{p_juntada:credentials.id,p_organizador:credentials.organizador,p_suspender:next});
+  if(!result||result.ok!==true||result.suspendida!==next)throw Error('No se pudo confirmar el cambio en el servidor');
+  const updated=getJuntadas(),target=updated.find(x=>x.id===id);
+  if(target){target.suspendida=result.suspendida;localStorage.setItem(JSTORE,JSON.stringify(updated))}
+  if(currentJuntadaId===id){const msg=document.getElementById('syncStatus');if(msg)msg.textContent=next?'Juntada suspendida. Podés reactivarla desde Mis juntadas.':'Juntada reactivada.'}
+  showMyEvents();toast(next?'Juntada suspendida. Las respuestas se conservaron.':'Juntada reactivada. El mismo enlace vuelve a funcionar.');
+ }catch(e){toast('No se pudo '+(next?'suspender':'reactivar')+': '+e.message)}
+ finally{if(button&&button.isConnected){button.disabled=false;button.removeAttribute('aria-busy')}}
+}
+function showMyEvents(){
+ const list=document.getElementById('myEventsList'),all=getJuntadas().filter(x=>x&&x.id&&x.saved&&x.saved.name);
+ list.innerHTML=all.length?all.map(x=>{
+  const canceled=!!x.cancelada,paused=!!x.suspendida,online=!!(()=>{try{const c=JSON.parse(localStorage.getItem('juntada_remote_'+x.id)||'null');return c&&c.id&&c.organizador}catch(e){return false}})();
+  const date=x.saved.date?x.saved.date.split('-').reverse().join('/'):'Fecha pendiente';
+  return '<div data-sort-id="'+escapeHTML(x.id)+'" style="position:relative;display:flex;align-items:center;gap:8px;background:white;border:1px solid #d9e6ed;border-radius:15px;padding:10px 12px;margin:9px 0;min-height:65px">'+
+  '<button type="button" class="juntada-drag-handle" data-drag-id="'+escapeHTML(x.id)+'" aria-label="Mover '+escapeHTML(x.saved.name)+'" title="Mantené presionado para ordenar" style="flex:none;touch-action:none;user-select:none;border:0;background:transparent;color:#7a9bb2;padding:10px 3px;cursor:grab;display:flex;align-items:center"><svg width="21" height="26" viewBox="0 0 20 26" fill="currentColor" aria-hidden="true"><circle cx="6" cy="5" r="1.7"/><circle cx="14" cy="5" r="1.7"/><circle cx="6" cy="13" r="1.7"/><circle cx="14" cy="13" r="1.7"/><circle cx="6" cy="21" r="1.7"/><circle cx="14" cy="21" r="1.7"/></svg></button><button type="button" data-open-id="'+escapeHTML(x.id)+'" style="flex:1;min-width:0;text-align:left;background:transparent;border:0;padding:3px 0;color:#24518b"><strong style="display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+escapeHTML(x.saved.name)+'</strong>'+(paused?'<span style="display:inline-block;font-size:11px;color:#24518b;background:#e4f3fa;padding:2px 7px;border-radius:8px;margin-top:3px">Suspendida</span>':!online?'<span style="display:inline-block;font-size:11px;color:#64778b;background:#f0f3f5;padding:2px 7px;border-radius:8px;margin-top:3px">Solo local</span>':'')+'<span style="display:block;color:#64778b;font-size:13px;margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+escapeHTML(date)+' · '+escapeHTML(x.saved.place||'Lugar a confirmar')+'</span></button>'+
+  '<button type="button" data-menu-id="'+escapeHTML(x.id)+'" aria-label="Opciones de '+escapeHTML(x.saved.name)+'" aria-expanded="false" style="flex:none;border:0;background:#eef6fa;color:#24518b;border-radius:10px;width:38px;height:38px;font-size:24px;line-height:1">⋮</button>'+
+  '<div data-options-id="'+escapeHTML(x.id)+'" hidden style="position:absolute;right:12px;top:52px;z-index:10;background:white;border:1px solid #d9e6ed;box-shadow:0 5px 20px #1234;border-radius:12px;padding:5px;min-width:245px"><button type="button" data-action="view" data-event-id="'+escapeHTML(x.id)+'" style="display:block;width:100%;text-align:left;background:transparent;border:0;padding:12px;color:#24518b;font-weight:600"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-right:12px;flex-shrink:0"><circle cx="12" cy="12" r="3"/><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/></svg>Ver detalles</button><button type="button" data-action="edit" data-event-id="'+escapeHTML(x.id)+'" style="display:block;width:100%;text-align:left;background:transparent;border:0;padding:12px;color:#24518b;font-weight:600"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-right:12px;flex-shrink:0"><path d="m16 5 3 3M4 20l4-.8L20 7a2.1 2.1 0 0 0-3-3L5 16z"/></svg>Editar juntada</button><button type="button" data-action="share" data-event-id="'+escapeHTML(x.id)+'" style="display:block;width:100%;text-align:left;background:transparent;border:0;padding:12px;color:#24518b;font-weight:600"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-right:12px;flex-shrink:0"><circle cx="18" cy="5" r="2"/><circle cx="6" cy="12" r="2"/><circle cx="18" cy="19" r="2"/><path d="m8 11 8-5M8 13l8 5"/></svg>Compartir invitación</button><button type="button" data-action="pause" data-event-id="'+escapeHTML(x.id)+'" style="display:block;width:100%;text-align:left;background:transparent;border:0;padding:12px;color:#24518b;font-weight:600;opacity:1"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-right:12px;flex-shrink:0"><circle cx="12" cy="12" r="9"/><path d="M10 8v8m4-8v8"/></svg>'+(paused?'Reactivar juntada':online?'Suspender juntada':'Suspender · Solo online')+'</button><button type="button" data-action="transfer" data-event-id="'+escapeHTML(x.id)+'" style="display:block;width:100%;text-align:left;background:transparent;border:0;padding:12px;color:#24518b;font-weight:600"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-right:12px;flex-shrink:0"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M10 18h4"/><path d="M19 8l3 3-3 3M22 11H12"/></svg>Llevar a otro dispositivo</button><div style="border-top:1px solid #e9edf1;margin:4px 0"></div><button type="button" data-action="delete" data-event-id="'+escapeHTML(x.id)+'" style="display:block;width:100%;text-align:left;background:transparent;border:0;padding:12px;color:#a63242;font-weight:600"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-right:12px;flex-shrink:0"><path d="M3 6h18M8 6V4h8v2m3 0-1 14H6L5 6m5 4v7m4-7v7"/></svg>Eliminar juntada</button></div></div>'
+ }).join(''):'<div class="card">Todavía no creaste ninguna juntada en este navegador.</div>';
+ // Drag con tarjeta flotante y animación FLIP para las demás tarjetas.
+ list.querySelectorAll('[data-drag-id]').forEach(handle=>{
+  handle.style.touchAction='none';
+  handle.style.webkitUserSelect='none';
+  handle.addEventListener('pointerdown',e=>{
+   if(e.pointerType==='mouse'&&e.button!==0)return;
+   const card=handle.closest('[data-sort-id]');if(!card)return;
+   e.preventDefault();
+   const pointerId=e.pointerId,initial=e.clientY;
+   const rect=card.getBoundingClientRect();
+   let lastY=initial,moved=false,raf=0,finished=false;
+   const ghost=card.cloneNode(true);
+   ghost.removeAttribute('data-sort-id');
+   ghost.querySelectorAll('[data-drag-id],[data-menu-id],[data-options-id],[data-open-id]').forEach(el=>{
+    el.removeAttribute('data-drag-id');el.removeAttribute('data-menu-id');
+    el.removeAttribute('data-options-id');el.removeAttribute('data-open-id');
+   });
+   ghost.style.cssText='position:fixed;left:'+rect.left+'px;top:'+rect.top+'px;width:'+rect.width+'px;height:'+rect.height+'px;box-sizing:border-box;margin:0;z-index:99999;pointer-events:none;transform:translate3d(0,0,0) scale(1.025);box-shadow:0 14px 35px #24518b45;background:#f2faff;border:1px solid #75c9e8;border-radius:15px;will-change:transform;';
+   document.body.appendChild(ghost);
+   card.style.visibility='hidden';
+   const oldUserSelect=document.body.style.userSelect;
+   document.body.style.userSelect='none';
+   const animateReorder=(target)=>{
+    const cards=[...list.querySelectorAll('[data-sort-id]')];
+    const before=new Map(cards.map(el=>[el,el.getBoundingClientRect().top]));
+    if(target){if(target!==card&&card.nextElementSibling!==target)list.insertBefore(card,target)}
+    else if(card!==list.lastElementChild)list.appendChild(card);
+    cards.forEach(el=>{
+     if(el===card)return;
+     const delta=before.get(el)-el.getBoundingClientRect().top;
+     if(Math.abs(delta)<1)return;
+     el.getAnimations().forEach(anim=>anim.cancel());
+     el.animate([{transform:'translateY('+delta+'px)'},{transform:'translateY(0)'}],{duration:190,easing:'cubic-bezier(.2,.8,.2,1)'});
+    });
+   };
+   const tick=()=>{
+    raf=0;if(finished)return;
+    const dy=lastY-initial;
+    ghost.style.transform='translate3d(0,'+dy+'px,0) scale(1.025)';
+    if(Math.abs(dy)>4)moved=true;
+    if(!moved)return;
+    const cards=[...list.querySelectorAll('[data-sort-id]')].filter(el=>el!==card);
+    const target=cards.find(el=>lastY<el.getBoundingClientRect().top+el.getBoundingClientRect().height/2);
+    animateReorder(target);
+    const edge=70;
+    if(lastY>innerHeight-edge)window.scrollBy(0,Math.min(16,(lastY-innerHeight+edge)/3));
+    else if(lastY<edge)window.scrollBy(0,-Math.min(16,(edge-lastY)/3));
+   };
+   const move=ev=>{
+    if(ev.pointerId!==pointerId)return;
+    ev.preventDefault();lastY=ev.clientY;
+    if(!raf)raf=requestAnimationFrame(tick);
+   };
+   const finish=ev=>{
+    if(ev.pointerId!==pointerId||finished)return;
+    finished=true;
+    document.removeEventListener('pointermove',move);
+    document.removeEventListener('pointerup',finish);
+    document.removeEventListener('pointercancel',finish);
+    if(raf)cancelAnimationFrame(raf);
+    document.body.style.userSelect=oldUserSelect;
+    const finalRect=card.getBoundingClientRect();
+    ghost.style.transition='top 160ms cubic-bezier(.2,.8,.2,1),transform 160ms cubic-bezier(.2,.8,.2,1),opacity 160ms';
+    ghost.style.top=finalRect.top+'px';
+    ghost.style.transform='translate3d(0,0,0) scale(1)';
+    ghost.style.opacity='0.6';
+    setTimeout(()=>{ghost.remove();card.style.visibility=''},170);
+    if(!moved)return;
+    const order=[...list.querySelectorAll('[data-sort-id]')].map(n=>n.dataset.sortId);
+    const stored=getJuntadas(),rank=new Map(order.map((id,i)=>[id,i]));
+    stored.sort((a,b)=>(rank.get(a.id)??99999)-(rank.get(b.id)??99999));
+    try{localStorage.setItem(JSTORE,JSON.stringify(stored))}catch(err){toast('No se pudo guardar el orden')}
+   };
+   document.addEventListener('pointermove',move,{passive:false});
+   document.addEventListener('pointerup',finish);
+   document.addEventListener('pointercancel',finish);
+  });
+ });
+ list.querySelectorAll('[data-open-id]').forEach(b=>b.onclick=()=>openJuntada(b.dataset.openId));
+ list.querySelectorAll('[data-menu-id]').forEach(b=>b.onclick=()=>{
+  const menu=list.querySelector('[data-options-id="'+b.dataset.menuId+'"]');
+  const opening=menu.hidden;
+  list.querySelectorAll('[data-options-id]').forEach(m=>m.hidden=true);
+  list.querySelectorAll('[data-menu-id]').forEach(m=>m.setAttribute('aria-expanded','false'));
+  menu.hidden=!opening;b.setAttribute('aria-expanded',String(opening));
+ });
+ list.querySelectorAll('[data-action]').forEach(b=>b.onclick=async()=>{
+  const id=b.dataset.eventId,action=b.dataset.action;
+  if(action==='transfer'){await shareOrganizerAccess(id);return}
+  if(action==='delete'){deleteLocalJuntada(id);return}
+  if(action==='pause'){await toggleSuspension(id);return}
+  if(action==='share'){
+   const credentials=JSON.parse(localStorage.getItem('juntada_remote_'+id)||'null');
+   if(!credentials?.codigo){toast('Esta juntada no tiene una invitación online disponible');return}
+   const event=getJuntadas().find(x=>x.id===id);
+   await shareInviteLink(credentials.codigo,event?.saved?.name||'Juntada');
+   return;
+  }
+  openJuntada(id);
+  if(action==='view')return;
+  if(action==='edit'){
+   requestAnimationFrame(()=>{window.scrollTo({top:0,behavior:'instant'});document.activeElement?.blur?.()});
+   return;
+  }
+  if(action==='share'){
+   if(!remoteEvent||!remoteEvent.codigo){toast('Esta juntada no tiene invitación online disponible');return}
+   await shareInviteLink(remoteEvent.codigo,saved.name||'Juntada');
+   return;
+  }
+  
+ });
+ go('myEvents');
+}
+const originalCreateV9=create;create=function(){const before=saved;originalCreateV9();if(saved!==before&&saved.name){currentJuntadaId=null;persistJuntada()}};
+const originalRenderOrganizerName=renderOrganizer;renderOrganizer=function(){originalRenderOrganizerName();const nameInput=document.getElementById('organizerEventName');if(nameInput&&document.activeElement!==nameInput)nameInput.value=saved.name||''};
+const originalGoV9=go;go=function(id){originalGoV9(id);document.querySelector('.nav').classList.toggle('hide',!['home','event','myEvents'].includes(id))};
+const originalConfirmPlaceV9=confirmPlace;confirmPlace=function(id){originalConfirmPlaceV9(id);persistJuntada()};
+if(typeof confirmDate==='function'){const oldConfirmDateV9=confirmDate;confirmDate=function(...args){const r=oldConfirmDateV9(...args);persistJuntada();return r}}
+const oldSaveVoteV9=saveVote;saveVote=function(){oldSaveVoteV9();persistJuntada()};
+const oldSavePlaceVotesV9=savePlaceVotes;savePlaceVotes=function(){oldSavePlaceVotesV9();persistJuntada()};
+const oldRemovePlaceV9=removePlace;removePlace=function(id){oldRemovePlaceV9(id);persistJuntada()};
+function demoInviteUrl(){const data={name:saved.name,desc:saved.desc,dateMode:saved.dateMode,date:saved.date,candidates:saved.candidates,time:saved.time,place:saved.place,expense:saved.expense};const bytes=new TextEncoder().encode(JSON.stringify(data));let binary='';bytes.forEach(b=>binary+=String.fromCharCode(b));return location.origin+location.pathname+'?preview='+encodeURIComponent(btoa(binary).split('+').join('-').split('/').join('_').replace(/=+$/,''))}
+copyInvite=async function(){if(!saved.name){toast('Creá una juntada primero');return}const url=demoInviteUrl();const msg=['¡Te invito a '+saved.name+'!',displayDate(),saved.place,url,'Vista previa: las respuestas todavía no se sincronizan.'].join(String.fromCharCode(10));try{await navigator.clipboard.writeText(msg);toast('Invitación de vista previa copiada')}catch(e){prompt('Copiá la invitación:',msg)}};
+(function initPreview(){try{const p=new URLSearchParams(location.search).get('preview');if(!p)return;const b=atob(p.replace(/-/g,'+').replace(/_/g,'/'));const bytes=Uint8Array.from(b,c=>c.charCodeAt(0));const v=JSON.parse(new TextDecoder().decode(bytes));if(!v.name)return;saved={name:String(v.name),desc:String(v.desc||''),dateMode:v.dateMode||'pending',date:v.date||'',candidates:Array.isArray(v.candidates)?v.candidates:[],time:v.time||'',place:v.place||'Lugar a confirmar',expense:v.expense||''};go('invite');toast('Vista previa: sin votos compartidos todavía')}catch(e){}})();
+
+/* V10 QA: persistir modificaciones y votos simulados en el dispositivo organizador. */
+const qaSaveOrganizer=saveOrganizerDetails;saveOrganizerDetails=function(){qaSaveOrganizer();persistJuntada()};
+const qaAddPlace=addPlace;addPlace=function(){const n=places.length;qaAddPlace();if(places.length!==n)persistJuntada()};
+const qaRsvp=rsvp;rsvp=function(...args){const result=qaRsvp(...args);persistJuntada();return result};
+const qaConfirmDate=confirmDate;confirmDate=function(...args){const result=qaConfirmDate(...args);persistJuntada();return result};
+const qaOpenJuntada=openJuntada;openJuntada=function(id){qaOpenJuntada(id);localVotes={};response='';renderGuestPreview()};
+
+const SB_URL='https://sswgtcpaayisecwxxskp.supabase.co';
+const SB_KEY='sb_publishable_a8hB04TzAhc9NLwrCDtozg_FwVk377j';
+let remoteEvent=null, remoteInvite=null, isGuestLink=false;
+async function rpc(fn,args){
+ const base=SB_URL;
+ let r;
+ try{r=await fetch(base+'/rest/v1/rpc/'+fn,{method:'POST',headers:{apikey:SB_KEY,'Content-Type':'application/json'},body:JSON.stringify(args)})}
+ catch(e){throw Error('No se pudo conectar con Supabase. Revisá la URL del proyecto. ('+e.message+')')}
+ const raw=await r.text();let data;
+ try{data=JSON.parse(raw)}catch(e){throw Error('Respuesta inesperada de Supabase (HTTP '+r.status+')')}
+ if(!r.ok)throw Error((data.message||'Error de API')+' (HTTP '+r.status+')');
+ return data
+}
+const createLocal=create;
+create=async function(){const prev=saved;createLocal();if(saved===prev||!saved.name)return;remoteEvent=null;document.querySelector('#ready h1').textContent='Publicando tu juntada…';const publishBtn=document.querySelector('#ready .green');if(publishBtn){publishBtn.disabled=true;publishBtn.textContent='Publicando online…'}try{remoteEvent=await rpc('juntada_crear',{p_nombre:saved.name,p_descripcion:saved.desc||'',p_fecha:saved.date||'',p_hora:saved.time||'',p_lugar:saved.place||'',p_modalidad_fecha:saved.dateMode||'fixed',p_opciones_fecha:saved.candidates||[],p_gastos:saved.expense||''});localStorage.setItem('juntada_remote_'+currentJuntadaId,JSON.stringify(remoteEvent));persistJuntada();document.querySelector('#ready h1').textContent='¡Tu juntada está publicada!';toast('¡Juntada publicada online!')}catch(e){localStorage.setItem(JSTORE,JSON.stringify(getJuntadas().filter(x=>x.id!==currentJuntadaId)));document.querySelector('#ready h1').textContent='No se pudo publicar';let err=document.getElementById('publishError');if(!err){err=document.createElement('div');err.id='publishError';err.className='card';err.style.cssText='margin:14px 0;color:#9b2430;text-align:left;overflow-wrap:anywhere';document.querySelector('#ready .pad').prepend(err)}err.textContent='No se pudo guardar online: '+e.message;let config=document.getElementById('configureSupabase');if(!config){config=document.createElement('button');config.id='configureSupabase';config.className='btn secondary';config.textContent='Revisar conexión con Supabase';config.onclick=configureSupabase;err.after(config)}let retry=document.getElementById('retryPublish');if(!retry){retry=document.createElement('button');retry.id='retryPublish';retry.className='btn';retry.textContent='Reintentar publicación';retry.onclick=()=>publishSavedOnline();err.after(retry)}console.error('Juntada publish failed',e)}finally{if(publishBtn){publishBtn.disabled=false;publishBtn.textContent='Compartir por WhatsApp'}}};
+copyInvite=async function(){if(!remoteEvent){toast('Esta juntada no está publicada online');return}const link=location.origin+location.pathname+'?invite='+encodeURIComponent(remoteEvent.codigo)+'&v=67';const msg=['¡Te invito a '+saved.name+'!',displayDate(),saved.place,link].join(String.fromCharCode(10));try{await navigator.clipboard.writeText(msg);toast('Invitación copiada')}catch(e){prompt('Copiá el enlace:',msg)}};
+function closeGuestInvitation(){if(isGuestLink){window.location.assign(location.origin+location.pathname);return}go('event')}
+function leaveInvitation(){if(isGuestLink){window.location.assign(location.origin+location.pathname+'?v=65');return}go('event')}
+async function shareInviteLink(code,name){
+ const url=location.origin+'/juntada/?invite='+encodeURIComponent(code);
+ if(navigator.share){
+  try{await navigator.share({title:name,text:'¡Te invito a '+name+'!',url});return}
+  catch(e){if(e.name==='AbortError')return}
+ }
+ const message='¡Te invito a '+name+'! '+url;
+ const overlay=document.createElement('div');overlay.id='shareFallback';
+ overlay.style.cssText='position:fixed;inset:0;background:#152e4b88;z-index:10005;display:flex;align-items:end;justify-content:center;padding:16px';
+ overlay.innerHTML='<div role="dialog" aria-modal="true" aria-label="Compartir invitación" style="background:white;border-radius:24px;padding:24px;width:100%;max-width:430px"><h2 style="margin-top:0">Compartir invitación</h2><p style="color:#64778b">Elegí cómo enviar el enlace.</p><button type="button" data-share="wa" class="btn">Compartir por WhatsApp</button><button type="button" data-share="copy" class="btn secondary">Copiar enlace</button><button type="button" data-share="close" class="btn outline">Volver</button></div>';
+ document.body.appendChild(overlay);
+ const close=()=>overlay.remove();overlay.addEventListener('click',e=>{if(e.target===overlay)close()});
+ overlay.querySelector('[data-share="close"]').onclick=close;
+ overlay.querySelector('[data-share="wa"]').onclick=()=>{close();window.open('https://wa.me/?text='+encodeURIComponent(message),'_blank','noopener')};
+ overlay.querySelector('[data-share="copy"]').onclick=async()=>{try{await navigator.clipboard.writeText(url);close();toast('Enlace copiado')}catch(e){prompt('Copiá este enlace:',url);close()}};
+}
+async function shareCurrentInvitation(){const code=remoteInvite||(remoteEvent&&remoteEvent.codigo);if(!code){toast('No hay una invitación disponible para compartir');return}const link=location.origin+location.pathname+'?invite='+encodeURIComponent(code)+'&v=67';if(navigator.share){try{await navigator.share({title:saved.name||'Juntada',text:'¡Te invito a '+(saved.name||'una juntada')+'!',url:link});return}catch(e){if(e.name==='AbortError')return}}try{await navigator.clipboard.writeText(link);toast('Enlace copiado para compartir')}catch(e){prompt('Copiá el enlace:',link)}}
+const goLocal=go;
+go=function(id){if(id==='share'&&!remoteEvent){toast('No se puede compartir: esta juntada no está publicada online');return}goLocal(id);if(id==='event'&&!isGuestLink){if(!remoteEvent&&currentJuntadaId){try{remoteEvent=JSON.parse(localStorage.getItem('juntada_remote_'+currentJuntadaId)||'null')}catch(e){remoteEvent=null}}}if(id==='event'){const management=document.getElementById('onlineManagement');if(management)management.classList.toggle('hide',!remoteEvent||isGuestLink)}if(id==='invite'){const preview=!isGuestLink;const status=document.getElementById('rsvpStatus');if(status){status.hidden=true;status.textContent='';}document.querySelectorAll('#invite .rsvp button').forEach(b=>{b.disabled=preview;b.style.opacity=preview?'0.45':'1'});const name=document.getElementById('guestName');if(name)name.disabled=preview;const detail=document.querySelector('#invite .btn.secondary:last-child');if(detail)detail.classList.toggle('hide',isGuestLink);if(preview){const card=document.getElementById('guestPreview');if(card)card.innerHTML='<p class="sub">Esta es una vista previa. Para confirmar de verdad, tocá «Abrir invitación real».</p><button class="btn" onclick="openGuestTest()">Abrir invitación real</button>'}}};
+const rsvpLocal=rsvp;
+rsvp=async function(value,btn){if(!remoteInvite){toast('Para responder, abrí el enlace que compartiste por WhatsApp');return}const name=document.querySelector('#guestName').value.trim();if(!name){toast('Escribí tu nombre');return}btn.disabled=true;try{await rpc('juntada_responder',{p_codigo:remoteInvite,p_nombre:name,p_asistencia:{'Voy':'voy','Tal vez':'tal_vez','No puedo':'no_puedo'}[value]});document.querySelectorAll('.rsvp button').forEach(e=>e.classList.toggle('on',e===btn));document.querySelector('#rsvpStatus').hidden=false;document.querySelector('#rsvpStatus').textContent='✓ ¡Listo, '+name+'! Confirmaste: '+value+'.';const guestCard=document.getElementById('guestPreview');if(guestCard)guestCard.innerHTML='<p class="sub">¡Listo! Tu respuesta fue enviada a la organizadora. Podés cambiarla seleccionando otra opción.</p>';saveGuestProgress({name,attendance:value});toast('Confirmación guardada online')}catch(e){toast('No se pudo enviar: '+e.message)}finally{btn.disabled=false}};
+async function loadResponses(){if(!remoteEvent)return;try{const arr=await rpc('juntada_respuestas_organizador',{p_juntada:remoteEvent.id,p_organizador:remoteEvent.organizador});guestResponses={};for(const x of arr){guestResponses[x.nombre]={voy:'Voy',tal_vez:'Tal vez',no_puedo:'No puedo'}[x.asistencia]}renderOrganizer()}catch(e){toast('No se pudieron cargar respuestas: '+e.message)}}
+const openLocal=openJuntada;
+openJuntada=function(id){try{const credential=JSON.parse(localStorage.getItem('juntada_remote_'+id)||'null');remoteEvent=credential&&credential.id&&credential.organizador?credential:null}catch(e){remoteEvent=null}isGuestLink=false;remoteInvite=null;openLocal(id)};
+(function(){const code=new URLSearchParams(location.search).get('invite');if(!code)return;remoteInvite=code;isGuestLink=true;remoteEvent=null;rpc('juntada_ver',{p_codigo:code}).then(d=>{saved={name:d.nombre,desc:d.descripcion||'',dateMode:d.modalidad_fecha||'fixed',date:d.fecha||'',time:d.hora||'',place:d.lugar||'',candidates:d.opciones_fecha||[],roundNumber:d.ronda||1,finalists:d.finalistas||[],expense:d.gastos||''};places=Array.isArray(d.lugares)?d.lugares:[];confirmedDate=d.fecha_confirmada||'';confirmedPlace='';go('invite');document.querySelector('#rsvpStatus').textContent='Elegí una opción para confirmar tu asistencia.';const prev=document.getElementById('guestPreview');if(prev)prev.innerHTML='<p class="sub">Tu respuesta se enviará a la organizadora.</p>';restoreGuestProgress(code)}).catch(e=>{const unavailable=/Invitación no disponible|HTTP 400/i.test(e.message);if(unavailable){document.body.innerHTML='<main style="min-height:100dvh;display:flex;align-items:center;justify-content:center;padding:28px;background:#f8fcff;font-family:system-ui,sans-serif;text-align:center"><div style="max-width:420px;background:white;border:1px solid #dceaf2;border-radius:24px;padding:40px 26px;box-shadow:0 12px 35px #24518b12"><div style="font-size:46px;margin-bottom:16px">⏸️</div><h1 style="color:#24518b;font-size:27px;line-height:1.2">Esta juntada no está disponible por ahora</h1><p style="color:#607487;font-size:17px;line-height:1.6">Puede estar suspendida por quien la organiza. Si se reactiva, vas a poder entrar desde este mismo enlace.</p></div></main>';}else{go('home');toast('No se pudo abrir la invitación: '+e.message)}})})();
+/* V1: los votos de fecha/lugar aún no tienen persistencia remota. */
+const voteV1=saveVote;saveVote=function(){toast('La votación de fechas online todavía no está disponible')};
+const placeVoteV1=savePlaceVotes;savePlaceVotes=function(){toast('La votación de lugares online todavía no está disponible')};
+
+function configureSupabase(){
+ const current=localStorage.getItem('juntada_supabase_url')||SB_URL;
+ const input=prompt('Pegá la Project URL desde Supabase > Project Settings > Data API:',current);
+ if(input===null)return;
+ let value=input.trim();
+ while(value.endsWith('/'))value=value.slice(0,-1);
+ let parsed;
+ try{parsed=new URL(value)}catch(e){toast('URL inválida');return}
+ if(parsed.protocol!=='https:'||!parsed.hostname.endsWith('.supabase.co')||parsed.pathname!=='/'){toast('La URL debe ser https://proyecto.supabase.co');return}
+ localStorage.setItem('juntada_supabase_url',value);
+ toast('URL guardada. Reintentá la publicación.');
+}
+async function publishSavedOnline(){
+ if(!saved.name)return;
+ const btn=document.getElementById('retryPublish');if(btn){btn.disabled=true;btn.textContent='Reintentando…'}
+ try{
+  const result=await rpc('juntada_crear',{p_nombre:saved.name,p_descripcion:saved.desc||'',p_fecha:saved.date||'',p_hora:saved.time||'',p_lugar:saved.place||'',p_modalidad_fecha:saved.dateMode||'fixed',p_opciones_fecha:saved.candidates||[],p_gastos:saved.expense||''});
+  remoteEvent=result;
+  if(!currentJuntadaId)currentJuntadaId='j'+Date.now().toString(36);
+  localStorage.setItem('juntada_remote_'+currentJuntadaId,JSON.stringify(result));persistJuntada();
+  document.querySelector('#ready h1').textContent='¡Tu juntada está publicada!';
+  document.getElementById('publishError')?.remove();document.getElementById('configureSupabase')?.remove();btn?.remove();
+  toast('¡Publicada! Ya podés compartirla.');
+ }catch(e){const el=document.getElementById('publishError');if(el)el.textContent='No se pudo guardar online: '+e.message;toast('La publicación falló');console.error(e)}
+ finally{if(btn){btn.disabled=false;btn.textContent='Reintentar publicación'}}
+}
+function openGuestTest(){
+ if(getJuntadas().find(x=>x.id===currentJuntadaId)?.cancelada){toast('Esta juntada está cancelada. Su invitación ya no funciona.');return}if(!remoteEvent||!remoteEvent.codigo){toast('Primero publicá la juntada online');return}
+ const link=location.origin+location.pathname+'?invite='+encodeURIComponent(remoteEvent.codigo)+'&v=67';
+ window.location.assign(link)
+}
+function sendWhatsApp(){
+ if(!remoteEvent||!remoteEvent.codigo){toast('La juntada todavía no está publicada online');return}
+ const link=location.origin+location.pathname+'?invite='+encodeURIComponent(remoteEvent.codigo)+'&v=67';
+ const msg=['¡Te invito a '+saved.name+'!',displayDate(),saved.place,link].join(String.fromCharCode(10));
+ window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank','noopener');
+}
+
+/* Sincronización de organizador: una sola consulta activa, pausa en segundo plano,
+   evita respuestas de un evento anterior y actualiza al volver a la pestaña. */
+let organizerRefreshTimer=null;
+let organizerRefreshInFlight=false;
+let organizerRefreshQueued=false;
+let organizerRefreshGeneration=0;
+function stopOrganizerRefresh(){
+ if(organizerRefreshTimer!==null){clearInterval(organizerRefreshTimer);organizerRefreshTimer=null}
+ organizerRefreshGeneration++;
+ organizerRefreshQueued=false;
+}
+function canRefreshOrganizer(){
+ return document.visibilityState!=='hidden' &&
+  !!document.getElementById('event')?.classList.contains('active') &&
+  !isGuestLink && !!remoteEvent?.id && !!remoteEvent?.organizador;
+}
+async function refreshOrganizer(){
+ if(!canRefreshOrganizer())return;
+ if(organizerRefreshInFlight){organizerRefreshQueued=true;return}
+ organizerRefreshInFlight=true;
+ const generation=organizerRefreshGeneration;
+ try{await loadResponses(generation)}finally{
+  organizerRefreshInFlight=false;
+  if(organizerRefreshQueued){organizerRefreshQueued=false;if(canRefreshOrganizer())refreshOrganizer()}
+ }
+}
+function startOrganizerRefresh(){
+ stopOrganizerRefresh();
+ if(!canRefreshOrganizer())return;
+ refreshOrganizer();
+ organizerRefreshTimer=setInterval(()=>{if(canRefreshOrganizer())refreshOrganizer()},20000);
+}
+document.addEventListener('visibilitychange',()=>{
+ if(document.visibilityState==='hidden')stopOrganizerRefresh();
+ else if(canRefreshOrganizer())startOrganizerRefresh();
+});
+const goBeforeAutoRefresh=go;
+go=function(id){
+ const wasEvent=document.getElementById('event')?.classList.contains('active');
+ if(id!=='event'&&wasEvent)stopOrganizerRefresh();
+ goBeforeAutoRefresh(id);
+ if(id==='event'&&!isGuestLink)startOrganizerRefresh();
+};
+/* V1 online voting and organizer management; requires migration 02. */
+loadResponses=async function(expectedGeneration=organizerRefreshGeneration){
+ const eventId=remoteEvent?.id;
+ const stillCurrent=()=>expectedGeneration===organizerRefreshGeneration && remoteEvent?.id===eventId && !isGuestLink;
+ const status=document.getElementById('syncStatus');
+ const setStatus=(message)=>{if(status)status.textContent=message};
+ if(!remoteEvent||!remoteEvent.id||!remoteEvent.organizador){
+  setStatus('Esta juntada no tiene una publicación online vinculada en este navegador.');
+  return;
+ }
+ if(!Object.keys(guestResponses).length)setStatus('Sincronizando confirmaciones…');
+ try{
+  const arr=await rpc('juntada_respuestas_organizador',{p_juntada:remoteEvent.id,p_organizador:remoteEvent.organizador});
+  if(!stillCurrent())return;
+  guestResponses={};
+  for(const x of [...arr].reverse()){
+   guestResponses[x.nombre]={voy:'Voy',tal_vez:'Tal vez',no_puedo:'No puedo'}[x.asistencia]||x.asistencia;
+  }
+  renderOrganizer();
+  setStatus('Confirmaciones actualizadas: '+Object.keys(guestResponses).length+' persona(s).');
+ }catch(e){
+  if(stillCurrent())setStatus('Error al cargar confirmaciones: '+e.message);
+  return;
+ }
+ try{
+  const votes=await rpc('juntada_votos_organizador',{p_juntada:remoteEvent.id,p_organizador:remoteEvent.organizador});
+  if(!stillCurrent())return;
+  guestVotes={};placeVotes={};
+  for(const v of votes){
+   if(v.tipo==='fecha'){guestVotes[v.nombre]={};for(const item of v.elecciones)guestVotes[v.nombre][item.date]=item.choice}
+   if(v.tipo==='lugar')placeVotes[v.nombre]=v.elecciones;
+  }
+  renderOrganizer();
+  setStatus('Consulta completada a las '+new Date().toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit',second:'2-digit'})+': '+Object.keys(guestResponses).length+' confirmación(es) y '+votes.length+' votación(es).');
+ }catch(e){if(stillCurrent())setStatus('Confirmaciones actualizadas. No se pudieron cargar votos: '+e.message)}
+};
+saveVote=async function(){
+ if(!remoteInvite){toast('Abrí una invitación compartida para votar');return}
+ const name=document.getElementById('guestName').value.trim();
+ const choices=Object.entries(localVotes).filter(([d,v])=>d&&v).map(([date,choice])=>({date,choice}));
+ if(!name){toast('Escribí tu nombre');return}
+ if(!choices.length){toast('Elegí al menos una fecha');return}
+ try{
+  await rpc('juntada_votar',{p_codigo:remoteInvite,p_nombre:name,p_tipo:'fecha',p_elecciones:choices});
+  document.getElementById('voteStatus').textContent='¡Disponibilidad guardada online!';
+  saveGuestProgress({name,dateVotes:{...localVotes}});
+  toast('Voto registrado');
+ }catch(e){toast('No se pudo guardar el voto: '+e.message)}
+};
+savePlaceVotes=async function(){
+ if(!remoteInvite){toast('Abrí una invitación compartida para votar');return}
+ const name=document.getElementById('guestName').value.trim();
+ const choices=[...document.querySelectorAll('.place-vote:checked')].map(e=>Number(e.value));
+ if(!name){toast('Escribí tu nombre');return}
+ if(!choices.length){toast('Elegí al menos un lugar');return}
+ try{
+  await rpc('juntada_votar',{p_codigo:remoteInvite,p_nombre:name,p_tipo:'lugar',p_elecciones:choices});
+  document.getElementById('placeVoteStatus').textContent='¡Preferencias guardadas online!';
+  saveGuestProgress({name,placeChoices:choices});
+  toast('Votos registrados');
+ }catch(e){toast('No se pudo guardar el voto: '+e.message)}
+};
+async function updateRemoteEvent(data){
+ if(!remoteEvent||!remoteEvent.organizador){toast('Este evento solo está guardado en tu celular');return}
+ try{
+  await rpc('juntada_actualizar',{p_juntada:remoteEvent.id,p_organizador:remoteEvent.organizador,...data});
+  toast('Cambios guardados online');
+ }catch(e){toast('No se pudo sincronizar: '+e.message)}
+}
+const oldConfirmDateOnline=confirmDate;
+confirmDate=function(d){oldConfirmDateOnline(d);if(remoteEvent)updateRemoteEvent({p_fecha_confirmada:d})};
+const oldConfirmPlaceOnline=confirmPlace;
+confirmPlace=function(id){oldConfirmPlaceOnline(id);if(remoteEvent)updateRemoteEvent({p_lugar:saved.place})};
+const oldDetailsOnline=saveOrganizerDetails;
+saveOrganizerDetails=function(){oldDetailsOnline();if(remoteEvent)updateRemoteEvent({p_hora:saved.time,p_lugar:saved.place})};
+const oldAddPlaceOnline=addPlace;
+addPlace=function(){const before=places.length;oldAddPlaceOnline();if(remoteEvent&&places.length!==before)updateRemoteEvent({p_lugares:places})};
+const oldRemovePlaceOnline=removePlace;
+removePlace=function(id){oldRemovePlaceOnline(id);if(remoteEvent)updateRemoteEvent({p_lugares:places,p_lugar:saved.place})};
+async function cancelOnlineEvent(){
+ if(!remoteEvent||!remoteEvent.organizador){toast('Este evento no tiene administración online');return}
+ if(!confirm('¿Cancelar definitivamente esta juntada? La invitación dejará de funcionar y desaparecerá de Mis juntadas. Esta acción no se puede deshacer.'))return;
+ try{await rpc('juntada_actualizar',{p_juntada:remoteEvent.id,p_organizador:remoteEvent.organizador,p_cancelada:true});const all=getJuntadas();const entry=all.find(x=>x.id===currentJuntadaId);if(entry){localStorage.setItem(JSTORE,JSON.stringify(all.filter(x=>x.id!==currentJuntadaId)));localStorage.removeItem('juntada_remote_'+currentJuntadaId)}currentJuntadaId=null;remoteEvent=null;showMyEvents();toast('Juntada cancelada y quitada de Mis juntadas.')}catch(e){toast('No se pudo cancelar: '+e.message)}
+}
+
+/* Navigation consistency: organizer sections keep the same bottom navigation. */
+(function(){
+ const previousGo=go;
+ go=function(id){
+  previousGo(id);
+  const nav=document.getElementById('nav');
+  if(!nav)return;
+  nav.classList.toggle('hide',isGuestLink||id==='invite'||id==='unavailable');
+  nav.querySelectorAll('button').forEach((b,i)=>{const selected=i===0?id==='home':id==='myEvents';b.classList.toggle('active',selected);if(selected)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});
+ };
+ const originalShowMyEvents=showMyEvents;
+ showMyEvents=function(){originalShowMyEvents();document.getElementById('nav')?.classList.remove('hide')};
+})();
+
+/* Acceso portable de organizador: el secreto viaja solo en el fragmento (#),
+   nunca en el enlace público de invitación ni en parámetros enviados al servidor. */
+function encodeOrganizerPackage(value){
+ const bytes=new TextEncoder().encode(JSON.stringify(value));
+ let binary='';for(const b of bytes)binary+=String.fromCharCode(b);
+ return btoa(binary).split('+').join('-').split('/').join('_').replace(/=+$/,'');
+}
+function decodeOrganizerPackage(value){
+ const base=value.replace(/-/g,'+').replace(/_/g,'/');
+ const binary=atob(base);
+ return JSON.parse(new TextDecoder().decode(Uint8Array.from(binary,c=>c.charCodeAt(0))));
+}
+async function shareOrganizerAccess(id){
+ const entry=getJuntadas().find(x=>x.id===id);
+ let credential;try{credential=JSON.parse(localStorage.getItem('juntada_remote_'+id)||'null')}catch(e){}
+ if(!entry||!credential?.id||!credential?.organizador||!credential?.codigo){toast('No se encontró el acceso de organizador');return}
+ const data={v:1,credentials:credential,entry};
+ const url=location.origin+location.pathname+'#manage='+encodeOrganizerPackage(data);
+ const message='Enlace privado de administración de '+(entry.saved?.name||'Juntada')+'. NO lo compartas con invitados: permite administrar el evento.';
+ try{await navigator.clipboard.writeText(url);toast('Enlace privado copiado. Guardalo o envialo solo a vos.')}
+ catch(e){prompt(message+' Copiá este enlace:',url)}
+}
+async function importOrganizerAccess(){
+ const match=location.hash.match(/^#manage=([A-Za-z0-9_-]+)$/);
+ if(!match)return;
+ // Eliminar el secreto de la barra antes de procesarlo.
+ history.replaceState(null,'',location.pathname+location.search);
+ let data;
+ try{data=decodeOrganizerPackage(match[1])}catch(e){toast('El enlace privado no es válido');return}
+ const c=data?.credentials,entry=data?.entry;
+ if(data?.v!==1||!c?.id||!c?.codigo||!c?.organizador||!entry?.saved?.name||typeof entry.id!=='string'){
+  toast('El enlace de administración está incompleto');return;
+ }
+ try{
+  // Verificar el secreto contra la API antes de conceder administración local.
+  await rpc('juntada_respuestas_organizador',{p_juntada:c.id,p_organizador:c.organizador});
+  // Refrescar datos online cuando el evento está activo.
+  try{
+   const d=await rpc('juntada_ver',{p_codigo:c.codigo});
+   entry.saved={name:d.nombre,desc:d.descripcion||'',dateMode:d.modalidad_fecha||'fixed',date:d.fecha||'',time:d.hora||'',place:d.lugar||'',candidates:d.opciones_fecha||[],expense:d.gastos||''};
+   entry.places=Array.isArray(d.lugares)?d.lugares:[];
+   entry.confirmedDate=d.fecha_confirmada||'';
+   entry.suspendida=!!d.cancelada;
+  }catch(e){/* Las invitaciones suspendidas no son públicas; conservar copia portable. */}
+  const all=getJuntadas();const existing=all.findIndex(x=>{try{return JSON.parse(localStorage.getItem('juntada_remote_'+x.id)||'null')?.id===c.id}catch(e){return false}});
+  const restored={...entry,id:existing>=0?all[existing].id:entry.id,updated:Date.now()};
+  if(existing>=0)all[existing]=restored;else all.unshift(restored);
+  localStorage.setItem(JSTORE,JSON.stringify(all));
+  localStorage.setItem('juntada_remote_'+restored.id,JSON.stringify(c));
+  showMyEvents();toast('¡Listo! Recuperaste la administración de tu juntada.');
+ }catch(e){toast('No se pudo verificar el acceso: '+e.message)}
+}
+if(location.hash.startsWith('#manage='))importOrganizerAccess();
+
+/* Recordar respuestas confirmadas solo en este navegador y para esta invitación.
+   Supabase sigue siendo la fuente oficial de los votos. */
+function guestProgressKey(code){return 'juntada_guest_progress_'+code}
+function saveGuestProgress(update){
+ if(!remoteInvite)return;
+ try{
+  const key=guestProgressKey(remoteInvite);
+  const current=JSON.parse(localStorage.getItem(key)||'{}');
+  localStorage.setItem(key,JSON.stringify({...current,...update}));
+ }catch(e){}
+}
+function restoreGuestProgress(code){
+ let state;
+ try{state=JSON.parse(localStorage.getItem(guestProgressKey(code))||'null')}catch(e){}
+ if(!state||typeof state!=='object')return;
+ const name=document.getElementById('guestName');
+ if(name&&typeof state.name==='string')name.value=state.name;
+ if(['Voy','Tal vez','No puedo'].includes(state.attendance)){
+  const buttons=[...document.querySelectorAll('.rsvp button')];
+  buttons.forEach(b=>b.classList.toggle('on',b.textContent.trim()===state.attendance));
+  const status=document.getElementById('rsvpStatus');
+  if(status)status.textContent=state.name+': '+state.attendance+' · Última confirmación enviada desde este navegador.';
+  const prev=document.getElementById('guestPreview');
+  if(prev)prev.innerHTML='<p class="sub">Tu respuesta ya fue enviada. Podés cambiarla seleccionando otra opción.</p>';
+ }
+ if(state.dateVotes&&typeof state.dateVotes==='object'){
+  localVotes={...state.dateVotes};
+  document.querySelectorAll('.vote-option button[data-date]').forEach(b=>b.classList.toggle('on',localVotes[b.dataset.date]===b.dataset.vote));
+  const status=document.getElementById('voteStatus');
+  if(status)status.textContent='Tu última disponibilidad fue enviada desde este navegador.';
+ }
+ if(Array.isArray(state.placeChoices)){
+  document.querySelectorAll('.place-vote').forEach(b=>b.checked=state.placeChoices.includes(Number(b.value)));
+  const status=document.getElementById('placeVoteStatus');
+  if(status)status.textContent='Tus últimas preferencias fueron enviadas desde este navegador.';
+ }
+}
+
+/* Rondas inteligentes: conservamos votos previos y control del organizador. */
+let roundReviews={};
+const previousRenderRounds=renderOrganizer;
+renderOrganizer=function(){
+ previousRenderRounds();
+ if(saved.dateMode!=='vote')return;
+ const card=document.getElementById('organizerDates');
+ let panel=document.getElementById('roundManager');
+ if(!panel){panel=document.createElement('div');panel.id='roundManager';panel.className='round-manager';document.getElementById('dateResults').before(panel)}
+ const round=Number(saved.roundNumber)||1;
+ const active=Array.isArray(saved.finalists)&&saved.finalists.length?saved.finalists:saved.candidates;
+ const total=Object.keys(guestVotes).length;
+ const reviewed=Object.values(roundReviews).filter(v=>Number(v)>=round).length;
+ const ranked=active.map(d=>{let yes=0,maybe=0,no=0;Object.values(guestVotes).forEach(v=>{if(v[d]==='yes')yes++;else if(v[d]==='maybe')maybe++;else if(v[d]==='no')no++});return {d,yes,maybe,no,score:yes*2+maybe}}).sort((a,b)=>b.score-a.score||b.yes-a.yes);
+ panel.innerHTML='<div class="round-title"><span>Ronda '+round+'</span><small>'+total+' votaron · '+reviewed+' revisaron esta ronda</small></div>'+
+ (confirmedDate?'<p class="field-hint">La fecha está confirmada; ya no se pueden abrir nuevas rondas.</p>':
+ '<div class="round-tip"><b>✦ Sugerencia de Juntada</b><p>'+(total?('Las fechas con mejor disponibilidad son '+ranked.slice(0,2).map(x=>formatDate(x.d,'')).join(' y ')+'.'):'Esperá algunos votos para recibir recomendaciones.')+'</p></div>'+
+ (active.length>2?'<p class="field-hint">Seleccioná al menos dos finalistas. Podés modificar la sugerencia.</p><div class="round-finalists">'+ranked.map((x,i)=>'<label><input type="checkbox" class="round-finalist" value="'+x.d+'" '+(i<2?'checked':'')+'> '+formatDate(x.d,'')+' <small>'+x.yes+' pueden · '+x.maybe+' se acomodan</small></label>').join('')+'</div><button class="btn secondary" type="button" onclick="openNextRound()">Abrir ronda '+(round+1)+'</button>':'<p class="field-hint">Ya hay '+active.length+' fechas finalistas. Podés confirmar una directamente.</p>'));
+};
+async 
+function confirmRoundDialog(round,count){
+ return new Promise(resolve=>{
+  document.getElementById('roundConfirmDialog')?.remove();
+  const overlay=document.createElement('div');overlay.id='roundConfirmDialog';overlay.className='round-dialog-backdrop';
+  overlay.innerHTML='<section class="round-dialog" role="alertdialog" aria-modal="true" aria-labelledby="roundDialogTitle" aria-describedby="roundDialogDesc"><div class="round-dialog-icon"><span data-icon="calendar"></span></div><h2 id="roundDialogTitle">¿Abrimos la ronda '+round+'?</h2><p id="roundDialogDesc">Vamos a continuar con <b>'+count+' fechas finalistas</b>. Conservaremos los votos anteriores y cada invitado podrá revisar su disponibilidad.</p><div class="round-dialog-actions"><button type="button" data-answer="no">Volver</button><button type="button" data-answer="yes">Abrir ronda '+round+'</button></div></section>';
+  document.body.appendChild(overlay);renderIcons();
+  const close=answer=>{overlay.remove();resolve(answer)};
+  overlay.querySelector('[data-answer="no"]').onclick=()=>close(false);
+  overlay.querySelector('[data-answer="yes"]').onclick=()=>close(true);
+  overlay.onclick=e=>{if(e.target===overlay)close(false)};
+ });
+}
+function showRoundSetupDialog(){
+ document.getElementById('roundSetupDialog')?.remove();
+ const overlay=document.createElement('div');overlay.id='roundSetupDialog';overlay.className='round-dialog-backdrop';
+ overlay.innerHTML='<section class="round-dialog" role="alertdialog" aria-modal="true"><div class="round-dialog-icon"><span data-icon="info"></span></div><h2>Falta activar las rondas</h2><p>La función de rondas todavía no está disponible en la base de datos. Para habilitarla, ejecutá <b>03_rondas_inteligentes.sql</b> en el SQL Editor de Supabase.</p><div class="round-dialog-actions"><button type="button" id="roundSetupClose">Entendido</button><button type="button" id="roundSetupGuide">Ver archivo SQL</button></div></section>';
+ document.body.appendChild(overlay);renderIcons();
+ overlay.querySelector('#roundSetupClose').onclick=()=>overlay.remove();
+ overlay.querySelector('#roundSetupGuide').onclick=()=>{window.open('https://github.com/boninip/juntada/blob/main/supabase/03_rondas_inteligentes.sql','_blank','noopener')};
+ overlay.onclick=e=>{if(e.target===overlay)overlay.remove()};
+}
+
+async function openNextRound(){
+ if(!remoteEvent?.organizador){toast('Necesitás una juntada publicada para abrir otra ronda');return}
+ if(confirmedDate){toast('La fecha ya está confirmada');return}
+ const choices=[...document.querySelectorAll('.round-finalist:checked')].map(x=>x.value);
+ if(choices.length<2||choices.length>8){toast('Elegí entre 2 y 8 fechas finalistas');return}
+ if(!await confirmRoundDialog((saved.roundNumber||1)+1,choices.length))return;
+ try{
+  const r=await rpc('juntada_abrir_ronda',{p_juntada:remoteEvent.id,p_organizador:remoteEvent.organizador,p_finalistas:choices});
+  saved.finalists=r.finalistas;saved.roundNumber=r.ronda;roundReviews={};persistJuntada();sync();renderOrganizer();
+  toast('Ronda '+r.ronda+' abierta. Compartí el enlace para avisar a tus invitados.');
+ }catch(e){if(/Could not find the function|schema cache|HTTP 404/i.test(e.message)){showRoundSetupDialog()}else{toast('No se pudo abrir la ronda. Intentá nuevamente.')}}
+}
+const priorSaveVoteRounds=saveVote;
+saveVote=async function(){
+ if(!remoteInvite)return priorSaveVoteRounds();
+ const name=document.getElementById('guestName').value.trim();
+ const allowed=Array.isArray(saved.finalists)&&saved.finalists.length?saved.finalists:saved.candidates;
+ const choices=allowed.filter(d=>localVotes[d]).map(date=>({date,choice:localVotes[date]}));
+ if(!name){toast('Escribí tu nombre');return}
+ if(!choices.length){toast('Elegí al menos una fecha');return}
+ try{
+  await rpc('juntada_votar',{p_codigo:remoteInvite,p_nombre:name,p_tipo:'fecha',p_elecciones:choices});
+  saveGuestProgress({name,dateVotes:{...localVotes},reviewedRound:saved.roundNumber||1});
+  document.getElementById('voteStatus').textContent='¡Disponibilidad revisada y guardada!';
+  toast('Disponibilidad guardada');
+ }catch(e){toast('No se pudo guardar: '+e.message)}
+};
+const previousSyncRounds=sync;
+sync=function(){
+ previousSyncRounds();
+ if(saved.dateMode!=='vote'||confirmedDate)return;
+ const round=Number(saved.roundNumber)||1;
+ const title=document.querySelector('#inviteVoting h2');
+ if(title)title.textContent=round>1?'Ronda '+round+' · Fechas finalistas':'¿Qué días podés?';
+ const sub=document.querySelector('#inviteVoting .sub');
+ if(sub)sub.textContent=round>1?'Conservamos tus respuestas anteriores. Revisalas y guardá tu disponibilidad.':'Elegí tu disponibilidad para cada fecha.';
+ const status=document.getElementById('voteStatus');
+ if(status&&round>1){let p={};try{p=JSON.parse(localStorage.getItem(guestProgressKey(remoteInvite))||'{}')}catch(e){}status.textContent=Number(p.reviewedRound)>=round?'Ya revisaste esta ronda. Podés cambiar tus votos.':'Tus votos anteriores están seleccionados. Confirmalos o cambialos.'}
+};
+const previousRestoreRounds=restoreGuestProgress;
+restoreGuestProgress=function(code){previousRestoreRounds(code);sync()};
+const previousOpenRounds=openJuntada;
+openJuntada=function(id){previousOpenRounds(id);roundReviews={}};
+const previousLoadResponsesRounds=loadResponses;
+loadResponses=async function(generation){
+ await previousLoadResponsesRounds(generation);
+ if(!remoteEvent?.organizador)return;
+ try{
+  const d=await rpc('juntada_ver_organizador',{p_juntada:remoteEvent.id,p_organizador:remoteEvent.organizador});
+  if(!d||!remoteEvent||remoteEvent.id!==d.id||document.getElementById('event')?.classList.contains('active')!==true)return;
+  saved.roundNumber=d.ronda||1;saved.finalists=d.finalistas||[];
+  roundReviews=d.revisiones||{};
+  renderOrganizer();
+ }catch(e){/* Las rondas requieren la migración 03. */}
+};
+
+
+/* Resúmenes de las tarjetas colapsables. La estructura está en HTML para que siempre se vea. */
+const renderBeforeCardSummaries=renderOrganizer;
+renderOrganizer=function(){
+ renderBeforeCardSummaries();
+ const set=(key,value)=>{const el=document.querySelector('[data-fold-summary="'+key+'"]');if(el)el.textContent=value};
+ const count=Object.keys(guestResponses).length;
+ const votesCount=Object.keys(guestVotes).length;
+ set('guests',count+' confirmaciones · '+votesCount+' votaron');
+ const round=Number(saved.roundNumber)||1;
+ const dates=Array.isArray(saved.finalists)&&saved.finalists.length?saved.finalists:saved.candidates||[];
+ set('dates',confirmedDate?'Fecha confirmada: '+formatDate(confirmedDate,''):saved.dateMode==='vote'?'Ronda '+round+' · '+dates.length+' fechas '+(round>1?'finalistas':'propuestas'):'Fecha pendiente');
+ set('places',(places.length+' propuesta'+(places.length===1?'':'s'))+(confirmedPlace?' · Lugar elegido':' · Sin confirmar'));
+ set('details',(saved.time?'Horario '+saved.time:'Horario pendiente')+' · '+(saved.place&&saved.place!=='Lugar a confirmar'?'Lugar definido':'Lugar pendiente'));
+};
+
+/* Panel compacto: una sola tarjeta abierta, guardar sólo cuando hay cambios. */
+(function organizerCompactBehavior(){
+ const folds=[...document.querySelectorAll('#event .organizer-card-fold')];
+ folds.forEach(fold=>fold.addEventListener('toggle',()=>{
+  if(!fold.open){refresh();return;}
+  folds.forEach(other=>{if(other!==fold)other.open=false});
+  refresh();
+ }));
+ const fields=['organizerEventName','organizerTime','organizerPlace'];
+ const save=document.getElementById('organizerSaveAction');
+ let baseline=null;
+ const values=()=>fields.map(id=>document.getElementById(id)?.value||'');
+ const refresh=()=>{
+  if(!save)return;
+  const dirty=baseline!==null&&values().some((v,i)=>v!==baseline[i]);
+  save.classList.remove('hide');
+  save.disabled=false;
+ };
+ fields.forEach(id=>{
+  const el=document.getElementById(id);
+  el?.addEventListener('input',refresh);
+  el?.addEventListener('change',refresh);
+ });
+ const originalRender=renderOrganizer;
+ renderOrganizer=function(){
+  originalRender();
+  const details=document.querySelector('[data-fold="details"]');
+  if(!details?.open||baseline===null){baseline=values()}
+  refresh();
+ };
+ const originalSave=saveOrganizerDetails;
+ saveOrganizerDetails=function(){
+  originalSave();
+  baseline=values();
+  refresh();
+ };
+ const originalGo=go;
+ go=function(id){
+  originalGo(id);
+  if(id==='event'){
+   folds.forEach(f=>f.open=false);
+   baseline=values();
+   refresh();
+  }
+ };
+ baseline=values();refresh();
+})();
+</script></body></html>
