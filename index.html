@@ -299,17 +299,22 @@ function deleteLocalJuntada(id){
  dialog.querySelector('#deleteKeep').focus();
 }
 async function toggleSuspension(id){
- const all=getJuntadas(),item=all.find(x=>x.id===id);if(!item)return;
+ const item=getJuntadas().find(x=>x.id===id);if(!item)return;
  let credentials=null;try{credentials=JSON.parse(localStorage.getItem('juntada_remote_'+id)||'null')}catch(e){}
- if(!credentials?.id||!credentials?.organizador){toast('Para suspender, la juntada debe estar publicada online');return}
+ if(!credentials?.id||!credentials?.organizador){toast('Esta juntada no tiene una publicación online válida');return}
  const next=!item.suspendida;
- if(!confirm(next?'¿Suspender esta juntada? Los invitados no podrán responder hasta que la reactives.':'¿Reactivar esta juntada? La invitación volverá a funcionar.'))return;
+ if(!confirm(next?'¿Suspender esta juntada? Tus invitados no podrán entrar hasta que la reactives. Las respuestas se conservarán.':'¿Reactivar esta juntada? Tus invitados podrán volver a entrar con el mismo enlace y sus respuestas seguirán guardadas.'))return;
+ const button=document.querySelector('[data-action="pause"][data-event-id="'+CSS.escape(id)+'"]');
+ if(button){button.disabled=true;button.setAttribute('aria-busy','true')}
  try{
-  await rpc('juntada_suspender',{p_juntada:credentials.id,p_organizador:credentials.organizador,p_suspender:next});
+  const result=await rpc('juntada_suspender',{p_juntada:credentials.id,p_organizador:credentials.organizador,p_suspender:next});
+  if(!result||result.ok!==true||result.suspendida!==next)throw Error('No se pudo confirmar el cambio en el servidor');
   const updated=getJuntadas(),target=updated.find(x=>x.id===id);
-  if(target){target.suspendida=next;localStorage.setItem(JSTORE,JSON.stringify(updated))}if(currentJuntadaId===id){const msg=document.getElementById('syncStatus');if(msg)msg.textContent=next?'Juntada suspendida. Podés reactivarla desde Mis juntadas.':'Juntada reactivada.'}
-  showMyEvents();toast(next?'Juntada suspendida':'Juntada reactivada');
+  if(target){target.suspendida=result.suspendida;localStorage.setItem(JSTORE,JSON.stringify(updated))}
+  if(currentJuntadaId===id){const msg=document.getElementById('syncStatus');if(msg)msg.textContent=next?'Juntada suspendida. Podés reactivarla desde Mis juntadas.':'Juntada reactivada.'}
+  showMyEvents();toast(next?'Juntada suspendida. Las respuestas se conservaron.':'Juntada reactivada. El mismo enlace vuelve a funcionar.');
  }catch(e){toast('No se pudo '+(next?'suspender':'reactivar')+': '+e.message)}
+ finally{if(button&&button.isConnected){button.disabled=false;button.removeAttribute('aria-busy')}}
 }
 function showMyEvents(){
  const list=document.getElementById('myEventsList'),all=getJuntadas().filter(x=>{try{const c=JSON.parse(localStorage.getItem('juntada_remote_'+x.id)||'null');return !!(c&&c.id&&c.organizador&&c.codigo)}catch(e){return false}});
@@ -342,7 +347,7 @@ function showMyEvents(){
   }
   if(action==='share'){
    if(!remoteEvent||!remoteEvent.codigo){toast('Esta juntada no tiene invitación online disponible');return}
-   const url=location.origin+location.pathname+'?invite='+encodeURIComponent(remoteEvent.codigo)+'&v=65';
+   const url=location.origin+location.pathname+'?invite='+encodeURIComponent(remoteEvent.codigo)+'&v=66';
    try{await navigator.clipboard.writeText(url);toast('Enlace de invitación copiado')}catch(e){toast('No se pudo copiar el enlace')}
    return;
   }
@@ -383,9 +388,9 @@ async function rpc(fn,args){
 }
 const createLocal=create;
 create=async function(){const prev=saved;createLocal();if(saved===prev||!saved.name)return;remoteEvent=null;document.querySelector('#ready h1').textContent='Publicando tu juntada…';const publishBtn=document.querySelector('#ready .green');if(publishBtn){publishBtn.disabled=true;publishBtn.textContent='Publicando online…'}try{remoteEvent=await rpc('juntada_crear',{p_nombre:saved.name,p_descripcion:saved.desc||'',p_fecha:saved.date||'',p_hora:saved.time||'',p_lugar:saved.place||'',p_modalidad_fecha:saved.dateMode||'fixed',p_opciones_fecha:saved.candidates||[],p_gastos:saved.expense||''});localStorage.setItem('juntada_remote_'+currentJuntadaId,JSON.stringify(remoteEvent));persistJuntada();document.querySelector('#ready h1').textContent='¡Tu juntada está publicada!';toast('¡Juntada publicada online!')}catch(e){localStorage.setItem(JSTORE,JSON.stringify(getJuntadas().filter(x=>x.id!==currentJuntadaId)));document.querySelector('#ready h1').textContent='No se pudo publicar';let err=document.getElementById('publishError');if(!err){err=document.createElement('div');err.id='publishError';err.className='card';err.style.cssText='margin:14px 0;color:#9b2430;text-align:left;overflow-wrap:anywhere';document.querySelector('#ready .pad').prepend(err)}err.textContent='No se pudo guardar online: '+e.message;let config=document.getElementById('configureSupabase');if(!config){config=document.createElement('button');config.id='configureSupabase';config.className='btn secondary';config.textContent='Revisar conexión con Supabase';config.onclick=configureSupabase;err.after(config)}let retry=document.getElementById('retryPublish');if(!retry){retry=document.createElement('button');retry.id='retryPublish';retry.className='btn';retry.textContent='Reintentar publicación';retry.onclick=()=>publishSavedOnline();err.after(retry)}console.error('Juntada publish failed',e)}finally{if(publishBtn){publishBtn.disabled=false;publishBtn.textContent='Compartir por WhatsApp'}}};
-copyInvite=async function(){if(!remoteEvent){toast('Esta juntada no está publicada online');return}const link=location.origin+location.pathname+'?invite='+encodeURIComponent(remoteEvent.codigo)+'&v=65';const msg=['¡Te invito a '+saved.name+'!',displayDate(),saved.place,link].join(String.fromCharCode(10));try{await navigator.clipboard.writeText(msg);toast('Invitación copiada')}catch(e){prompt('Copiá el enlace:',msg)}};
+copyInvite=async function(){if(!remoteEvent){toast('Esta juntada no está publicada online');return}const link=location.origin+location.pathname+'?invite='+encodeURIComponent(remoteEvent.codigo)+'&v=66';const msg=['¡Te invito a '+saved.name+'!',displayDate(),saved.place,link].join(String.fromCharCode(10));try{await navigator.clipboard.writeText(msg);toast('Invitación copiada')}catch(e){prompt('Copiá el enlace:',msg)}};
 function leaveInvitation(){if(isGuestLink){window.location.assign(location.origin+location.pathname+'?v=65');return}go('event')}
-async function shareCurrentInvitation(){const code=remoteInvite||(remoteEvent&&remoteEvent.codigo);if(!code){toast('No hay una invitación disponible para compartir');return}const link=location.origin+location.pathname+'?invite='+encodeURIComponent(code)+'&v=65';if(navigator.share){try{await navigator.share({title:saved.name||'Juntada',text:'¡Te invito a '+(saved.name||'una juntada')+'!',url:link});return}catch(e){if(e.name==='AbortError')return}}try{await navigator.clipboard.writeText(link);toast('Enlace copiado para compartir')}catch(e){prompt('Copiá el enlace:',link)}}
+async function shareCurrentInvitation(){const code=remoteInvite||(remoteEvent&&remoteEvent.codigo);if(!code){toast('No hay una invitación disponible para compartir');return}const link=location.origin+location.pathname+'?invite='+encodeURIComponent(code)+'&v=66';if(navigator.share){try{await navigator.share({title:saved.name||'Juntada',text:'¡Te invito a '+(saved.name||'una juntada')+'!',url:link});return}catch(e){if(e.name==='AbortError')return}}try{await navigator.clipboard.writeText(link);toast('Enlace copiado para compartir')}catch(e){prompt('Copiá el enlace:',link)}}
 const goLocal=go;
 go=function(id){if(id==='share'&&!remoteEvent){toast('No se puede compartir: esta juntada no está publicada online');return}goLocal(id);if(id==='event'&&!isGuestLink){if(!remoteEvent&&currentJuntadaId){try{remoteEvent=JSON.parse(localStorage.getItem('juntada_remote_'+currentJuntadaId)||'null')}catch(e){remoteEvent=null}}}if(id==='event'){const management=document.getElementById('onlineManagement');if(management)management.classList.toggle('hide',!remoteEvent||isGuestLink)}if(id==='invite'){const preview=!isGuestLink;const status=document.getElementById('rsvpStatus');if(status){status.hidden=true;status.textContent='';}document.querySelectorAll('#invite .rsvp button').forEach(b=>{b.disabled=preview;b.style.opacity=preview?'0.45':'1'});const name=document.getElementById('guestName');if(name)name.disabled=preview;const detail=document.querySelector('#invite .btn.secondary:last-child');if(detail)detail.classList.toggle('hide',isGuestLink);if(preview){const card=document.getElementById('guestPreview');if(card)card.innerHTML='<p class="sub">Esta es una vista previa. Para confirmar de verdad, tocá «Abrir invitación real».</p><button class="btn" onclick="openGuestTest()">Abrir invitación real</button>'}}};
 const rsvpLocal=rsvp;
@@ -426,12 +431,12 @@ async function publishSavedOnline(){
 }
 function openGuestTest(){
  if(getJuntadas().find(x=>x.id===currentJuntadaId)?.cancelada){toast('Esta juntada está cancelada. Su invitación ya no funciona.');return}if(!remoteEvent||!remoteEvent.codigo){toast('Primero publicá la juntada online');return}
- const link=location.origin+location.pathname+'?invite='+encodeURIComponent(remoteEvent.codigo)+'&v=65';
+ const link=location.origin+location.pathname+'?invite='+encodeURIComponent(remoteEvent.codigo)+'&v=66';
  window.location.assign(link)
 }
 function sendWhatsApp(){
  if(!remoteEvent||!remoteEvent.codigo){toast('La juntada todavía no está publicada online');return}
- const link=location.origin+location.pathname+'?invite='+encodeURIComponent(remoteEvent.codigo)+'&v=65';
+ const link=location.origin+location.pathname+'?invite='+encodeURIComponent(remoteEvent.codigo)+'&v=66';
  const msg=['¡Te invito a '+saved.name+'!',displayDate(),saved.place,link].join(String.fromCharCode(10));
  window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank','noopener');
 }
