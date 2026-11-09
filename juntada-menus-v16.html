@@ -954,8 +954,7 @@ renderOrganizer=function(){
  '<div class="round-tip"><b>✦ Sugerencia de Juntada</b><p>'+(total?('Las fechas con mejor disponibilidad son '+ranked.slice(0,2).map(x=>formatDate(x.d,'')).join(' y ')+'.'):'Esperá algunos votos para recibir recomendaciones.')+'</p></div>'+
  (active.length>2?'<p class="field-hint">Seleccioná al menos dos finalistas. Podés modificar la sugerencia.</p><div class="round-finalists">'+ranked.map((x,i)=>'<label><input type="checkbox" class="round-finalist" value="'+x.d+'" '+(i<2?'checked':'')+'> '+formatDate(x.d,'')+' <small>'+x.yes+' pueden · '+x.maybe+' se acomodan</small></label>').join('')+'</div><button class="btn secondary" type="button" onclick="openNextRound()">Abrir ronda '+(round+1)+'</button>':'<p class="field-hint">Ya hay '+active.length+' fechas finalistas. Podés confirmar una directamente.</p>'));
 };
-async 
-function confirmRoundDialog(round,count){
+async function confirmRoundDialog(round,count){
  return new Promise(resolve=>{
   document.getElementById('roundConfirmDialog')?.remove();
   const overlay=document.createElement('div');overlay.id='roundConfirmDialog';overlay.className='round-dialog-backdrop';
