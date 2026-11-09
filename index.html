@@ -1134,14 +1134,16 @@ renderOrganizer=function(){
   const payerInput=document.getElementById('quickExpensePayer').value.trim(),members=people(document.getElementById('quickExpensePeople').value);
   const payer=members.find(x=>normalize(x)===normalize(payerInput))||payerInput;
   const amount=Number(raw),cents=Math.round(amount*100);
+  if(!/^\d+(?:\.\d{1,2})?$/.test(raw)){toast('Ingresá un importe válido con hasta dos decimales');return}
   const groupId=document.getElementById('juntadaExpenseGroupSelect').value||null;
   const group=read(GROUPS).find(g=>g.id===groupId);
+  if(groupId&&!group){toast('El grupo seleccionado ya no existe');return}
   if(!name||!payer||!raw||!Number.isFinite(amount)||amount<=0||cents<=0||members.length<2||!members.some(x=>normalize(x)===normalize(payer))||new Set(members.map(normalize)).size!==members.length){toast('Completá nombre, importe y al menos dos participantes, incluyendo quien pagó');return}
   if(!Number.isSafeInteger(cents)||cents>100000000000){toast('El importe es demasiado grande');return}
   if(group&&members.some(x=>!group.members.some(y=>normalize(x)===normalize(y)))){toast('Todos los participantes deben pertenecer al grupo');return}
   let shares;
   if(document.getElementById('juntadaSplitMode').value==='custom'){
-   const amounts=document.getElementById('juntadaCustomAmounts').value.split(/[,;\n]/).map(x=>x.trim());
+   const amounts=document.getElementById('juntadaCustomAmounts').value.split(/[;\n]/).map(x=>x.trim()).filter(Boolean);
    if(amounts.length!==members.length){toast('Ingresá un importe por participante, en el mismo orden');return}
    const parts=amounts.map(x=>/^\d+(?:[.,]\d{1,2})?$/.test(x)?Math.round(Number(x.replace(',','.'))*100):NaN);
    if(parts.some(x=>!Number.isSafeInteger(x)||x<0)||parts.reduce((a,b)=>a+b,0)!==cents){toast('Las partes deben sumar exactamente el importe total');return}
@@ -1204,7 +1206,7 @@ renderOrganizer=function(){
  const splitSelect=document.createElement('select');splitSelect.id='juntadaSplitMode';
  splitSelect.innerHTML='<option value="equal">En partes iguales</option><option value="custom">Importes personalizados</option>';
  const customLabel=document.createElement('label');customLabel.htmlFor='juntadaCustomAmounts';customLabel.textContent='Importe por participante (en el mismo orden)';
- const customInput=document.createElement('textarea');customInput.id='juntadaCustomAmounts';customInput.placeholder='Ej. 12000, 18000, 30000';
+ const customInput=document.createElement('textarea');customInput.id='juntadaCustomAmounts';customInput.placeholder='Ej. 12000; 18000; 30000 (separá con ; o Enter)';
  customLabel.hidden=true;customInput.hidden=true;
  splitSelect.addEventListener('change',()=>{const show=splitSelect.value==='custom';customLabel.hidden=!show;customInput.hidden=!show});
  groupSelect.after(splitLabel,splitSelect,customLabel,customInput);
@@ -1215,7 +1217,7 @@ renderOrganizer=function(){
  document.querySelectorAll('#quickExpense .juntada-preview-tag,#newExpenseGroup .juntada-preview-tag,#balances .juntada-preview-tag,#accounts .juntada-preview-tag').forEach(e=>e.textContent='Versión inicial · Guardado en este dispositivo');
  document.querySelector('#quickExpense .juntada-close-note').textContent='Podés dividir en partes iguales o indicar cuánto corresponde a cada participante. El total debe coincidir exactamente.';
  document.querySelector('#newExpenseGroup .juntada-close-note').textContent='El grupo se guarda en este dispositivo. Podés seleccionarlo al cargar un gasto. Compartir entre teléfonos sigue pendiente.';
- document.querySelector('#balances .juntada-close-note').textContent='Saldos de gastos rápidos guardados en este dispositivo. Para identificarte, usá «Yo» al registrar gastos. Todavía no hay sincronización entre teléfonos.';
+ document.querySelector('#balances .juntada-close-note').textContent='Incluye gastos rápidos, de grupos y pagos registrados en este dispositivo. Usá «Yo» para identificarte. No hay sincronización entre teléfonos.';
 
  document.querySelector('#balances .pad').addEventListener('click',e=>{
   const btn=e.target.closest('[data-settle]');if(!btn)return;
@@ -1224,8 +1226,8 @@ renderOrganizer=function(){
   for(const expense of read(KEY)){
    for(const share of expense.shares||[]){
     if(normalize(share.person)===normalize(expense.payer))continue;
-    if(expense.normalize(payer)==='yo'&&share.person.toLowerCase()===person.toLowerCase())net+=share.cents;
-    else if(normalize(share.person)==='yo'&&expense.payer.toLowerCase()===person.toLowerCase())net-=share.cents;
+    if(normalize(expense.payer)==='yo'&&normalize(share.person)===normalize(person))net+=share.cents;
+    else if(normalize(share.person)==='yo'&&normalize(expense.payer)===normalize(person))net-=share.cents;
    }
   }
   for(const payment of read(SETTLEMENTS))if(normalize(payment.person)===normalize(person))net+=payment.direction==='paidByMe'?payment.cents:-payment.cents;
