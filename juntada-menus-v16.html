@@ -1137,11 +1137,20 @@ renderOrganizer=function(){
   if(!name||!payer||!raw||!Number.isFinite(amount)||amount<=0||cents<=0||members.length<2||!members.some(x=>x.toLowerCase()===payer.toLowerCase())||new Set(members.map(x=>x.toLowerCase())).size!==members.length){toast('Completá nombre, importe y al menos dos participantes, incluyendo quien pagó');return}
   if(!Number.isSafeInteger(cents)||cents>100000000000){toast('El importe es demasiado grande');return}
   if(group&&members.some(x=>!group.members.some(y=>x.toLowerCase()===y.toLowerCase()))){toast('Todos los participantes deben pertenecer al grupo');return}
-  const base=Math.floor(cents/members.length),remainder=cents%members.length;
-  const shares=members.map((person,i)=>({person,cents:base+(i<remainder?1:0)}));
+  let shares;
+  if(document.getElementById('juntadaSplitMode').value==='custom'){
+   const amounts=document.getElementById('juntadaCustomAmounts').value.split(/[,;\n]/).map(x=>x.trim());
+   if(amounts.length!==members.length){toast('Ingresá un importe por participante, en el mismo orden');return}
+   const parts=amounts.map(x=>/^\d+(?:[.,]\d{1,2})?$/.test(x)?Math.round(Number(x.replace(',','.'))*100):NaN);
+   if(parts.some(x=>!Number.isSafeInteger(x)||x<0)||parts.reduce((a,b)=>a+b,0)!==cents){toast('Las partes deben sumar exactamente el importe total');return}
+   shares=members.map((person,i)=>({person,cents:parts[i]}));
+  }else{
+   const base=Math.floor(cents/members.length),remainder=cents%members.length;
+   shares=members.map((person,i)=>({person,cents:base+(i<remainder?1:0)}));
+  }
   const records=read(KEY);records.unshift({id:'e'+Date.now()+'_'+Math.random().toString(36).slice(2,8),name,payer,cents,shares,created:Date.now(),groupId});
   if(!save(KEY,records))return;
-  ['quickExpenseName','quickExpenseAmount','quickExpensePayer','quickExpensePeople'].forEach(id=>document.getElementById(id).value='');
+  ['quickExpenseName','quickExpenseAmount','quickExpensePayer','quickExpensePeople','juntadaCustomAmounts'].forEach(id=>document.getElementById(id).value='');
   toast('Gasto guardado en este dispositivo');render();go('balances');
  }
  function addGroup(){
@@ -1189,12 +1198,20 @@ renderOrganizer=function(){
  const groupLabel=document.createElement('label');groupLabel.htmlFor='juntadaExpenseGroupSelect';groupLabel.textContent='Grupo (opcional)';
  const groupSelect=document.createElement('select');groupSelect.id='juntadaExpenseGroupSelect';
  document.getElementById('quickExpensePeople').after(groupLabel,groupSelect);
+ const splitLabel=document.createElement('label');splitLabel.htmlFor='juntadaSplitMode';splitLabel.textContent='¿Cómo se divide?';
+ const splitSelect=document.createElement('select');splitSelect.id='juntadaSplitMode';
+ splitSelect.innerHTML='<option value="equal">En partes iguales</option><option value="custom">Importes personalizados</option>';
+ const customLabel=document.createElement('label');customLabel.htmlFor='juntadaCustomAmounts';customLabel.textContent='Importe por participante (en el mismo orden)';
+ const customInput=document.createElement('textarea');customInput.id='juntadaCustomAmounts';customInput.placeholder='Ej. 12000, 18000, 30000';
+ customLabel.hidden=true;customInput.hidden=true;
+ splitSelect.addEventListener('change',()=>{const show=splitSelect.value==='custom';customLabel.hidden=!show;customInput.hidden=!show});
+ groupSelect.after(splitLabel,splitSelect,customLabel,customInput);
  const q=document.querySelector('#quickExpense .juntada-disabled-action');
  q.disabled=false;q.classList.remove('juntada-disabled-action');q.textContent='Guardar gasto';q.addEventListener('click',addExpense);
  const g=document.querySelector('#newExpenseGroup .juntada-disabled-action');
  g.disabled=false;g.classList.remove('juntada-disabled-action');g.textContent='Crear grupo';g.addEventListener('click',addGroup);
  document.querySelectorAll('#quickExpense .juntada-preview-tag,#newExpenseGroup .juntada-preview-tag,#balances .juntada-preview-tag,#accounts .juntada-preview-tag').forEach(e=>e.textContent='Versión inicial · Guardado en este dispositivo');
- document.querySelector('#quickExpense .juntada-close-note').textContent='El gasto se divide en partes iguales. Incluí a quien pagó entre los participantes. Los importes se calculan en centavos para evitar diferencias por redondeo.';
+ document.querySelector('#quickExpense .juntada-close-note').textContent='Podés dividir en partes iguales o indicar cuánto corresponde a cada participante. El total debe coincidir exactamente.';
  document.querySelector('#newExpenseGroup .juntada-close-note').textContent='El grupo se guarda en este dispositivo. Podés seleccionarlo al cargar un gasto. Compartir entre teléfonos sigue pendiente.';
  document.querySelector('#balances .juntada-close-note').textContent='Saldos de gastos rápidos guardados en este dispositivo. Para identificarte, usá «Yo» al registrar gastos. Todavía no hay sincronización entre teléfonos.';
 
