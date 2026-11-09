@@ -1239,6 +1239,49 @@ renderOrganizer=function(){
   const payments=read(SETTLEMENTS);payments.push({id:'s'+Date.now(),person,cents,direction:net>0?'received':'paidByMe',created:Date.now()});
   if(save(SETTLEMENTS,payments)){toast('Pago registrado');render()}
  });
+
+ /* Copia de seguridad portable: permite mover gastos y grupos sin prometer sincronización en vivo. */
+ function backup(){
+  const payload={format:'juntada-expenses',version:1,exportedAt:new Date().toISOString(),expenses:read(KEY),groups:read(GROUPS),settlements:read(SETTLEMENTS)};
+  const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);const a=document.createElement('a');
+  a.href=url;a.download='juntada-gastos-'+new Date().toISOString().slice(0,10)+'.json';
+  document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);
+ }
+ const backupArea=document.createElement('div');backupArea.className='card';
+ backupArea.style.cssText='margin-top:18px;padding:16px';
+ const backupTitle=document.createElement('strong');backupTitle.textContent='Copia de seguridad de gastos';
+ const backupHelp=document.createElement('p');backupHelp.className='sub';backupHelp.textContent='Exportá tus gastos, grupos y pagos a un archivo para recuperarlos en otro navegador. No es sincronización automática.';
+ const exportBtn=document.createElement('button');exportBtn.type='button';exportBtn.className='btn secondary';exportBtn.textContent='Exportar mis gastos';exportBtn.addEventListener('click',backup);
+ const importBtn=document.createElement('button');importBtn.type='button';importBtn.className='btn secondary';importBtn.textContent='Importar copia';importBtn.style.marginTop='8px';
+ const file=document.createElement('input');file.type='file';file.accept='.json,application/json';file.hidden=true;
+ importBtn.addEventListener('click',()=>file.click());
+ file.addEventListener('change',async()=>{
+  const selected=file.files?.[0];if(!selected)return;
+  try{
+   if(selected.size>2000000)throw Error('El archivo supera 2 MB');
+   const data=JSON.parse(await selected.text());
+   if(data.format!=='juntada-expenses'||data.version!==1||!['expenses','groups','settlements'].every(k=>Array.isArray(data[k])))throw Error('Formato de copia no válido');
+   if(data.expenses.length>10000||data.groups.length>10000||data.settlements.length>10000)throw Error('La copia contiene demasiados registros');
+   const validExpense=e=>e&&typeof e.id==='string'&&typeof e.name==='string'&&typeof e.payer==='string'&&Number.isSafeInteger(e.cents)&&e.cents>0&&Array.isArray(e.shares)&&e.shares.length>0&&e.shares.every(x=>x&&typeof x.person==='string'&&Number.isSafeInteger(x.cents)&&x.cents>=0)&&e.shares.reduce((n,x)=>n+x.cents,0)===e.cents;
+   const validGroup=g=>g&&typeof g.id==='string'&&typeof g.name==='string'&&Array.isArray(g.members)&&g.members.every(x=>typeof x==='string');
+   const validPayment=p=>p&&typeof p.id==='string'&&typeof p.person==='string'&&Number.isSafeInteger(p.cents)&&p.cents>0&&['received','paidByMe'].includes(p.direction);
+   if(!data.expenses.every(validExpense)||!data.groups.every(validGroup)||!data.settlements.every(validPayment))throw Error('La copia contiene registros inválidos');
+   if(!confirm('¿Reemplazar los gastos, grupos y pagos guardados en este dispositivo por los de la copia?'))return;
+   const snapshot=[localStorage.getItem(KEY),localStorage.getItem(GROUPS),localStorage.getItem(SETTLEMENTS)];
+   try{
+    localStorage.setItem(KEY,JSON.stringify(data.expenses));
+    localStorage.setItem(GROUPS,JSON.stringify(data.groups));
+    localStorage.setItem(SETTLEMENTS,JSON.stringify(data.settlements));
+   }catch(e){
+    [KEY,GROUPS,SETTLEMENTS].forEach((key,i)=>{try{if(snapshot[i]===null)localStorage.removeItem(key);else localStorage.setItem(key,snapshot[i])}catch(_){}});
+    throw Error('No se pudo guardar la copia');
+   }
+   toast('Copia importada');render();
+  }catch(e){toast(e.message||'No se pudo importar la copia')}finally{file.value=''}
+ });
+ backupArea.append(backupTitle,backupHelp,exportBtn,importBtn,file);
+ document.querySelector('#accounts .pad').appendChild(backupArea);
  const previousGo=go;go=function(id){previousGo(id);if(id==='balances'||id==='accounts')render()};
  render();
 })();
