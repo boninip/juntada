@@ -673,7 +673,7 @@ function configureSupabase(){
  localStorage.setItem('juntada_supabase_url',value);
  toast('URL guardada. Reintentá la publicación.');
 }
-async let juntadaRetryPublishing=false;
+let juntadaRetryPublishing=false;
 async function publishSavedOnline(){
  if(!saved.name||juntadaRetryPublishing)return;
  juntadaRetryPublishing=true;
