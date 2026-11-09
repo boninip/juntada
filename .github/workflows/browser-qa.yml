@@ -13,6 +13,6 @@ jobs:
         with:
           node-version: '22'
       - run: npm install --no-save playwright@1.56.1
-      - run: npx playwright install --with-deps chromium
+      - run: which google-chrome || which chromium || which chromium-browser
       - run: python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/juntada-http.log 2>&1 &
       - run: node tests/browser-smoke.cjs
