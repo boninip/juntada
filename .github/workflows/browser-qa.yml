@@ -17,3 +17,22 @@ jobs:
       - run: python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/juntada-http.log 2>&1 &
       - run: node tests/browser-smoke.cjs
       - run: node tests/full-qa.cjs
+  iphone:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        device: ['iPhone SE', 'iPhone 13', 'iPhone 15 Pro Max']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-save playwright@1.56.1
+      - run: npx playwright install --with-deps webkit
+      - run: python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/juntada-http.log 2>&1 &
+      - run: node tests/full-qa.cjs
+        env:
+          JUNTADA_BROWSER: webkit
+          JUNTADA_DEVICE: ${{ matrix.device }}
