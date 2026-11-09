@@ -1124,19 +1124,21 @@ renderOrganizer=function(){
 (function juntadaExpensesV1(){
  const KEY='juntada_expenses_v1',GROUPS='juntada_expense_groups_v1',SETTLEMENTS='juntada_settlements_v1';
  const read=key=>{try{const a=JSON.parse(localStorage.getItem(key)||'[]');return Array.isArray(a)?a:[]}catch(e){return []}};
- const people=value=>[...new Set(value.split(/[,;\n]/).map(x=>x.trim()).filter(Boolean))];
+ const people=value=>value.split(/[,;\n]/).map(x=>x.trim()).filter(Boolean);
  const money=cents=>(cents/100).toLocaleString('es-AR',{style:'currency',currency:'ARS'});
  const clean=s=>escapeHTML(String(s));
+ const normalize=s=>String(s).trim().toLocaleLowerCase('es-AR');
  function save(key,arr){try{localStorage.setItem(key,JSON.stringify(arr));return true}catch(e){toast('No se pudo guardar en este dispositivo');return false}}
  function addExpense(){
   const name=document.getElementById('quickExpenseName').value.trim(),raw=document.getElementById('quickExpenseAmount').value;
-  const payer=document.getElementById('quickExpensePayer').value.trim(),members=people(document.getElementById('quickExpensePeople').value);
+  const payerInput=document.getElementById('quickExpensePayer').value.trim(),members=people(document.getElementById('quickExpensePeople').value);
+  const payer=members.find(x=>normalize(x)===normalize(payerInput))||payerInput;
   const amount=Number(raw),cents=Math.round(amount*100);
   const groupId=document.getElementById('juntadaExpenseGroupSelect').value||null;
   const group=read(GROUPS).find(g=>g.id===groupId);
-  if(!name||!payer||!raw||!Number.isFinite(amount)||amount<=0||cents<=0||members.length<2||!members.some(x=>x.toLowerCase()===payer.toLowerCase())||new Set(members.map(x=>x.toLowerCase())).size!==members.length){toast('Completá nombre, importe y al menos dos participantes, incluyendo quien pagó');return}
+  if(!name||!payer||!raw||!Number.isFinite(amount)||amount<=0||cents<=0||members.length<2||!members.some(x=>normalize(x)===normalize(payer))||new Set(members.map(normalize)).size!==members.length){toast('Completá nombre, importe y al menos dos participantes, incluyendo quien pagó');return}
   if(!Number.isSafeInteger(cents)||cents>100000000000){toast('El importe es demasiado grande');return}
-  if(group&&members.some(x=>!group.members.some(y=>x.toLowerCase()===y.toLowerCase()))){toast('Todos los participantes deben pertenecer al grupo');return}
+  if(group&&members.some(x=>!group.members.some(y=>normalize(x)===normalize(y)))){toast('Todos los participantes deben pertenecer al grupo');return}
   let shares;
   if(document.getElementById('juntadaSplitMode').value==='custom'){
    const amounts=document.getElementById('juntadaCustomAmounts').value.split(/[,;\n]/).map(x=>x.trim());
@@ -1155,7 +1157,7 @@ renderOrganizer=function(){
  }
  function addGroup(){
   const name=document.getElementById('expenseGroupName').value.trim(),members=people(document.getElementById('expenseGroupPeople').value);
-  if(!name||members.length<2||new Set(members.map(x=>x.toLowerCase())).size!==members.length){toast('Ingresá un nombre y al menos dos participantes distintos');return}
+  if(!name||members.length<2||new Set(members.map(normalize)).size!==members.length){toast('Ingresá un nombre y al menos dos participantes distintos');return}
   const groups=read(GROUPS);groups.unshift({id:'g'+Date.now(),name,members,created:Date.now()});
   if(!save(GROUPS,groups))return;
   document.getElementById('expenseGroupName').value='';document.getElementById('expenseGroupPeople').value='';
@@ -1170,16 +1172,16 @@ renderOrganizer=function(){
    if(!Array.isArray(expense.shares))continue;
    const payer=expense.payer;
    for(const share of expense.shares){
-    if(share.person.toLowerCase()===payer.toLowerCase())continue;
+    if(normalize(share.person)===normalize(payer))continue;
     const n=Number(share.cents);
     if(!Number.isSafeInteger(n)||n<0)continue;
-    if(payer.toLowerCase()==='yo'&&share.person.toLowerCase()!=='yo')balances.set(share.person,(balances.get(share.person)||0)+n);
-    else if(share.person.toLowerCase()==='yo'&&payer.toLowerCase()!=='yo')balances.set(payer,(balances.get(payer)||0)-n);
+    if(normalize(payer)==='yo'&&normalize(share.person)!=='yo')balances.set(normalize(share.person),(balances.get(normalize(share.person))||0)+n);
+    else if(normalize(share.person)==='yo'&&normalize(payer)!=='yo')balances.set(normalize(payer),(balances.get(normalize(payer))||0)-n);
    }
   }
   for(const payment of read(SETTLEMENTS)){
    if(!Number.isSafeInteger(payment.cents)||payment.cents<=0)continue;
-   balances.set(payment.person,(balances.get(payment.person)||0)+(payment.direction==='paidByMe'?payment.cents:-payment.cents));
+   balances.set(normalize(payment.person),(balances.get(normalize(payment.person))||0)+(payment.direction==='paidByMe'?payment.cents:-payment.cents));
   }
   const entries=[...balances].filter(([,n])=>n!==0).sort((a,b)=>Math.abs(b[1])-Math.abs(a[1]));
   const owed=entries.reduce((s,[,n])=>s+Math.max(0,n),0),owe=entries.reduce((s,[,n])=>s+Math.max(0,-n),0);
@@ -1221,12 +1223,12 @@ renderOrganizer=function(){
   let net=0;
   for(const expense of read(KEY)){
    for(const share of expense.shares||[]){
-    if(share.person.toLowerCase()===expense.payer.toLowerCase())continue;
-    if(expense.payer.toLowerCase()==='yo'&&share.person.toLowerCase()===person.toLowerCase())net+=share.cents;
-    else if(share.person.toLowerCase()==='yo'&&expense.payer.toLowerCase()===person.toLowerCase())net-=share.cents;
+    if(normalize(share.person)===normalize(expense.payer))continue;
+    if(expense.normalize(payer)==='yo'&&share.person.toLowerCase()===person.toLowerCase())net+=share.cents;
+    else if(normalize(share.person)==='yo'&&expense.payer.toLowerCase()===person.toLowerCase())net-=share.cents;
    }
   }
-  for(const payment of read(SETTLEMENTS))if(payment.person.toLowerCase()===person.toLowerCase())net+=payment.direction==='paidByMe'?payment.cents:-payment.cents;
+  for(const payment of read(SETTLEMENTS))if(normalize(payment.person)===normalize(person))net+=payment.direction==='paidByMe'?payment.cents:-payment.cents;
   if(!net)return;
   const raw=prompt((net>0?'¿Cuánto te pagó ':'¿Cuánto le pagaste a ')+person+'? (ARS)',String(Math.abs(net)/100));
   if(raw===null)return;
