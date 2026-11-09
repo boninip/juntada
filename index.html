@@ -1094,4 +1094,27 @@ renderOrganizer=function(){
  };
  baseline=values();refresh();
 })();
+
+/* QA V17: browser/Android back navigation and reload recovery. */
+(function juntadaHistoryNavigation(){
+ const valid=new Set([...document.querySelectorAll('.screen[id]')].map(el=>el.id));
+ const initial='home';
+ const current=()=>document.querySelector('.screen.active')?.id||initial;
+ const originalGo=go;
+ let restoring=false;
+ go=function(id){
+  if(!valid.has(id))return;
+  const previous=current();
+  originalGo(id);
+  if(!restoring&&previous!==id){
+   try{history.pushState({juntadaScreen:id},'',location.pathname+location.search+location.hash)}catch(e){}
+  }
+ };
+ window.addEventListener('popstate',function(e){
+  const target=e.state?.juntadaScreen;
+  restoring=true;
+  try{originalGo(valid.has(target)?target:initial)}finally{restoring=false}
+ });
+ try{history.replaceState({juntadaScreen:current()},'',location.href)}catch(e){}
+})();
 </script></body></html>
