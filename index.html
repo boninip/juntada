@@ -204,7 +204,15 @@ let currentJuntadaId=null;
 function getJuntadas(){try{return JSON.parse(localStorage.getItem(JSTORE)||'[]')}catch(e){return []}}
 function persistJuntada(){if(!saved.name)return;try{const all=getJuntadas();if(!currentJuntadaId)currentJuntadaId='j'+Date.now().toString(36);const entry={id:currentJuntadaId,updated:Date.now(),saved:{...saved},confirmedDate,confirmedPlace,places:JSON.parse(JSON.stringify(places)),guestResponses:{...guestResponses},guestVotes:{...guestVotes},placeVotes:{...placeVotes}};const idx=all.findIndex(x=>x.id===entry.id);if(idx<0)all.unshift(entry);else all[idx]=entry;localStorage.setItem(JSTORE,JSON.stringify(all))}catch(e){toast('No se pudo guardar en este navegador')}}
 function openJuntada(id){const entry=getJuntadas().find(x=>x.id===id);if(!entry)return;currentJuntadaId=id;saved={...entry.saved};confirmedDate=entry.confirmedDate||'';confirmedPlace=entry.confirmedPlace||'';places=entry.places||[];guestResponses=entry.guestResponses||{};guestVotes=entry.guestVotes||{};placeVotes=entry.placeVotes||{};placeCounter=Math.max(0,...places.map(p=>Number(p.id)||0));go('event')}
-function showMyEvents(){const list=document.getElementById('myEventsList'),all=getJuntadas();list.innerHTML=all.length?all.map(x=>'<button type="button" data-id="'+x.id+'" style="display:block;width:100%;text-align:left;background:white;border:1px solid #d9e6ed;border-radius:16px;padding:18px;margin:12px 0;color:#24518b"><strong>'+escapeHTML(x.saved.name)+'</strong><div style="color:#64778b;margin-top:6px">'+escapeHTML(x.saved.date||'Fecha pendiente')+' · '+escapeHTML(x.saved.place||'Lugar a confirmar')+'</div></button>').join(''):'<div class="card">Todavía no creaste ninguna juntada en este navegador.</div>';list.querySelectorAll('[data-id]').forEach(b=>b.onclick=()=>openJuntada(b.dataset.id));go('myEvents')}
+function showMyEvents(){
+ const list=document.getElementById('myEventsList'),all=getJuntadas();
+ list.innerHTML=all.length?all.map(x=>{
+  const canceled=!!x.cancelada;
+  return '<button type="button" data-id="'+escapeHTML(x.id)+'" style="display:block;width:100%;text-align:left;background:white;border:1px solid '+(canceled?'#e6c5cc':'#d9e6ed')+';border-radius:16px;padding:18px;margin:12px 0;color:#24518b;opacity:'+(canceled?'0.75':'1')+'"><strong>'+escapeHTML(x.saved.name)+'</strong><span style="float:right;font-size:12px;font-weight:700;color:'+(canceled?'#a63242':'#287a60')+'">'+(canceled?'Cancelada':'Activa')+'</span><div style="color:#64778b;margin-top:6px">'+escapeHTML(x.saved.date||'Fecha pendiente')+' · '+escapeHTML(x.saved.place||'Lugar a confirmar')+'</div></button>'
+ }).join(''):'<div class="card">Todavía no creaste ninguna juntada en este navegador.</div>';
+ list.querySelectorAll('[data-id]').forEach(b=>b.onclick=()=>openJuntada(b.dataset.id));
+ go('myEvents');
+}
 const originalCreateV9=create;create=function(){const before=saved;originalCreateV9();if(saved!==before&&saved.name){currentJuntadaId=null;persistJuntada()}};
 const originalGoV9=go;go=function(id){originalGoV9(id);document.querySelector('.nav').classList.toggle('hide',!['home','event','myEvents'].includes(id))};
 const originalConfirmPlaceV9=confirmPlace;confirmPlace=function(id){originalConfirmPlaceV9(id);persistJuntada()};
@@ -278,7 +286,7 @@ async function publishSavedOnline(){
  finally{if(btn){btn.disabled=false;btn.textContent='Reintentar publicación'}}
 }
 function openGuestTest(){
- if(!remoteEvent||!remoteEvent.codigo){toast('Primero publicá la juntada online');return}
+ if(getJuntadas().find(x=>x.id===currentJuntadaId)?.cancelada){toast('Esta juntada está cancelada. Su invitación ya no funciona.');return}if(!remoteEvent||!remoteEvent.codigo){toast('Primero publicá la juntada online');return}
  const link=location.origin+location.pathname+'?invite='+encodeURIComponent(remoteEvent.codigo);
  window.location.assign(link)
 }
@@ -365,6 +373,6 @@ removePlace=function(id){oldRemovePlaceOnline(id);if(remoteEvent)updateRemoteEve
 async function cancelOnlineEvent(){
  if(!remoteEvent||!remoteEvent.organizador){toast('Este evento no tiene administración online');return}
  if(!confirm('¿Cancelar esta juntada? El enlace dejará de funcionar.'))return;
- try{await rpc('juntada_actualizar',{p_juntada:remoteEvent.id,p_organizador:remoteEvent.organizador,p_cancelada:true});toast('Juntada cancelada');showMyEvents()}catch(e){toast('No se pudo cancelar: '+e.message)}
+ try{await rpc('juntada_actualizar',{p_juntada:remoteEvent.id,p_organizador:remoteEvent.organizador,p_cancelada:true});const all=getJuntadas();const entry=all.find(x=>x.id===currentJuntadaId);if(entry){entry.cancelada=true;entry.updated=Date.now();localStorage.setItem(JSTORE,JSON.stringify(all))}showMyEvents();toast('Juntada cancelada. La invitación dejó de funcionar.')}catch(e){toast('No se pudo cancelar: '+e.message)}
 }
 </script></body></html>
