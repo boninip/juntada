@@ -357,35 +357,53 @@ function showMyEvents(){
   '<button type="button" data-menu-id="'+escapeHTML(x.id)+'" aria-label="Opciones de '+escapeHTML(x.saved.name)+'" aria-expanded="false" style="flex:none;border:0;background:#eef6fa;color:#24518b;border-radius:10px;width:38px;height:38px;font-size:24px;line-height:1">⋮</button>'+
   '<div data-options-id="'+escapeHTML(x.id)+'" hidden style="position:absolute;right:12px;top:52px;z-index:10;background:white;border:1px solid #d9e6ed;box-shadow:0 5px 20px #1234;border-radius:12px;padding:5px;min-width:245px"><button type="button" data-action="view" data-event-id="'+escapeHTML(x.id)+'" style="display:block;width:100%;text-align:left;background:transparent;border:0;padding:12px;color:#24518b;font-weight:600"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-right:12px;flex-shrink:0"><circle cx="12" cy="12" r="3"/><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/></svg>Ver detalles</button><button type="button" data-action="edit" data-event-id="'+escapeHTML(x.id)+'" style="display:block;width:100%;text-align:left;background:transparent;border:0;padding:12px;color:#24518b;font-weight:600"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-right:12px;flex-shrink:0"><path d="m16 5 3 3M4 20l4-.8L20 7a2.1 2.1 0 0 0-3-3L5 16z"/></svg>Editar juntada</button><button type="button" data-action="share" data-event-id="'+escapeHTML(x.id)+'" style="display:block;width:100%;text-align:left;background:transparent;border:0;padding:12px;color:#24518b;font-weight:600"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-right:12px;flex-shrink:0"><circle cx="18" cy="5" r="2"/><circle cx="6" cy="12" r="2"/><circle cx="18" cy="19" r="2"/><path d="m8 11 8-5M8 13l8 5"/></svg>Compartir invitación</button><button type="button" data-action="pause" data-event-id="'+escapeHTML(x.id)+'" style="display:block;width:100%;text-align:left;background:transparent;border:0;padding:12px;color:#24518b;font-weight:600;opacity:1"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-right:12px;flex-shrink:0"><circle cx="12" cy="12" r="9"/><path d="M10 8v8m4-8v8"/></svg>'+(paused?'Reactivar juntada':online?'Suspender juntada':'Suspender · Solo online')+'</button><button type="button" data-action="transfer" data-event-id="'+escapeHTML(x.id)+'" style="display:block;width:100%;text-align:left;background:transparent;border:0;padding:12px;color:#24518b;font-weight:600"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-right:12px;flex-shrink:0"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M10 18h4"/><path d="M19 8l3 3-3 3M22 11H12"/></svg>Llevar a otro dispositivo</button><div style="border-top:1px solid #e9edf1;margin:4px 0"></div><button type="button" data-action="delete" data-event-id="'+escapeHTML(x.id)+'" style="display:block;width:100%;text-align:left;background:transparent;border:0;padding:12px;color:#a63242;font-weight:600"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-right:12px;flex-shrink:0"><path d="M3 6h18M8 6V4h8v2m3 0-1 14H6L5 6m5 4v7m4-7v7"/></svg>Eliminar juntada</button></div></div>'
  }).join(''):'<div class="card">Todavía no creaste ninguna juntada en este navegador.</div>';
- // Orden manual táctil: solo el asa inicia el movimiento; tocar la tarjeta sigue abriendo el evento.
+ // Arrastre móvil: los eventos se escuchan en document para no perder el gesto
+ // cuando la tarjeta cambia de posición en el DOM.
  list.querySelectorAll('[data-drag-id]').forEach(handle=>{
+  handle.style.touchAction='none';
+  handle.style.webkitUserSelect='none';
   handle.addEventListener('pointerdown',e=>{
-   if(e.button!==0)return;
+   if(e.pointerType==='mouse'&&e.button!==0)return;
    const card=handle.closest('[data-sort-id]');if(!card)return;
-   e.preventDefault();handle.setPointerCapture(e.pointerId);
-   const startY=e.clientY;let moved=false;
-   card.style.transition='box-shadow .15s';card.style.zIndex='2';
+   e.preventDefault();
+   const pointerId=e.pointerId,startY=e.clientY;
+   let moved=false,lastY=startY;
+   document.body.style.userSelect='none';
+   document.body.style.webkitUserSelect='none';
+   card.style.zIndex='5';
+   card.style.boxShadow='0 10px 28px #24518b30';
+   card.style.background='#f2faff';
    const move=ev=>{
-    if(Math.abs(ev.clientY-startY)>7)moved=true;
+    if(ev.pointerId!==pointerId)return;
+    lastY=ev.clientY;
+    if(Math.abs(lastY-startY)>5)moved=true;
     if(!moved)return;
-    card.style.boxShadow='0 10px 28px #24518b30';
-    card.style.background='#f2faff';
+    ev.preventDefault();
     const others=[...list.querySelectorAll('[data-sort-id]')].filter(n=>n!==card);
-    const target=others.find(n=>ev.clientY<n.getBoundingClientRect().top+n.getBoundingClientRect().height/2);
-    if(target)list.insertBefore(card,target);else list.appendChild(card);
+    const target=others.find(n=>lastY<n.getBoundingClientRect().top+n.getBoundingClientRect().height/2);
+    if(target&&card.nextElementSibling!==target)list.insertBefore(card,target);
+    else if(!target&&card!==list.lastElementChild)list.appendChild(card);
+    const edge=65;
+    if(lastY>innerHeight-edge)window.scrollBy(0,13);
+    else if(lastY<edge)window.scrollBy(0,-13);
    };
-   const finish=()=>{
-    handle.removeEventListener('pointermove',move);handle.removeEventListener('pointerup',finish);handle.removeEventListener('pointercancel',finish);
-    card.style.boxShadow='';card.style.background='white';card.style.zIndex='';
+   const finish=ev=>{
+    if(ev.pointerId!==pointerId)return;
+    document.removeEventListener('pointermove',move);
+    document.removeEventListener('pointerup',finish);
+    document.removeEventListener('pointercancel',finish);
+    document.body.style.userSelect='';
+    document.body.style.webkitUserSelect='';
+    card.style.zIndex='';card.style.boxShadow='';card.style.background='';
     if(!moved)return;
     const order=[...list.querySelectorAll('[data-sort-id]')].map(n=>n.dataset.sortId);
-    const allStored=getJuntadas(),rank=new Map(order.map((id,i)=>[id,i]));
-    allStored.sort((a,b)=>(rank.get(a.id)??99999)-(rank.get(b.id)??99999));
-    try{localStorage.setItem(JSTORE,JSON.stringify(allStored));toast('Orden guardado')}catch(err){toast('No se pudo guardar el orden')}
+    const stored=getJuntadas(),rank=new Map(order.map((id,i)=>[id,i]));
+    stored.sort((a,b)=>(rank.get(a.id)??99999)-(rank.get(b.id)??99999));
+    try{localStorage.setItem(JSTORE,JSON.stringify(stored));toast('Orden guardado')}catch(err){toast('No se pudo guardar el orden')}
    };
-   handle.addEventListener('pointermove',move);
-   handle.addEventListener('pointerup',finish);
-   handle.addEventListener('pointercancel',finish);
+   document.addEventListener('pointermove',move,{passive:false});
+   document.addEventListener('pointerup',finish);
+   document.addEventListener('pointercancel',finish);
   });
  });
  list.querySelectorAll('[data-open-id]').forEach(b=>b.onclick=()=>openJuntada(b.dataset.openId));
