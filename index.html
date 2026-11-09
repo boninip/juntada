@@ -241,7 +241,7 @@ function showMyEvents(){
   return '<div style="position:relative;display:flex;align-items:center;gap:8px;background:white;border:1px solid #d9e6ed;border-radius:15px;padding:10px 12px;margin:9px 0;min-height:65px">'+
   '<button type="button" data-open-id="'+escapeHTML(x.id)+'" style="flex:1;min-width:0;text-align:left;background:transparent;border:0;padding:3px 0;color:#24518b"><strong style="display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+escapeHTML(x.saved.name)+'</strong><span style="display:block;color:#64778b;font-size:13px;margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+escapeHTML(date)+' · '+escapeHTML(x.saved.place||'Lugar a confirmar')+'</span></button>'+
   '<button type="button" data-menu-id="'+escapeHTML(x.id)+'" aria-label="Opciones de '+escapeHTML(x.saved.name)+'" aria-expanded="false" style="flex:none;border:0;background:#eef6fa;color:#24518b;border-radius:10px;width:38px;height:38px;font-size:24px;line-height:1">⋮</button>'+
-  '<div data-options-id="'+escapeHTML(x.id)+'" hidden style="position:absolute;right:12px;top:52px;z-index:10;background:white;border:1px solid #d9e6ed;box-shadow:0 5px 20px #1234;border-radius:12px;padding:5px;min-width:155px"><button type="button" data-delete-id="'+escapeHTML(x.id)+'" style="width:100%;text-align:left;background:transparent;border:0;border-radius:8px;padding:11px;color:#a63242;font-weight:700">Eliminar de la lista</button></div></div>'
+  '<div data-options-id="'+escapeHTML(x.id)+'" hidden style="position:absolute;right:12px;top:52px;z-index:10;background:white;border:1px solid #d9e6ed;box-shadow:0 5px 20px #1234;border-radius:12px;padding:5px;min-width:205px"><button type="button" data-action="view" data-event-id="'+escapeHTML(x.id)+'" style="display:block;width:100%;text-align:left;background:transparent;border:0;padding:11px;color:#24518b;font-weight:600">Ver detalles</button><button type="button" data-action="edit" data-event-id="'+escapeHTML(x.id)+'" style="display:block;width:100%;text-align:left;background:transparent;border:0;padding:11px;color:#24518b;font-weight:600">Editar juntada</button><button type="button" data-action="share" data-event-id="'+escapeHTML(x.id)+'" style="display:block;width:100%;text-align:left;background:transparent;border:0;padding:11px;color:#24518b;font-weight:600">Compartir invitación</button><div style="border-top:1px solid #e9edf1;margin:4px 0"></div><button type="button" data-action="cancel" data-event-id="'+escapeHTML(x.id)+'" style="display:block;width:100%;text-align:left;background:transparent;border:0;padding:11px;color:#a63242;font-weight:600">Cancelar juntada</button><button type="button" data-action="delete" data-event-id="'+escapeHTML(x.id)+'" style="display:block;width:100%;text-align:left;background:transparent;border:0;padding:11px;color:#a63242;font-weight:600">Eliminar de la lista</button></div></div>'
  }).join(''):'<div class="card">Todavía no creaste ninguna juntada en este navegador.</div>';
  list.querySelectorAll('[data-open-id]').forEach(b=>b.onclick=()=>openJuntada(b.dataset.openId));
  list.querySelectorAll('[data-menu-id]').forEach(b=>b.onclick=()=>{
@@ -251,7 +251,24 @@ function showMyEvents(){
   list.querySelectorAll('[data-menu-id]').forEach(m=>m.setAttribute('aria-expanded','false'));
   menu.hidden=!opening;b.setAttribute('aria-expanded',String(opening));
  });
- list.querySelectorAll('[data-delete-id]').forEach(b=>b.onclick=()=>deleteLocalJuntada(b.dataset.deleteId));
+ list.querySelectorAll('[data-action]').forEach(b=>b.onclick=async()=>{
+  const id=b.dataset.eventId,action=b.dataset.action;
+  if(action==='delete'){deleteLocalJuntada(id);return}
+  openJuntada(id);
+  if(action==='view')return;
+  if(action==='edit'){
+   const field=document.getElementById('organizerPlace');
+   if(field){field.scrollIntoView({behavior:'smooth',block:'center'});field.focus()}
+   return;
+  }
+  if(action==='share'){
+   if(!remoteEvent||!remoteEvent.codigo){toast('Esta juntada no tiene invitación online disponible');return}
+   const url=location.origin+location.pathname+'?invite='+encodeURIComponent(remoteEvent.codigo);
+   try{await navigator.clipboard.writeText(url);toast('Enlace de invitación copiado')}catch(e){toast('No se pudo copiar el enlace')}
+   return;
+  }
+  if(action==='cancel')cancelOnlineEvent();
+ });
  go('myEvents');
 }
 const originalCreateV9=create;create=function(){const before=saved;originalCreateV9();if(saved!==before&&saved.name){currentJuntadaId=null;persistJuntada()}};
