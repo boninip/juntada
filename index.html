@@ -446,11 +446,11 @@ async function shareCurrentInvitation(){const code=remoteInvite||(remoteEvent&&r
 const goLocal=go;
 go=function(id){if(id==='share'&&!remoteEvent){toast('No se puede compartir: esta juntada no está publicada online');return}goLocal(id);if(id==='event'&&!isGuestLink){if(!remoteEvent&&currentJuntadaId){try{remoteEvent=JSON.parse(localStorage.getItem('juntada_remote_'+currentJuntadaId)||'null')}catch(e){remoteEvent=null}}}if(id==='event'){const management=document.getElementById('onlineManagement');if(management)management.classList.toggle('hide',!remoteEvent||isGuestLink)}if(id==='invite'){const preview=!isGuestLink;const status=document.getElementById('rsvpStatus');if(status){status.hidden=true;status.textContent='';}document.querySelectorAll('#invite .rsvp button').forEach(b=>{b.disabled=preview;b.style.opacity=preview?'0.45':'1'});const name=document.getElementById('guestName');if(name)name.disabled=preview;const detail=document.querySelector('#invite .btn.secondary:last-child');if(detail)detail.classList.toggle('hide',isGuestLink);if(preview){const card=document.getElementById('guestPreview');if(card)card.innerHTML='<p class="sub">Esta es una vista previa. Para confirmar de verdad, tocá «Abrir invitación real».</p><button class="btn" onclick="openGuestTest()">Abrir invitación real</button>'}}};
 const rsvpLocal=rsvp;
-rsvp=async function(value,btn){if(!remoteInvite){toast('Para responder, abrí el enlace que compartiste por WhatsApp');return}const name=document.querySelector('#guestName').value.trim();if(!name){toast('Escribí tu nombre');return}btn.disabled=true;try{await rpc('juntada_responder',{p_codigo:remoteInvite,p_nombre:name,p_asistencia:{'Voy':'voy','Tal vez':'tal_vez','No puedo':'no_puedo'}[value]});document.querySelectorAll('.rsvp button').forEach(e=>e.classList.toggle('on',e===btn));document.querySelector('#rsvpStatus').hidden=false;document.querySelector('#rsvpStatus').textContent='✓ ¡Listo, '+name+'! Confirmaste: '+value+'.';const guestCard=document.getElementById('guestPreview');if(guestCard)guestCard.innerHTML='<p class="sub">¡Listo! Tu respuesta fue enviada a la organizadora. Podés cambiarla seleccionando otra opción.</p>';toast('Confirmación guardada online')}catch(e){toast('No se pudo enviar: '+e.message)}finally{btn.disabled=false}};
+rsvp=async function(value,btn){if(!remoteInvite){toast('Para responder, abrí el enlace que compartiste por WhatsApp');return}const name=document.querySelector('#guestName').value.trim();if(!name){toast('Escribí tu nombre');return}btn.disabled=true;try{await rpc('juntada_responder',{p_codigo:remoteInvite,p_nombre:name,p_asistencia:{'Voy':'voy','Tal vez':'tal_vez','No puedo':'no_puedo'}[value]});document.querySelectorAll('.rsvp button').forEach(e=>e.classList.toggle('on',e===btn));document.querySelector('#rsvpStatus').hidden=false;document.querySelector('#rsvpStatus').textContent='✓ ¡Listo, '+name+'! Confirmaste: '+value+'.';const guestCard=document.getElementById('guestPreview');if(guestCard)guestCard.innerHTML='<p class="sub">¡Listo! Tu respuesta fue enviada a la organizadora. Podés cambiarla seleccionando otra opción.</p>';saveGuestProgress({name,attendance:value});toast('Confirmación guardada online')}catch(e){toast('No se pudo enviar: '+e.message)}finally{btn.disabled=false}};
 async function loadResponses(){if(!remoteEvent)return;try{const arr=await rpc('juntada_respuestas_organizador',{p_juntada:remoteEvent.id,p_organizador:remoteEvent.organizador});guestResponses={};for(const x of arr){guestResponses[x.nombre]={voy:'Voy',tal_vez:'Tal vez',no_puedo:'No puedo'}[x.asistencia]}renderOrganizer()}catch(e){toast('No se pudieron cargar respuestas: '+e.message)}}
 const openLocal=openJuntada;
 openJuntada=function(id){try{remoteEvent=JSON.parse(localStorage.getItem('juntada_remote_'+id)||'null')}catch(e){remoteEvent=null}isGuestLink=false;remoteInvite=null;openLocal(id)};
-(function(){const code=new URLSearchParams(location.search).get('invite');if(!code)return;remoteInvite=code;isGuestLink=true;remoteEvent=null;rpc('juntada_ver',{p_codigo:code}).then(d=>{saved={name:d.nombre,desc:d.descripcion||'',dateMode:d.modalidad_fecha||'fixed',date:d.fecha||'',time:d.hora||'',place:d.lugar||'',candidates:d.opciones_fecha||[],expense:d.gastos||''};places=Array.isArray(d.lugares)?d.lugares:[];confirmedDate=d.fecha_confirmada||'';confirmedPlace='';go('invite');document.querySelector('#rsvpStatus').textContent='Elegí una opción para confirmar tu asistencia.';const prev=document.getElementById('guestPreview');if(prev)prev.innerHTML='<p class="sub">Tu respuesta se enviará a la organizadora.</p>'}).catch(e=>{const unavailable=/Invitación no disponible|HTTP 400/i.test(e.message);if(unavailable){document.body.innerHTML='<main style="min-height:100dvh;display:flex;align-items:center;justify-content:center;padding:28px;background:#f8fcff;font-family:system-ui,sans-serif;text-align:center"><div style="max-width:420px;background:white;border:1px solid #dceaf2;border-radius:24px;padding:40px 26px;box-shadow:0 12px 35px #24518b12"><div style="font-size:46px;margin-bottom:16px">⏸️</div><h1 style="color:#24518b;font-size:27px;line-height:1.2">Esta juntada no está disponible por ahora</h1><p style="color:#607487;font-size:17px;line-height:1.6">Puede estar suspendida por quien la organiza. Si se reactiva, vas a poder entrar desde este mismo enlace.</p></div></main>';}else{go('home');toast('No se pudo abrir la invitación: '+e.message)}})})();
+(function(){const code=new URLSearchParams(location.search).get('invite');if(!code)return;remoteInvite=code;isGuestLink=true;remoteEvent=null;rpc('juntada_ver',{p_codigo:code}).then(d=>{saved={name:d.nombre,desc:d.descripcion||'',dateMode:d.modalidad_fecha||'fixed',date:d.fecha||'',time:d.hora||'',place:d.lugar||'',candidates:d.opciones_fecha||[],expense:d.gastos||''};places=Array.isArray(d.lugares)?d.lugares:[];confirmedDate=d.fecha_confirmada||'';confirmedPlace='';go('invite');document.querySelector('#rsvpStatus').textContent='Elegí una opción para confirmar tu asistencia.';const prev=document.getElementById('guestPreview');if(prev)prev.innerHTML='<p class="sub">Tu respuesta se enviará a la organizadora.</p>';restoreGuestProgress(code)}).catch(e=>{const unavailable=/Invitación no disponible|HTTP 400/i.test(e.message);if(unavailable){document.body.innerHTML='<main style="min-height:100dvh;display:flex;align-items:center;justify-content:center;padding:28px;background:#f8fcff;font-family:system-ui,sans-serif;text-align:center"><div style="max-width:420px;background:white;border:1px solid #dceaf2;border-radius:24px;padding:40px 26px;box-shadow:0 12px 35px #24518b12"><div style="font-size:46px;margin-bottom:16px">⏸️</div><h1 style="color:#24518b;font-size:27px;line-height:1.2">Esta juntada no está disponible por ahora</h1><p style="color:#607487;font-size:17px;line-height:1.6">Puede estar suspendida por quien la organiza. Si se reactiva, vas a poder entrar desde este mismo enlace.</p></div></main>';}else{go('home');toast('No se pudo abrir la invitación: '+e.message)}})})();
 /* V1: los votos de fecha/lugar aún no tienen persistencia remota. */
 const voteV1=saveVote;saveVote=function(){toast('La votación de fechas online todavía no está disponible')};
 const placeVoteV1=savePlaceVotes;savePlaceVotes=function(){toast('La votación de lugares online todavía no está disponible')};
@@ -581,6 +581,7 @@ saveVote=async function(){
  try{
   await rpc('juntada_votar',{p_codigo:remoteInvite,p_nombre:name,p_tipo:'fecha',p_elecciones:choices});
   document.getElementById('voteStatus').textContent='¡Disponibilidad guardada online!';
+  saveGuestProgress({name,dateVotes:{...localVotes}});
   toast('Voto registrado');
  }catch(e){toast('No se pudo guardar el voto: '+e.message)}
 };
@@ -593,6 +594,7 @@ savePlaceVotes=async function(){
  try{
   await rpc('juntada_votar',{p_codigo:remoteInvite,p_nombre:name,p_tipo:'lugar',p_elecciones:choices});
   document.getElementById('placeVoteStatus').textContent='¡Preferencias guardadas online!';
+  saveGuestProgress({name,placeChoices:choices});
   toast('Votos registrados');
  }catch(e){toast('No se pudo guardar el voto: '+e.message)}
 };
@@ -686,4 +688,42 @@ async function importOrganizerAccess(){
  }catch(e){toast('No se pudo verificar el acceso: '+e.message)}
 }
 if(location.hash.startsWith('#manage='))importOrganizerAccess();
+
+/* Recordar respuestas confirmadas solo en este navegador y para esta invitación.
+   Supabase sigue siendo la fuente oficial de los votos. */
+function guestProgressKey(code){return 'juntada_guest_progress_'+code}
+function saveGuestProgress(update){
+ if(!remoteInvite)return;
+ try{
+  const key=guestProgressKey(remoteInvite);
+  const current=JSON.parse(localStorage.getItem(key)||'{}');
+  localStorage.setItem(key,JSON.stringify({...current,...update}));
+ }catch(e){}
+}
+function restoreGuestProgress(code){
+ let state;
+ try{state=JSON.parse(localStorage.getItem(guestProgressKey(code))||'null')}catch(e){}
+ if(!state||typeof state!=='object')return;
+ const name=document.getElementById('guestName');
+ if(name&&typeof state.name==='string')name.value=state.name;
+ if(['Voy','Tal vez','No puedo'].includes(state.attendance)){
+  const buttons=[...document.querySelectorAll('.rsvp button')];
+  buttons.forEach(b=>b.classList.toggle('on',b.textContent.trim()===state.attendance));
+  const status=document.getElementById('rsvpStatus');
+  if(status)status.textContent=state.name+': '+state.attendance+' · Última confirmación enviada desde este navegador.';
+  const prev=document.getElementById('guestPreview');
+  if(prev)prev.innerHTML='<p class="sub">Tu respuesta ya fue enviada. Podés cambiarla seleccionando otra opción.</p>';
+ }
+ if(state.dateVotes&&typeof state.dateVotes==='object'){
+  localVotes={...state.dateVotes};
+  document.querySelectorAll('.vote-option button[data-date]').forEach(b=>b.classList.toggle('on',localVotes[b.dataset.date]===b.dataset.vote));
+  const status=document.getElementById('voteStatus');
+  if(status)status.textContent='Tu última disponibilidad fue enviada desde este navegador.';
+ }
+ if(Array.isArray(state.placeChoices)){
+  document.querySelectorAll('.place-vote').forEach(b=>b.checked=state.placeChoices.includes(Number(b.value)));
+  const status=document.getElementById('placeVoteStatus');
+  if(status)status.textContent='Tus últimas preferencias fueron enviadas desde este navegador.';
+ }
+}
 </script></body></html>
