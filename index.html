@@ -207,15 +207,31 @@ function openJuntada(id){const entry=getJuntadas().find(x=>x.id===id);if(!entry)
 function deleteLocalJuntada(id){
  const all=getJuntadas(),item=all.find(x=>x.id===id);
  if(!item)return;
- if(!confirm('¿Eliminar «'+item.saved.name+'» de Mis juntadas? Se borrará de este navegador, pero no de Supabase. Esta acción no se puede deshacer.'))return;
- const remaining=all.filter(x=>x.id!==id);
- try{
-  localStorage.setItem(JSTORE,JSON.stringify(remaining));
-  localStorage.removeItem('juntada_remote_'+id);
-  if(currentJuntadaId===id){currentJuntadaId=null;remoteEvent=null}
-  showMyEvents();
-  toast('Juntada eliminada de este navegador');
- }catch(e){toast('No se pudo eliminar: '+e.message)}
+ const old=document.getElementById('deleteJuntadaDialog');if(old)old.remove();
+ const overlay=document.createElement('div');
+ overlay.id='deleteJuntadaDialog';
+ overlay.setAttribute('role','presentation');
+ overlay.style.cssText='position:fixed;inset:0;z-index:9999;background:rgba(18,35,55,.45);display:flex;align-items:center;justify-content:center;padding:22px';
+ const dialog=document.createElement('div');
+ dialog.setAttribute('role','alertdialog');dialog.setAttribute('aria-modal','true');dialog.setAttribute('aria-labelledby','deleteDialogTitle');dialog.setAttribute('aria-describedby','deleteDialogDesc');
+ dialog.style.cssText='width:100%;max-width:370px;background:white;border-radius:22px;padding:26px 22px;box-shadow:0 20px 55px rgba(20,42,64,.2);text-align:center';
+ dialog.innerHTML='<div style="width:52px;height:52px;border-radius:16px;background:#fff1f1;color:#ad4050;margin:0 auto 14px;display:grid;place-items:center;font-size:26px">×</div><h2 id="deleteDialogTitle" style="margin:0 0 8px;color:#24518b;font-size:23px">¿Eliminar juntada?</h2><p id="deleteDialogDesc" style="margin:0;color:#64778b;font-size:15px">Se quitará <strong id="deleteEventName"></strong> de tu lista en este dispositivo. No se puede deshacer.</p><div style="display:flex;gap:10px;margin-top:24px"><button type="button" id="deleteKeep" style="flex:1;border:1px solid #d9e6ed;border-radius:12px;background:white;color:#24518b;padding:13px 8px;font-weight:700">Volver</button><button type="button" id="deleteConfirm" style="flex:1;border:0;border-radius:12px;background:#24518b;color:white;padding:13px 8px;font-weight:700">Eliminar</button></div>';
+ overlay.appendChild(dialog);document.body.appendChild(overlay);
+ dialog.querySelector('#deleteEventName').textContent='«'+item.saved.name+'»';
+ const close=()=>{document.removeEventListener('keydown',esc);overlay.remove()};
+ const esc=e=>{if(e.key==='Escape')close()};
+ document.addEventListener('keydown',esc);
+ overlay.addEventListener('click',e=>{if(e.target===overlay)close()});
+ dialog.querySelector('#deleteKeep').onclick=close;
+ dialog.querySelector('#deleteConfirm').onclick=()=>{
+  try{
+   localStorage.setItem(JSTORE,JSON.stringify(all.filter(x=>x.id!==id)));
+   localStorage.removeItem('juntada_remote_'+id);
+   if(currentJuntadaId===id){currentJuntadaId=null;remoteEvent=null}
+   close();showMyEvents();toast('Juntada eliminada');
+  }catch(e){close();toast('No se pudo eliminar: '+e.message)}
+ };
+ dialog.querySelector('#deleteKeep').focus();
 }
 function showMyEvents(){
  const list=document.getElementById('myEventsList'),all=getJuntadas();
