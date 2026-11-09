@@ -267,36 +267,40 @@ function getJuntadas(){try{return JSON.parse(localStorage.getItem(JSTORE)||'[]')
 function persistJuntada(){if(!saved.name)return;try{const all=getJuntadas();if(!currentJuntadaId)currentJuntadaId='j'+Date.now().toString(36);const prior=all.find(x=>x.id===currentJuntadaId)||{};const entry={...prior,id:currentJuntadaId,updated:Date.now(),saved:{...saved},confirmedDate,confirmedPlace,places:JSON.parse(JSON.stringify(places)),guestResponses:{...guestResponses},guestVotes:{...guestVotes},placeVotes:{...placeVotes}};const idx=all.findIndex(x=>x.id===entry.id);if(idx<0)all.unshift(entry);else all[idx]=entry;localStorage.setItem(JSTORE,JSON.stringify(all))}catch(e){toast('No se pudo guardar en este navegador')}}
 function openJuntada(id){const entry=getJuntadas().find(x=>x.id===id);if(!entry)return;currentJuntadaId=id;saved={...entry.saved};confirmedDate=entry.confirmedDate||'';confirmedPlace=entry.confirmedPlace||'';places=entry.places||[];guestResponses=entry.guestResponses||{};guestVotes=entry.guestVotes||{};placeVotes=entry.placeVotes||{};placeCounter=Math.max(0,...places.map(p=>Number(p.id)||0));go('event')}
 function deleteLocalJuntada(id){
- const all=getJuntadas(),item=all.find(x=>x.id===id);
- if(!item)return;
- const old=document.getElementById('deleteJuntadaDialog');if(old)old.remove();
+ const item=getJuntadas().find(x=>x.id===id);if(!item)return;
+ document.getElementById('deleteJuntadaDialog')?.remove();
  const overlay=document.createElement('div');
  overlay.id='deleteJuntadaDialog';
- overlay.setAttribute('role','presentation');
- overlay.style.cssText='position:fixed;inset:0;z-index:9999;background:rgba(18,35,55,.45);display:flex;align-items:center;justify-content:center;padding:22px';
- const dialog=document.createElement('div');
+ overlay.style.cssText='position:fixed;inset:0;z-index:10002;background:rgba(20,37,58,.48);display:flex;align-items:center;justify-content:center;padding:20px';
+ const dialog=document.createElement('section');
  dialog.setAttribute('role','alertdialog');dialog.setAttribute('aria-modal','true');dialog.setAttribute('aria-labelledby','deleteDialogTitle');dialog.setAttribute('aria-describedby','deleteDialogDesc');
- dialog.style.cssText='width:100%;max-width:370px;background:white;border-radius:20px;padding:22px 20px;box-shadow:0 20px 55px rgba(20,42,64,.2);text-align:center';
- dialog.innerHTML='<h2 id="deleteDialogTitle" style="margin:0 0 8px;color:#24518b;font-size:23px">¿Eliminar <span id="deleteEventName"></span>?</h2><p id="deleteDialogDesc" style="margin:0;color:#64778b;font-size:15px">Se quitará de Mis juntadas.</p><div style="display:flex;gap:10px;margin-top:18px"><button type="button" id="deleteKeep" style="flex:1;border:1px solid #d9e6ed;border-radius:12px;background:white;color:#24518b;padding:13px 8px;font-weight:700">Volver</button><button type="button" id="deleteConfirm" style="flex:1;border:0;border-radius:12px;background:#24518b;color:white;padding:13px 8px;font-weight:700">Eliminar</button></div>';
+ dialog.style.cssText='width:100%;max-width:390px;background:white;border-radius:24px;padding:30px 24px 24px;box-shadow:0 22px 55px rgba(18,41,66,.22);text-align:center;color:#24518b';
+ dialog.innerHTML='<div aria-hidden="true" style="width:68px;height:68px;border-radius:22px;background:#fcecf0;margin:0 auto 18px;display:grid;place-items:center"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#a63242" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2m3 0-1 14H6L5 6m5 4v7m4-7v7"/></svg></div><h2 id="deleteDialogTitle" style="font-size:25px;line-height:1.2;margin:0 0 14px"></h2><p id="deleteDialogDesc" style="font-size:16px;line-height:1.55;color:#65788a;margin:0"></p><div style="display:flex;gap:10px;margin-top:28px"><button type="button" data-choice="no" style="flex:1;padding:15px 8px;border-radius:14px;border:1px solid #d7e4eb;background:white;color:#24518b;font-weight:700;font-size:16px">Volver</button><button type="button" data-choice="yes" style="flex:1;padding:15px 8px;border-radius:14px;border:0;background:#a63242;color:white;font-weight:700;font-size:16px">Eliminar</button></div>';
+ dialog.querySelector('#deleteDialogTitle').textContent='¿Eliminamos «'+item.saved.name+'»?';
+ const hasOnline=!!localStorage.getItem('juntada_remote_'+id);
+ dialog.querySelector('#deleteDialogDesc').textContent=hasOnline?'Esta acción es definitiva: el enlace dejará de funcionar y la juntada desaparecerá de tu lista. Si solo querés pausarla, elegí Suspender.':'Esta juntada se quitará de este navegador. No vas a poder recuperarla desde la lista.';
  overlay.appendChild(dialog);document.body.appendChild(overlay);
- dialog.querySelector('#deleteEventName').textContent='«'+item.saved.name+'»';
- if(localStorage.getItem('juntada_remote_'+id))dialog.querySelector('#deleteDialogDesc').textContent='La invitación dejará de funcionar.';
- const close=()=>{document.removeEventListener('keydown',esc);overlay.remove()};
- const esc=e=>{if(e.key==='Escape')close()};
- document.addEventListener('keydown',esc);
+ const previous=document.activeElement;
+ const close=()=>{document.removeEventListener('keydown',onKey);overlay.remove();if(previous?.isConnected)previous.focus()};
+ const onKey=e=>{if(e.key==='Escape'){e.preventDefault();close()}};
+ document.addEventListener('keydown',onKey);
  overlay.addEventListener('click',e=>{if(e.target===overlay)close()});
- dialog.querySelector('#deleteKeep').onclick=close;
- dialog.querySelector('#deleteConfirm').onclick=async()=>{
+ dialog.querySelector('[data-choice="no"]').onclick=close;
+ dialog.querySelector('[data-choice="yes"]').onclick=async()=>{
+  const btn=dialog.querySelector('[data-choice="yes"]');btn.disabled=true;btn.textContent='Eliminando…';
   try{
    let credential=null;try{credential=JSON.parse(localStorage.getItem('juntada_remote_'+id)||'null')}catch(e){}
-   if(credential&&credential.id&&credential.organizador){await rpc('juntada_actualizar',{p_juntada:credential.id,p_organizador:credential.organizador,p_cancelada:true})}
-   localStorage.setItem(JSTORE,JSON.stringify(all.filter(x=>x.id!==id)));
+   if(credential?.id&&credential?.organizador){
+    await rpc('juntada_actualizar',{p_juntada:credential.id,p_organizador:credential.organizador,p_cancelada:true});
+   }else if(hasOnline){throw Error('No se encontró el acceso de organizadora. No se eliminó la juntada')}
+   const updated=getJuntadas().filter(x=>x.id!==id);
+   localStorage.setItem(JSTORE,JSON.stringify(updated));
    localStorage.removeItem('juntada_remote_'+id);
    if(currentJuntadaId===id){currentJuntadaId=null;remoteEvent=null}
-   close();showMyEvents();toast('Juntada eliminada');
-  }catch(e){close();toast('No se pudo eliminar: '+e.message)}
+   close();showMyEvents();toast('Juntada eliminada. El enlace ya no está disponible.');
+  }catch(e){btn.disabled=false;btn.textContent='Eliminar';toast('No se pudo eliminar: '+e.message)}
  };
- dialog.querySelector('#deleteKeep').focus();
+ dialog.querySelector('[data-choice="no"]').focus();
 }
 function confirmJuntadaState(item,pausing){
  return new Promise(resolve=>{
