@@ -329,13 +329,13 @@ input:focus,textarea:focus,select:focus{outline:2px solid #75C9E8;outline-offset
 .screen>header{gap:8px}.screen>header .headleft{flex:1;min-width:0}.screen>header .back{flex:none}
 .j-menu-overlay{position:fixed;inset:0;background:rgba(15,37,60,.42);z-index:10020;display:none}
 .j-menu-overlay.open{display:block}
-.j-menu-panel{height:100%;width:min(340px,88vw);background:#fff;box-shadow:8px 0 30px #17365925;display:flex;flex-direction:column;padding-top:env(safe-area-inset-top)}
-.j-menu-heading{background:#75c9e8;color:#24518b;display:flex;align-items:center;justify-content:space-between;padding:19px 20px;font-weight:800;font-size:23px}
+.j-menu-panel{height:100%;width:min(230px,65vw);background:#fff;box-shadow:8px 0 30px #17365925;display:flex;flex-direction:column;padding-top:env(safe-area-inset-top)}
+.j-menu-heading{background:#eaf7fc;color:#24518b;display:flex;align-items:center;justify-content:space-between;padding:14px 13px;font-weight:800;font-size:19px}
 .j-menu-close{border:0;background:transparent;color:#24518b;font-size:28px;cursor:pointer}
-.j-menu-items{overflow-y:auto;flex:1;padding:12px}
-.j-menu-item{width:100%;display:flex;align-items:center;gap:14px;text-align:left;background:#fff;border:0;border-radius:12px;padding:13px;color:#173659;font:600 15px system-ui;cursor:pointer}
-.j-menu-item:hover,.j-menu-item:focus-visible{background:#eaf6fc;outline-offset:2px}
-.j-menu-item svg{width:21px;height:21px;stroke:#24518b;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.j-menu-items{overflow-y:auto;flex:1;padding:8px}
+.j-menu-item{width:100%;display:flex;align-items:center;gap:10px;text-align:left;background:#fff;border:0;border-radius:9px;padding:10px 9px;min-height:42px;color:#173659;font:500 14px system-ui;cursor:pointer}
+.j-menu-item:hover,.j-menu-item:focus-visible{background:#eaf6fc;outline-offset:2px}.j-menu-item[aria-current='page']{background:#eaf7fc;color:#24518b;font-weight:700}
+.j-menu-item svg{width:18px;height:18px;flex-shrink:0;stroke:#24518b;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .j-menu-item small{margin-left:auto;color:#64778b;font-size:11px;font-weight:400}
 .j-menu-sep{border:0;border-top:1px solid #e1eae8;margin:10px 8px}
 </style></head><body><div class="app">
@@ -1401,7 +1401,7 @@ document.body.appendChild(overlay);
 const list=overlay.querySelector('.j-menu-items');
 items.forEach(([label,icon,target],i)=>{
  if(i===3||i===6){const hr=document.createElement('hr');hr.className='j-menu-sep';list.appendChild(hr)}
- const b=document.createElement('button');b.type='button';b.className='j-menu-item';b.innerHTML=svg(symbols[icon])+'<span>'+label+'</span>'+(target?'':'<small>Próximamente</small>');
+ const b=document.createElement('button');b.type='button';b.className='j-menu-item';b.innerHTML=svg(symbols[icon])+'<span>'+label+'</span>';
  b.addEventListener('click',()=>{
   if(!target){if(typeof toast==='function')toast(label+': próximamente');return}
   close();
@@ -1411,7 +1411,7 @@ items.forEach(([label,icon,target],i)=>{
 });
 let lastFocus=null;
 function close(){overlay.classList.remove('open');document.body.style.overflow='';if(lastFocus&&lastFocus.isConnected)lastFocus.focus()}
-function open(){lastFocus=document.activeElement;overlay.classList.add('open');document.body.style.overflow='hidden';overlay.querySelector('.j-menu-close').focus()}
+function open(){lastFocus=document.activeElement;const current=document.querySelector('.screen.active')?.id;list.querySelectorAll('.j-menu-item').forEach((button,i)=>{const target=items[i][2];if(target===current||(current==='ready'&&target==='create'))button.setAttribute('aria-current','page');else button.removeAttribute('aria-current')});overlay.classList.add('open');document.body.style.overflow='hidden';overlay.querySelector('.j-menu-close').focus()}
 overlay.querySelector('.j-menu-close').addEventListener('click',close);
 overlay.addEventListener('click',e=>{if(e.target===overlay)close()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&overlay.classList.contains('open'))close();if(e.key==='Tab'&&overlay.classList.contains('open')){const focusables=[...overlay.querySelectorAll('button')];const first=focusables[0],last=focusables[focusables.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}}});
