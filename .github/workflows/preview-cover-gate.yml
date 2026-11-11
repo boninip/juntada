@@ -1,0 +1,28 @@
+name: Juntada preview cover gate
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'preview-v116.html'
+      - 'juntada_create_cover_v115.jpg'
+      - 'tests/preview-cover.cjs'
+      - '.github/workflows/preview-cover-gate.yml'
+jobs:
+  cover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-save playwright@1.56.1
+      - run: python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/juntada-http.log 2>&1 &
+      - run: node tests/preview-cover.cjs
+      - name: Save visual evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: preview-cover-screenshot
+          path: qa-cover-v116.png
+          if-no-files-found: ignore
