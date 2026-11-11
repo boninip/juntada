@@ -11,8 +11,8 @@ const assert=require('node:assert/strict');
  const state=await cover.evaluate(async el=>{
    const css=getComputedStyle(el);const bg=css.backgroundImage;
    if(!bg||bg==='none')return {ok:false,reason:'No CSS background',bg};
-   const matches=[...bg.matchAll(/url\\(["']?(.+?)["']?\\)/g)];
-   if(!matches.length)return {ok:false,reason:'No image URL',bg};
+   const matches=[...bg.matchAll(/url\(["']([^"']+)["']\)/g)];
+   if(!matches.length)return {ok:false,reason:'No image URL',backgroundStart:bg.slice(0,100)};
    const url=matches[matches.length-1][1];
    const image=new Image();
    const loaded=await new Promise(resolve=>{image.onload=()=>resolve(true);image.onerror=()=>resolve(false);image.src=url});
