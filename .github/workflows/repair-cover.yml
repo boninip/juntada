@@ -1,6 +1,9 @@
 name: Repair and validate Juntada cover
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/repair-cover.yml'
 permissions:
   contents: write
 jobs:
