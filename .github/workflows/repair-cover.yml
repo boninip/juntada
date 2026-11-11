@@ -1,0 +1,30 @@
+name: Repair and validate Juntada cover
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Inspect and repair existing JPEG
+        run: |
+          python3 -m pip install --quiet Pillow
+          python3 - <<'PY'
+          from PIL import Image, ImageFile
+          ImageFile.LOAD_TRUNCATED_IMAGES=True
+          src='juntada_create_cover_v115.jpg'
+          im=Image.open(src)
+          im.load()
+          print('Source image:', im.size, im.mode)
+          im.convert('RGB').save('juntada_create_cover_repaired.jpg',quality=92,optimize=True)
+          check=Image.open('juntada_create_cover_repaired.jpg');check.verify()
+          print('Repaired image verified:',Image.open('juntada_create_cover_repaired.jpg').size)
+          PY
+      - name: Commit repaired asset (preview only)
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add juntada_create_cover_repaired.jpg
+          git diff --cached --quiet || (git commit -m 'fix: recover decodable create cover JPEG for preview' && git push)
