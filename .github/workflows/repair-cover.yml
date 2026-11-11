@@ -21,7 +21,7 @@ jobs:
           import base64, pathlib
           raw=pathlib.Path(src).read_bytes()
           print('Asset initial bytes:',repr(raw[:35]))
-          if not raw.startswith(b'\\xff\\xd8'):
+          if not raw.startswith(bytes([255,216])):
               raw=base64.b64decode(raw)
               pathlib.Path('juntada_create_cover_repaired.jpg').write_bytes(raw)
               src='juntada_create_cover_repaired.jpg'
