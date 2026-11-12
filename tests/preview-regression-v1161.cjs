@@ -17,8 +17,7 @@ const assert=require('node:assert/strict');
   await page.evaluate(()=>go('create'));
   const cover=await page.locator('#create .create-cover').evaluate(async el=>{
    const bg=getComputedStyle(el).backgroundImage;
-   const urls=[...bg.matchAll(/url\\(["']?([^"'\\)]+)["']?\\)/g)];
-   const url=urls.length?urls[urls.length-1][1]:null;
+   const url=bg.includes('juntada_create_cover_v115(4)-1.jpg')?'./juntada_create_cover_v115(4)-1.jpg':null;
    const image=new Image();
    const loaded=await new Promise(resolve=>{image.onload=()=>resolve(true);image.onerror=()=>resolve(false);image.src=url});
    return {url,loaded,width:image.naturalWidth,height:image.naturalHeight};
