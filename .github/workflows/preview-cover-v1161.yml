@@ -6,6 +6,7 @@ on:
       - 'preview-v1161.html'
       - 'juntada_create_cover_v115(4)-1.jpg'
       - 'tests/preview-cover-v1161.cjs'
+      - 'tests/preview-regression-v1161.cjs'
       - '.github/workflows/preview-cover-v1161.yml'
 jobs:
   cover:
@@ -20,10 +21,14 @@ jobs:
       - run: ln -s "$PWD" juntada
       - run: python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/juntada-http.log 2>&1 &
       - run: node tests/preview-cover-v1161.cjs
+      - run: node tests/preview-regression-v1161.cjs
       - name: Save visual evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: preview-cover-v1161-screenshot
-          path: qa-cover-v1161.png
+          path: |
+            qa-cover-v1161.png
+            qa-preview-v1161-390.png
+            qa-preview-v1161-1440.png
           if-no-files-found: ignore
