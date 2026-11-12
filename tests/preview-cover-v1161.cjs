@@ -16,7 +16,7 @@ const assert=require('node:assert/strict');
    const url=matches[matches.length-1][1];
    console.log('COVER_URL',url);const response=await fetch(url).then(r=>({status:r.status,contentType:r.headers.get('content-type'),finalUrl:r.url})).catch(e=>({error:String(e)}));console.log('COVER_FETCH',JSON.stringify(response));const image=new Image();
    const loaded=await new Promise(resolve=>{image.onload=()=>resolve(true);image.onerror=()=>resolve(false);image.src=url});
-   return {ok:loaded&&image.naturalWidth>=900&&image.naturalHeight>=400,width:image.naturalWidth,height:image.naturalHeight,loaded,reason:!loaded?'Image failed to decode':image.naturalWidth<900?'Image resolution too small':null};
+   return {ok:loaded&&image.naturalWidth>=900&&image.naturalHeight>=400,width:image.naturalWidth,height:image.naturalHeight,loaded,url,response,reason:!loaded?'Image failed to decode':image.naturalWidth<900?'Image resolution too small':null};
  });
  console.log('Create cover QA:',JSON.stringify(state));
  await page.screenshot({path:'qa-cover-v1161.png',fullPage:false});
