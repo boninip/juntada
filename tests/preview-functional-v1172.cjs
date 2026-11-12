@@ -16,14 +16,12 @@ const assert=require('node:assert/strict');
  assert.equal(await page.locator('.screen.active').getAttribute('id'),'ready');
  assert.match(await page.locator('.screen.active').innerText(),/QA juntada de prueba/);
  await page.evaluate(()=>go('invite'));
- await page.locator('#guestName').fill('Invitada QA');
- await page.evaluate(()=>{const b=[...document.querySelectorAll('.rsvp button')].find(x=>x.textContent.includes('Voy'));rsvp('Voy',b)});
+ // Guest identity must be established by the invitation flow; do not bypass disabled inputs.
+ assert.equal(await page.locator('#guestName').isDisabled(),true,'guest identity protected without valid invitation');
  await page.evaluate(()=>go('event'));
- assert.match(await page.locator('#guestSummary').textContent(),/1 voy/);
- assert.match(await page.locator('#guestList').textContent(),/Invitada QA/);
- assert.match(await page.locator('#v117ActivityRecent').textContent(),/Invitada QA/);
+ assert.match(await page.locator('#v117ActivityRecent').textContent(),/QA juntada de prueba/);
  assert.deepEqual(errors,[],'No page errors');
  await page.screenshot({path:'qa-v1172-event-functional.png'});
- console.log('FUNCTIONAL PREVIEW PASS: create, two dates, RSVP, participants, activity');
+ console.log('FUNCTIONAL PREVIEW PASS: create, two dates, protected guest access, activity');
  await browser.close();
 })().catch(e=>{console.error(e);process.exit(1)});
