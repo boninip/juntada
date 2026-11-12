@@ -1,0 +1,28 @@
+const {chromium}=require('playwright');
+const assert=require('node:assert/strict');
+(async()=>{
+ const browser=await chromium.launch({executablePath:'/usr/bin/google-chrome'});
+ const page=await browser.newPage({viewport:{width:390,height:844}});
+ const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.goto('http://127.0.0.1:8765/preview-v1171.html',{waitUntil:'domcontentloaded'});
+ await page.evaluate(()=>{localStorage.clear();go('create');setDateMode('vote');setCandidateInputMode('single')});
+ await page.locator('#eventName').fill('QA juntada de prueba');
+ const dates=page.locator('#candidateSingleFields input.candidate');
+ assert.ok(await dates.count()>=2,'two date fields');
+ await dates.nth(0).fill('2026-12-05');
+ await dates.nth(1).fill('2026-12-12');
+ await page.evaluate(()=>create());
+ assert.equal(await page.locator('.screen.active').getAttribute('id'),'ready');
+ assert.match(await page.locator('.screen.active').innerText(),/QA juntada de prueba/);
+ await page.evaluate(()=>go('invite'));
+ await page.locator('#guestName').fill('Invitada QA');
+ await page.evaluate(()=>{const b=[...document.querySelectorAll('.rsvp button')].find(x=>x.textContent.includes('Voy'));rsvp('Voy',b)});
+ await page.evaluate(()=>go('event'));
+ assert.match(await page.locator('#guestSummary').textContent(),/1 voy/);
+ assert.match(await page.locator('#guestList').textContent(),/Invitada QA/);
+ assert.match(await page.locator('#v117ActivityRecent').textContent(),/Invitada QA/);
+ assert.deepEqual(errors,[],'No page errors');
+ await page.screenshot({path:'qa-v1171-event-functional.png'});
+ console.log('FUNCTIONAL PREVIEW PASS: create, two dates, RSVP, participants, activity');
+ await browser.close();
+})().catch(e=>{console.error(e);process.exit(1)});
