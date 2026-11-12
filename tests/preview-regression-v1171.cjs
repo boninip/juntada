@@ -16,7 +16,7 @@ const assert=require('node:assert/strict');
   }
   await page.evaluate(()=>go('event'));
   assert.equal(await page.locator('#v117Activity').count(),1);
-  assert.match(await page.locator('.v117-participants').innerText(),/Solicitudes de ingreso/);
+  assert.match(await page.locator('.v117-participants').textContent(),/Solicitudes de ingreso/);
   await page.evaluate(()=>go('create'));
   await page.evaluate(()=>setDateMode('vote'));
   const modes=page.locator('#voteFields .vote-tool');
