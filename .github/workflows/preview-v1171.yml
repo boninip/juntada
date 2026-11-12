@@ -4,6 +4,7 @@ on:
     paths:
       - 'preview-v1171.html'
       - 'tests/preview-regression-v1171.cjs'
+      - 'tests/preview-functional-v1171.cjs'
       - '.github/workflows/preview-v1171.yml'
   workflow_dispatch:
 jobs:
@@ -19,10 +20,13 @@ jobs:
       - run: ln -s "$PWD" juntada
       - run: python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/juntada-http.log 2>&1 &
       - run: node tests/preview-regression-v1171.cjs
+      - run: node tests/preview-functional-v1171.cjs
       - name: Save screenshots
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: preview-v1171-screenshots
-          path: qa-preview-v1171-*.png
+          path: |
+            qa-preview-v1171-*.png
+            qa-v1171-event-functional.png
           if-no-files-found: ignore
