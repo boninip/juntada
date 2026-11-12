@@ -11,7 +11,7 @@ const assert=require('node:assert/strict');
  assert.ok(await dates.count()>=2,'two date fields');
  await dates.nth(0).fill('2026-12-05');
  await dates.nth(1).fill('2026-12-12');
- await page.evaluate(()=>create());
+ await page.evaluate(async()=>{rpc=async()=>({id:'qa-test',codigo:'qa-test',organizador:'qa-test'});await create()});
  console.log('CREATE DIAGNOSTICS',await page.evaluate(()=>({dateMode,candidateInputMode,dates:[...document.querySelectorAll('.candidate')].map(x=>x.value),toast:document.querySelector('#toast').textContent,screen:document.querySelector('.screen.active')?.id})));
  assert.equal(await page.locator('.screen.active').getAttribute('id'),'ready');
  assert.match(await page.locator('.screen.active').innerText(),/QA juntada de prueba/);
