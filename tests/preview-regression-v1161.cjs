@@ -9,7 +9,7 @@ const assert=require('node:assert/strict');
   await page.goto('http://127.0.0.1:8765/preview-v1161.html',{waitUntil:'domcontentloaded'});
   assert.equal(await page.locator('.screen.active').getAttribute('id'),'home');
   const homeBg=await page.locator('#home .hero').evaluate(el=>getComputedStyle(el).backgroundImage);
-  assert.match(homeBg,/photo-1530103862676-de8c9debad1d/);
+  assert.match(homeBg,/photo-1511988617509-a57c8a288659/);
   for(const id of ['create','accounts','balances','myEvents','quickExpense','newExpenseGroup']){
    await page.evaluate(id=>go(id),id);
    assert.equal(await page.locator('.screen.active').getAttribute('id'),id,'navigation '+id);
