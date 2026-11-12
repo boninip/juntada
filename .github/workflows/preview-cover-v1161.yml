@@ -1,0 +1,28 @@
+name: Juntada V1.16.1 cover QA
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'preview-v1161.html'
+      - 'juntada_create_cover_v115(4)-1.jpg'
+      - 'tests/preview-cover-v1161.cjs'
+      - '.github/workflows/preview-cover-v1161.yml'
+jobs:
+  cover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-save playwright@1.56.1
+      - run: python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/juntada-http.log 2>&1 &
+      - run: node tests/preview-cover-v1161.cjs
+      - name: Save visual evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: preview-cover-v1161-screenshot
+          path: qa-cover-v1161.png
+          if-no-files-found: ignore
