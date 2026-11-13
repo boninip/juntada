@@ -1694,7 +1694,7 @@ const independent=window.v1174StartIndependent;window.v1174StartIndependent=func
 (function(){
 let expenseEventId=null;
 function records(){return typeof getJuntadas==='function'?getJuntadas().filter(e=>e&&e.id&&e.saved&&e.saved.name):[]}
-function eventKey(){const select=document.getElementById('v1174EventSelect');return select&&select.value||expenseEventId||null}
+function eventKey(){const select=document.getElementById('v1174EventSelect');return expenseEventId||select&&select.value||null}
 function populate(){const box=document.getElementById('v1181SuggestedWrap'),list=document.getElementById('v1181Suggested');list.replaceChildren();const key=eventKey();const event=records().find(e=>String(e.id)===String(key));let responses=event?.guestResponses||{};if(!event&&expenseEventId==='current'&&typeof guestResponses!=='undefined')responses=guestResponses;const names=Object.entries(responses).filter(([name,status])=>status==='Voy'&&name.trim()).map(([name])=>name);box.hidden=!names.length;names.forEach(name=>{const btn=document.createElement('button');btn.type='button';btn.textContent='+ '+name;btn.setAttribute('aria-label','Agregar '+name+' al gasto');btn.onclick=()=>{const input=document.getElementById('v1178AddName');input.value=name;v1178AddParticipant();btn.disabled=true;btn.textContent='✓ '+name};list.appendChild(btn)})}
 window.v1181Suggestions=populate;
 const from=window.v1175FromEvent;window.v1175FromEvent=function(){expenseEventId=(typeof currentJuntadaId!=='undefined'&&currentJuntadaId)?String(currentJuntadaId):'current';from()};
