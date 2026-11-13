@@ -1,0 +1,28 @@
+name: Juntada V1.18.3 preview QA
+on:
+  push:
+    paths:
+      - 'preview-v1183.html'
+      - 'tests/preview-regression-v1183.cjs'
+      - '.github/workflows/preview-v1183.yml'
+  workflow_dispatch:
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-save playwright@1.56.1
+      - run: ln -s "$PWD" juntada
+      - run: python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/juntada-http.log 2>&1 &
+      - run: node tests/preview-regression-v1183.cjs
+      - name: Save screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: preview-v1183-screenshots
+          path: qa-preview-v1183-*.png
+          if-no-files-found: ignore
