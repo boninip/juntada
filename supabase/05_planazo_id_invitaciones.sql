@@ -68,9 +68,9 @@ begin
  if not exists(select 1 from public.planazo_group_members where group_id=p_group_id and user_id=auth.uid() and role='owner') then
   raise exception 'No tenés permiso para invitar';
  end if;
- v_token := encode(gen_random_bytes(32),'hex');
+ v_token := encode(extensions.gen_random_bytes(32),'hex');
  insert into public.planazo_group_invites(group_id,token_hash,created_by,expires_at)
- values(p_group_id,encode(digest(v_token,'sha256'),'hex'),auth.uid(),now()+interval '7 days');
+ values(p_group_id,encode(extensions.digest(v_token,'sha256'),'hex'),auth.uid(),now()+interval '7 days');
  return v_token;
 end $$;
 
@@ -81,7 +81,7 @@ begin
  if p_token !~ '^[a-f0-9]{64}$' then return; end if;
  return query select g.name,i.expires_at from public.planazo_group_invites i
  join public.planazo_groups g on g.id=i.group_id
- where i.token_hash=encode(digest(p_token,'sha256'),'hex')
+ where i.token_hash=encode(extensions.digest(p_token,'sha256'),'hex')
  and i.revoked_at is null and i.expires_at>now() and i.uses<i.max_uses;
 end $$;
 
@@ -92,7 +92,7 @@ begin
  if v_user is null then raise exception 'Iniciá sesión para aceptar'; end if;
  if p_token !~ '^[a-f0-9]{64}$' then raise exception 'Invitación inválida'; end if;
  select * into v_inv from public.planazo_group_invites
- where token_hash=encode(digest(p_token,'sha256'),'hex') for update;
+ where token_hash=encode(extensions.digest(p_token,'sha256'),'hex') for update;
  if not found or v_inv.revoked_at is not null or v_inv.expires_at<=now() or v_inv.uses>=v_inv.max_uses then
   raise exception 'Invitación vencida o inválida';
  end if;
