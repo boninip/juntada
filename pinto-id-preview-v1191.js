@@ -184,7 +184,7 @@ window.pintoRenderCuentasLink=async()=>{
  if(typeof remoteEvent==='undefined'||!remoteEvent||!remoteEvent.id){box.hidden=true;return}
  box.hidden=false;const head='<h3 style="margin:0 0 6px">Grupo de Cuentas</h3>';
  const open='<a class="btn secondary" href="https://boninip.github.io/cuentas/" target="_blank" rel="noopener">Abrir Cuentas</a>';
- if(!session){box.innerHTML=head+'<p class="field-hint">Para vincular un grupo de Cuentas ingresá con tu Pintó ID (Compartir gastos › Mis planes en Pintó). Los gastos se cargan en Cuentas; acá solo se muestra el vínculo.</p>';return}
+ if(!session){box.innerHTML=head+'<p class="field-hint">Para vincular un grupo de Cuentas ingresá con tu Pintó ID desde el ícono de arriba a la derecha. Los gastos se cargan en Cuentas; acá solo se muestra el vínculo.</p>';return}
  box.innerHTML=head+'<p class="field-hint">Cargando…</p>';
  const msg=t=>{const m=box.querySelector('#cuentasLinkMsg');if(m)m.textContent=t};
  const again=()=>window.pintoRenderCuentasLink();
