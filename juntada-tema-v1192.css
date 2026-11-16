@@ -234,6 +234,9 @@ html[data-eff="dark"] [style*="background:#f0f8fc"],html[data-eff="dark"] [style
 html[data-eff="dark"] .btn:not(.secondary):not(.outline):not(.green){color:#fff}
 html[data-eff="dark"] #miCuenta .cu-card,html[data-eff="dark"] #ingresoOverlay .ing-card{background:#1c2a3a!important}
 
+html[data-eff="dark"] .pinto-invite-details{background:#1c2a3a!important;border-color:#33485e!important}
+html[data-eff="dark"] .pinto-invite-details>summary{color:#8fc0f0!important}
+html[data-eff="dark"] .pinto-secondary-label{color:#9fb3c8!important}
 html[data-eff="dark"] #plazoInvitado[data-e=a]{background:#243a52!important;color:#8fc0f0!important}
 html[data-eff="dark"] #plazoInvitado[data-e=c]{background:#4a3a22!important;color:#f2c58d!important}
 html[data-eff="dark"] .btn:not(.secondary):not(.outline):not(.green){background:#2f6bb3!important;color:#fff!important}
