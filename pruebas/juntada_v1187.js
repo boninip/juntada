@@ -81,6 +81,13 @@ const txt=p=>p.textContent('#cuentasLinkCard');
   ok(/Viaje del grupo/.test(await txt(page))&&/quien administra el grupo en Cuentas/.test(await txt(page)),'directo: sigue vinculando y aclara quién desvincula');
   await page.click('#cuentasUnlink');await page.waitForTimeout(600);
   ok(/permiso/.test(await page.textContent('#cuentasLinkMsg')),'desvincular sin permiso: mensaje claro, no un error crudo');await ctx.close()}
+ // 10) historial (0038): se muestra por qué terminó la última solicitud
+ for(const [st,re] of [['expired',/venció sin respuesta/],['rejected',/fue rechazada/],['cancelled',/se canceló/],['invalidated',/dejó de valer/]]){
+  const {ctx,page,calls}=await mk(browser,{session:true,store:STORE,handlers:{...BASE,core_link_for_ref:null,core_link_requests_list:[],core_link_requests_history:[{id:RQ,group_id:G,group_name:'Viaje del grupo',ref_type:'juntada',ref_id:ID,needs:'cuentas',status:st,mine:true,i_can_approve:false},{id:'x',group_id:G,group_name:'Otro',ref_type:'juntada',ref_id:'otro',status:'rejected'}]}});
+  await abrir(page);ok(re.test(await txt(page))&&!/Otro/.test(await txt(page)),'historial '+st+': muestra solo la de esta juntada y por qué terminó');
+  ok(await page.isVisible('#cuentasLinkBtn'),'historial '+st+': sigue ofreciendo vincular o solicitar de nuevo');await ctx.close()}
+ {const {ctx,page,errs}=await mk(browser,{session:true,store:STORE,handlers:{...BASE,core_link_for_ref:null,core_link_requests_list:[],core_link_requests_history:{__error:'function does not exist'}}});
+  await abrir(page);ok(await page.isVisible('#cuentasLinkBtn')&&errs.length===0,'historial no disponible: la tarjeta funciona igual');await ctx.close()}
  // 9) sin sesión
  {const {ctx,page}=await mk(browser,{store:STORE,handlers:BASE});await abrir(page);
   ok(/ingresá con tu Pinto ID/i.test(await txt(page)),'sin sesión: pide ingresar');await ctx.close()}

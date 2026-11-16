@@ -212,9 +212,15 @@ window.pintoRenderCuentasLink=async()=>{
    box.innerHTML=head+'<p><b>Solicitud enviada</b></p><p>Esperando que '+(mine.needs==='cuentas'?'quien administra el grupo <b>'+esc(mine.group_name)+'</b> en Cuentas':'quien organiza la juntada')+' la apruebe. Vence el '+esc(vence(mine))+'.</p><button type="button" class="btn outline" id="cuentasCancelReq">Cancelar solicitud</button><p class="field-hint" id="cuentasLinkMsg" role="status"></p>';
    box.querySelector('#cuentasCancelReq').onclick=async()=>{try{await call('core_link_request_cancel',{p_request:mine.id});again()}catch(e){msg(lnk(e))}};return;
   }
+  /* última solicitud ya cerrada de este evento (0038): vencida, rechazada, cancelada o invalidada */
+  let ult='';try{
+   const h=((await call('core_link_requests_history',{p_group:null,p_days:30}))||[]).filter(q=>q.ref_type==='juntada'&&q.ref_id===remoteEvent.id&&q.status!=='approved')[0];
+   if(h){const T={expired:'venció sin respuesta',rejected:'fue rechazada',cancelled:'se canceló',invalidated:'dejó de valer porque cambió algo en la juntada o en el grupo'};
+    ult='<p class="field-hint" id="cuentasLastReq">Tu última solicitud con el grupo <b>'+esc(h.group_name)+'</b> '+(T[h.status]||'se cerró')+'. Podés enviar una nueva.</p>'}
+  }catch(_){}
   const gs=(await call('cuentas_my_groups',{})||[]).filter(g=>g.status!=='archived');
   if(!gs.length){box.innerHTML=head+'<p class="field-hint">No tenés grupos en Cuentas todavía. Creá uno en Cuentas y volvé a esta pantalla.</p>'+open;return}
-  box.innerHTML=head+'<p class="field-hint">Elegí el grupo donde se cargan los gastos de esta juntada. Si no podés vincular en ese grupo, podés solicitar el vínculo y lo aprueba quien lo administra.</p><label for="cuentasGroupSel">Grupo</label><select id="cuentasGroupSel">'+gs.map(g=>'<option value="'+esc(g.id)+'">'+esc(g.name)+'</option>').join('')+'</select><button type="button" class="btn secondary" id="cuentasLinkBtn" style="margin-top:8px">Vincular</button> <button type="button" class="btn outline" id="cuentasRequestBtn" style="margin-top:8px;display:none">Solicitar vínculo</button><p class="field-hint" id="cuentasLinkMsg" role="status"></p>';
+  box.innerHTML=head+ult+'<p class="field-hint">Elegí el grupo donde se cargan los gastos de esta juntada. Si no podés vincular en ese grupo, podés solicitar el vínculo y lo aprueba quien lo administra.</p><label for="cuentasGroupSel">Grupo</label><select id="cuentasGroupSel">'+gs.map(g=>'<option value="'+esc(g.id)+'">'+esc(g.name)+'</option>').join('')+'</select><button type="button" class="btn secondary" id="cuentasLinkBtn" style="margin-top:8px">Vincular</button> <button type="button" class="btn outline" id="cuentasRequestBtn" style="margin-top:8px;display:none">Solicitar vínculo</button><p class="field-hint" id="cuentasLinkMsg" role="status"></p>';
   const sel=()=>box.querySelector('#cuentasGroupSel').value;
   const reqBtn=box.querySelector('#cuentasRequestBtn');
   box.querySelector('#cuentasGroupSel').onchange=()=>{reqBtn.style.display='none';msg('')};
