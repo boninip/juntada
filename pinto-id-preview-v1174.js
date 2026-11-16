@@ -53,7 +53,7 @@ el('planazoLogin').onclick=async()=>{
  try{
   const redirect=new URL(location.pathname,location.origin);
   if(safeToken)redirect.searchParams.set('invite',safeToken);
-  await request('/auth/v1/otp',{email,create_user:true,email_redirect_to:redirect.toString()});
+  await request('/auth/v1/otp?redirect_to='+encodeURIComponent(redirect.toString()),{email,create_user:true});
   message('Revisá tu correo y abrí el enlace de acceso. Si no llega, revisá spam.');
  }catch(e){message('No se pudo enviar el enlace: '+e.message)}
  finally{button.disabled=false}
