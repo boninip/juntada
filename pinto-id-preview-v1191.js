@@ -99,9 +99,9 @@ async function init(){
  }
 }
 
-/* V1.18.4 etapa C: «Mis juntadas en Pinto». Aditivo: no cambia cómo se crean ni se abren los eventos. */
+/* V1.18.4 etapa C: «Mis planes en Pintó». Aditivo: no cambia cómo se crean ni se abren los eventos. */
 const mine=document.createElement('details');mine.id='pintoMine';mine.className='pinto-invite-details';
-mine.innerHTML='<summary>Mis juntadas en Pinto <span class="pinto-secondary-label">Opcional</span></summary><div style="padding:0 18px 18px"><p class="pinto-secondary-label" id="pintoMineHelp"></p><div id="pintoMineList" role="list"></div><button type="button" class="btn secondary" id="pintoClaim" style="margin-top:10px;width:100%;display:none">Vincular mis juntadas a mi cuenta</button><button type="button" class="btn secondary" id="pintoMineLogin" style="margin-top:10px;width:100%;display:none">Ingresar con mi email</button></div>';
+mine.innerHTML='<summary>Mis planes en Pintó <span class="pinto-secondary-label">Opcional</span></summary><div style="padding:0 18px 18px"><p class="pinto-secondary-label" id="pintoMineHelp"></p><div id="pintoMineList" role="list"></div><button type="button" class="btn secondary" id="pintoClaim" style="margin-top:10px;width:100%;display:none">Vincular mis juntadas a mi cuenta</button><button type="button" class="btn secondary" id="pintoMineLogin" style="margin-top:10px;width:100%;display:none">Ingresar con mi email</button></div>';
 inviteDetails.before(mine);
 el('pintoMineLogin').onclick=()=>{inviteDetails.open=true;const e=el('planazoEmail');if(e){e.scrollIntoView({block:'center'});e.focus()}};
 const localCreds=()=>{const out=[];try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(!/^juntada_remote_/.test(k))continue;try{const c=JSON.parse(localStorage.getItem(k)||'null');if(c&&/^[0-9a-f-]{36}$/i.test(c.id||'')&&/^[0-9a-f-]{36}$/i.test(c.organizador||''))out.push(c)}catch(_){}}}catch(_){}return out};
@@ -184,7 +184,7 @@ window.pintoRenderCuentasLink=async()=>{
  if(typeof remoteEvent==='undefined'||!remoteEvent||!remoteEvent.id){box.hidden=true;return}
  box.hidden=false;const head='<h3 style="margin:0 0 6px">Grupo de Cuentas</h3>';
  const open='<a class="btn secondary" href="https://boninip.github.io/cuentas/" target="_blank" rel="noopener">Abrir Cuentas</a>';
- if(!session){box.innerHTML=head+'<p class="field-hint">Para vincular un grupo de Cuentas ingresá con tu Pintó ID (Compartir gastos › Mis juntadas en Pinto). Los gastos se cargan en Cuentas; acá solo se muestra el vínculo.</p>';return}
+ if(!session){box.innerHTML=head+'<p class="field-hint">Para vincular un grupo de Cuentas ingresá con tu Pintó ID (Compartir gastos › Mis planes en Pintó). Los gastos se cargan en Cuentas; acá solo se muestra el vínculo.</p>';return}
  box.innerHTML=head+'<p class="field-hint">Cargando…</p>';
  const msg=t=>{const m=box.querySelector('#cuentasLinkMsg');if(m)m.textContent=t};
  const again=()=>window.pintoRenderCuentasLink();
@@ -231,7 +231,7 @@ window.pintoRenderCuentasLink=async()=>{
     await call('core_link_request_create',{p_group:sel(),p_ref_type:'juntada',p_ref_id:remoteEvent.id,p_correlation:null});again();if(typeof toast==='function')toast('Solicitud enviada')
    }catch(e){reqBtn.disabled=false;
     if(lnkCode(e)==='LNK_USAR_VINCULO_DIRECTO'){reqBtn.style.display='none';box.querySelector('#cuentasLinkBtn').click();return}
-    if(lnkCode(e)==='LNK_NO_AUTORIZADO')msg('Para solicitar hace falta que organices esta juntada con tu Pintó ID. Si la creaste con un código, reclamala primero desde Mis juntadas en Pinto.');else msg(lnk(e))}};
+    if(lnkCode(e)==='LNK_NO_AUTORIZADO')msg('Para solicitar hace falta que organices esta juntada con tu Pintó ID. Si la creaste con un código, reclamala primero desde Mis planes en Pintó.');else msg(lnk(e))}};
  }catch(e){box.innerHTML=head+'<p class="field-hint">'+esc(lnk(e))+'</p>'}
 };
 /* Etapa D: respuestas ligadas a mi cuenta, y juntadas a las que respondí con ella */
