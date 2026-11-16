@@ -55,7 +55,7 @@ function pintarOrg(){
   +'<div style="display:flex;gap:8px;flex-wrap:wrap"><div style="flex:1;min-width:140px"><label for="plazoDia">Día</label><input id="plazoDia" type="date"></div><div style="flex:1;min-width:110px"><label for="plazoHora">Hora</label><input id="plazoHora" type="time" value="23:59"></div></div>'
   +'<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"><button type="button" class="btn secondary" id="plazoFijar">'+(e?'Cambiar plazo':'Fijar plazo')+'</button>'+(e?'<button type="button" class="btn outline" id="plazoQuitar">Quitar plazo</button>':'')+'</div>'
   +'<p class="field-hint" id="plazoMsg" role="status"></p>'
-  +'<h3 style="margin:14px 0 6px">Recordar</h3><p class="sub">Para quienes no usan Pinto, mandales un recordatorio vos.</p>'
+  +'<h3 style="margin:14px 0 6px">Recordar</h3><p class="sub">Para quienes no usan Pintó, mandales un recordatorio vos.</p>'
   +'<div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="btn secondary" id="recCompartir">Compartir</button><button type="button" class="btn outline" id="recCopiar">Copiar link</button><a class="btn outline" id="recMail" href="#">Por mail</a></div>';
  const hoy=new Date(nowS()),d=n=>new Date(hoy.getTime()+n*864e5);const iso=x=>x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0');
  const dia=c.querySelector('#plazoDia');dia.min=iso(hoy);dia.max=iso(d(30));
