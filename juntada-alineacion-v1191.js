@@ -23,10 +23,10 @@ sec.innerHTML='<header><div class="headleft"><button class="back" type="button" 
 function pintar(){
  const s=sesion(),b=$('cuBody');
  if(s){
-  b.innerHTML='<h2>Pinto ID</h2><p style="margin:0 0 4px">Sesión iniciada'+(s.email?' como <b>'+esc(s.email)+'</b>':'')+'.</p><p class="field-hint" style="margin:0 0 6px">Con tu Pinto ID ves tus planes en todos tus celulares.</p><button class="btn secondary" type="button" id="cuSalir">Cerrar sesión</button><p class="cu-msg" role="status" aria-live="polite" id="cuMsg"></p>';
+  b.innerHTML='<h2>Pintó ID</h2><p style="margin:0 0 4px">Sesión iniciada'+(s.email?' como <b>'+esc(s.email)+'</b>':'')+'.</p><p class="field-hint" style="margin:0 0 6px">Con tu Pintó ID ves tus planes en todos tus celulares.</p><button class="btn secondary" type="button" id="cuSalir">Cerrar sesión</button><p class="cu-msg" role="status" aria-live="polite" id="cuMsg"></p>';
   $('cuSalir').onclick=()=>{try{localStorage.removeItem(STORE)}catch(_){}pintar();pintarHome();$('cuMsg').textContent='Sesión cerrada.'};
  }else{
-  b.innerHTML='<h2>Ingresá con Pinto ID</h2><label for="cuEmail">Tu email</label><input id="cuEmail" type="email" autocomplete="email" placeholder="nombre@correo.com"><button class="btn" type="button" id="cuEnviar">Recibir enlace de acceso</button><p class="field-hint">No necesitás contraseña. Te llega un enlace por email.</p><p class="cu-msg" role="status" aria-live="polite" id="cuMsg"></p>';
+  b.innerHTML='<h2>Ingresá con Pintó ID</h2><label for="cuEmail">Tu email</label><input id="cuEmail" type="email" autocomplete="email" placeholder="nombre@correo.com"><button class="btn" type="button" id="cuEnviar">Recibir enlace de acceso</button><p class="field-hint">No necesitás contraseña. Te llega un enlace por email.</p><p class="cu-msg" role="status" aria-live="polite" id="cuMsg"></p>';
   $('cuEnviar').onclick=async()=>{
    const email=$('cuEmail').value.trim(),m=$('cuMsg');
    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){m.textContent='Ingresá un email válido';return}
@@ -60,7 +60,7 @@ function pintarHome(){
  if(sesion()){if(c)c.remove();return}
  if(c)return;
  c=document.createElement('button');c.type='button';c.id='homeLoginCard';
- c.innerHTML='<span><b>Ingresá con Pinto ID</b><small>Para ver tus planes en todos tus celulares.</small></span><span style="margin-left:auto;color:#24518b">›</span>';
+ c.innerHTML='<span><b>Ingresá con Pintó ID</b><small>Para ver tus planes en todos tus celulares.</small></span><span style="margin-left:auto;color:#24518b">›</span>';
  c.onclick=abrir;lista.parentNode.insertBefore(c,lista);
 }
 pintarHome();

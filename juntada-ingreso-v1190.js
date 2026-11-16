@@ -8,8 +8,8 @@ const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;'
 const code=new URLSearchParams(location.search).get('invite');
 const msgErr=e=>{const d=String((e&&e.detail)||'');
  if(/JUN_REQUIERE_APROBACION/.test(d))return 'Necesitás que quien organiza te apruebe para participar.';
- if(/JUN_SIN_PINTO_ID/.test(d))return 'Esa persona todavía no usó su Pinto ID en esta juntada. Pedile que abra el link con su cuenta.';
- if(/JUN_SESION/.test(d))return 'Ingresá con tu Pinto ID para continuar.';
+ if(/JUN_SIN_PINTO_ID/.test(d))return 'Esa persona todavía no usó su Pintó ID en esta juntada. Pedile que abra el link con su cuenta.';
+ if(/JUN_SESION/.test(d))return 'Ingresá con tu Pintó ID para continuar.';
  const m=String((e&&e.message)||'').replace(/\s*\(HTTP \d+\)\s*$/,'');
  if(/Acceso no autorizado/i.test(m))return 'Esto solo lo puede hacer quien organiza.';
  return m||'No se pudo completar. Probá de nuevo.'};
@@ -29,7 +29,7 @@ function overlay(d){
  const nom=esc(d.nombre||'Juntada');
  const acc=d.acceso;
  let h='<div class="ing-card"><div class="logo" style="margin-bottom:14px">Juntada<span>.</span></div><h1>'+nom+'</h1>';
- if(acc==='iniciar_sesion')h+='<p>Quien organiza pidió aprobar a cada persona antes de entrar. Para pedirlo, ingresá con tu Pinto ID: te mandamos un enlace por mail.</p><label for="ingEmail" style="text-align:left">Tu email</label><input id="ingEmail" type="email" autocomplete="email" placeholder="nombre@correo.com"><button type="button" class="btn" id="ingEnviar">Enviarme el enlace</button>';
+ if(acc==='iniciar_sesion')h+='<p>Quien organiza pidió aprobar a cada persona antes de entrar. Para pedirlo, ingresá con tu Pintó ID: te mandamos un enlace por mail.</p><label for="ingEmail" style="text-align:left">Tu email</label><input id="ingEmail" type="email" autocomplete="email" placeholder="nombre@correo.com"><button type="button" class="btn" id="ingEnviar">Enviarme el enlace</button>';
  else if(acc==='solicitar')h+='<p>Quien organiza aprueba a cada persona antes de que entre. Poné tu nombre y pedí entrar.</p><label for="ingNombre" style="text-align:left">Tu nombre</label><input id="ingNombre" type="text" maxlength="80" autocomplete="name" placeholder="Cómo te conocen"><button type="button" class="btn" id="ingPedir">Pedir entrar</button>';
  else if(acc==='pendiente')h+='<p>Tu solicitud está pendiente. Cuando quien organiza la apruebe, vas a poder entrar desde este mismo enlace.</p><button type="button" class="btn secondary" id="ingRevisar">Revisar de nuevo</button>';
  else if(acc==='rechazada')h+='<p>Quien organiza no aprobó tu ingreso a esta juntada. Si creés que fue un error, hablalo con esa persona.</p>';
@@ -82,7 +82,7 @@ function pintar(){
  const candidatos=resp.filter(r=>r.ligada&&!r.coorganizador);
  let h='<h3>Quién puede entrar</h3>'
   +'<label class="ing-chk"><input type="checkbox" id="ingApro"'+(org.requiere_aprobacion?' checked':'')+'><span>Pedir aprobación para entrar</span></label>'
-  +'<p class="sub">'+(org.requiere_aprobacion?'Cada persona necesita Pinto ID y que la apruebes. Quienes ya respondieron siguen pudiendo participar.':'Sin aprobación: entra cualquiera con el link, con o sin Pinto ID.')+'</p>';
+  +'<p class="sub">'+(org.requiere_aprobacion?'Cada persona necesita Pintó ID y que la apruebes. Quienes ya respondieron siguen pudiendo participar.':'Sin aprobación: entra cualquiera con el link, con o sin Pintó ID.')+'</p>';
  if(org.requiere_aprobacion||sols.length){
   h+='<h3>Solicitudes'+(pend.length?' ('+pend.length+' pendiente'+(pend.length===1?'':'s')+')':'')+'</h3>';
   if(!sols.length)h+='<p class="sub">Todavía no hay solicitudes.</p>';
@@ -91,11 +91,11 @@ function pintar(){
  }
  h+='<h3>Coorganización</h3>';
  if(!soyOrg)h+='<p class="sub">Coorganizás esta juntada. Podés hacer todo menos eliminarla y cambiar quién coorganiza.</p>';
- else h+='<p class="sub">Quien coorganiza puede editar, fijar fecha, abrir rondas y aprobar ingresos. No puede eliminar la juntada ni cambiar quién coorganiza. Tiene que haber usado su Pinto ID en esta juntada.</p>';
+ else h+='<p class="sub">Quien coorganiza puede editar, fijar fecha, abrir rondas y aprobar ingresos. No puede eliminar la juntada ni cambiar quién coorganiza. Tiene que haber usado su Pintó ID en esta juntada.</p>';
  h+=coos.map(x=>'<div class="ing-row"><b>'+esc(x.nombre)+(x.soy_yo?' (vos)':'')+'</b>'+((soyOrg||x.soy_yo)?'<div class="ing-btns"><button type="button" class="btn outline" data-qc="'+esc(x.id)+'">'+(x.soy_yo&&!soyOrg?'Dejar de coorganizar':'Quitar')+'</button></div>':'')+'</div>').join('');
  if(soyOrg){
   if(candidatos.length)h+='<label for="ingElegir">Sumar coorganización</label><select id="ingElegir"><option value="">Elegí una persona…</option>'+candidatos.map(r=>'<option value="r:'+esc(r.id)+'">'+esc(r.nombre)+'</option>').join('')+'</select><button type="button" class="btn secondary" id="ingSumar">Sumar</button>';
-  else h+='<p class="sub">Para sumar a alguien, tiene que haber respondido con su Pinto ID.</p>';
+  else h+='<p class="sub">Para sumar a alguien, tiene que haber respondido con su Pintó ID.</p>';
  }
  h+='<p class="field-hint" id="ingMsgOrg" role="status"></p>';
  c.innerHTML=h;
@@ -112,7 +112,7 @@ function enganchar(){
  loadResponses=async function(g){await prev(g);if(orgOk())cargar()};
 }
 
-/* ---------- Mis planes: lo que organizo o coorganizo con mi Pinto ID ---------- */
+/* ---------- Mis planes: lo que organizo o coorganizo con mi Pintó ID ---------- */
 const abrirLocal=async id=>{
  const d=await rpc('juntada_abrir_gestion',{p_juntada:id});
  const lid='p'+String(d.id).replace(/-/g,'').slice(0,12);
@@ -131,7 +131,7 @@ async function pintarMios(){
  let box=document.getElementById('ingMiosBox');
  if(!faltan.length){if(box)box.remove();return}
  if(!box){box=document.createElement('div');box.id='ingMiosBox';lista.after(box)}
- box.innerHTML='<h3 style="margin:22px 0 6px">Con tu Pinto ID</h3><p class="sub">Juntadas que organizás o coorganizás y no están en este celular.</p>'+faltan.map(e=>'<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 0;border-top:1px solid #e3eef4"><span><b>'+esc(e.nombre||'Juntada')+'</b><br><span class="sub">'+(e.rol==='coorganizador'?'Coorganizás':'Organizás')+'</span></span><button type="button" class="btn secondary" style="width:auto;margin:0" data-abrir="'+esc(e.id)+'">Abrir</button></div>').join('');
+ box.innerHTML='<h3 style="margin:22px 0 6px">Con tu Pintó ID</h3><p class="sub">Juntadas que organizás o coorganizás y no están en este celular.</p>'+faltan.map(e=>'<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 0;border-top:1px solid #e3eef4"><span><b>'+esc(e.nombre||'Juntada')+'</b><br><span class="sub">'+(e.rol==='coorganizador'?'Coorganizás':'Organizás')+'</span></span><button type="button" class="btn secondary" style="width:auto;margin:0" data-abrir="'+esc(e.id)+'">Abrir</button></div>').join('');
  box.querySelectorAll('[data-abrir]').forEach(b=>b.onclick=async()=>{b.disabled=true;try{await abrirLocal(b.dataset.abrir)}catch(e){b.disabled=false;if(typeof toast==='function')toast(msgErr(e))}});
 }
 function engancharMios(){

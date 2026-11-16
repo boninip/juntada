@@ -1,4 +1,4 @@
-/* V1.18.9 · Migración asistida de gastos viejos a Cuentas. Solo con Pinto ID y a pedido de la persona.
+/* V1.18.9 · Migración asistida de gastos viejos a Cuentas. Solo con Pintó ID y a pedido de la persona.
    No borra ni modifica la copia vieja. Reintentar no duplica (clave de idempotencia por gasto). */
 (()=>{
 'use strict';
@@ -81,7 +81,7 @@ function detalle(c,p){
  if(bad.length){d.innerHTML='<p class="field-hint" role="alert">No se puede pasar todavía: estos gastos tienen el reparto mal ('+bad.map(esc).join(', ')+'). Corregilos y volvé a intentar.</p>';return}
  d.innerHTML='<p class="sub">'+p.buckets.length+' grupo(s) en Cuentas:</p><ul>'+p.buckets.map(b=>'<li>'+esc(b.name)+': '+b.expenses.length+' gasto(s), '+money(b.expenses.reduce((a,e)=>a+e.cents,0))+'</li>').join('')+'</ul>'
   +'<label for="migYo">¿Cuál de estas personas sos vos?</label><select id="migYo">'+people.map(x=>'<option>'+esc(x)+'</option>').join('')+'</select>'
-  +'<p class="field-hint">Vas a quedar como administradora o administrador. Las demás personas se agregan como invitadas sin cuenta; después pueden sumarse con su Pinto ID.</p>'
+  +'<p class="field-hint">Vas a quedar como administradora o administrador. Las demás personas se agregan como invitadas sin cuenta; después pueden sumarse con su Pintó ID.</p>'
   +(p.settlements.length?'<p class="field-hint" role="note">Los '+p.settlements.length+' pago(s) registrados no se pasan: Cuentas los pide confirmados por quien recibe. Registralos de nuevo allá.</p>':'')
   +'<button type="button" class="btn" id="migConfirmar">Pasar a Cuentas</button><p id="migEstado" class="sub" role="status"></p>';
  d.querySelector('#migConfirmar').onclick=async ev=>{

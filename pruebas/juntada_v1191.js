@@ -16,10 +16,10 @@ async function mk(browser,{session=false}={}){
  // 1) sin sesión
  {const {ctx,page,calls,errs}=await mk(browser);
   await page.goto(U);await page.waitForTimeout(1200);
-  ok(await page.locator('#homeLoginCard').isVisible(),'1.1 inicio sin sesión: invita a ingresar con Pinto ID');
+  ok(await page.locator('#homeLoginCard').isVisible(),'1.1 inicio sin sesión: invita a ingresar con Pintó ID');
   const txt=await page.textContent('#home');
   ok(txt.includes('Mis planes')&&!txt.includes('Mis planes y grupos')&&!txt.includes('Mis juntadas'),'1.2 un solo nombre: Mis planes');
-  ok(!/Pintó ID/.test(await page.content()),'1.3 se escribe Pinto ID, sin acento, en pantalla');
+  ok(!/Pinto ID/.test(await page.content()),'1.3 se escribe Pintó ID, con acento, en pantalla');
   await page.click('#homeLoginCard');await page.waitForTimeout(400);
   ok(await page.locator('#miCuenta.active').count()===1&&await page.locator('#cuEmail').isVisible(),'1.4 abre Cuenta con campo de email');
   await page.fill('#cuEmail','mal');await page.click('#cuEnviar');
