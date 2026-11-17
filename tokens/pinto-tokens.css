@@ -1,0 +1,27 @@
+/* pinto-tokens.css · v1 · PROPUESTA (sin aprobar) · 16/11/2026
+   Paleta A «Mar» ajustada (aprobada por Pau el 16/11). Fuente única de colores de todas las apps de Pinto.
+   Claro = :root; oscuro = :root[data-eff=dark] (la app decide cómo activarlo: cada una guarda su Apariencia).
+   Coral: un solo rol focal por pantalla; nunca fondo general. Punto del logo: solo decorativo, nunca texto.
+   Estados (ok/aviso/error/neutro) son semánticos: no usan la paleta de marca ni dependen solo del color. */
+:root{color-scheme:light;
+--primario:#1F5F6B;--primario-txt:#1F5F6B;--foco:#1F5F6B;
+--coral-btn:#BE4B2C;--coral-txt:#B8472A;--punto-logo:#F2C14E;
+--fondo:#FAF8F4;--tarjeta:#FFFFFF;--tinte:#E6F1F0;
+--texto:#1D2F33;--texto-sec:#5B6E70;--borde:#DCE6E4;
+--sobre-primario:#FFFFFF;--sobre-foto:#FFFFFF;
+--ok-bg:#D5F2E2;--ok-txt:#146842;--ok-brd:#19835A;
+--aviso-bg:#FFF0BC;--aviso-txt:#775600;--aviso-brd:#B18A1D;
+--error-bg:#F8D5CF;--error-txt:#A33B37;
+--neutro-bg:#E9EDF3;--neutro-txt:#51647B;
+--velo-rgb:18 32 31;--sombra-rgb:29 47 51}
+:root[data-eff=dark]{color-scheme:dark;
+--primario:#2A7A89;--primario-txt:#6FB8C4;--foco:#6FB8C4;
+--coral-btn:#BE4B2C;--coral-txt:#F0907A;--punto-logo:#F2C14E;
+--fondo:#12201F;--tarjeta:#1B2D2C;--tinte:#244240;
+--texto:#E8F0EE;--texto-sec:#9DB5B3;--borde:#2F4644;
+--sobre-primario:#FFFFFF;--sobre-foto:#FFFFFF;
+--ok-bg:#1F3B2E;--ok-txt:#8FD6B0;--ok-brd:#3F8F68;
+--aviso-bg:#3F3715;--aviso-txt:#EBCB6A;--aviso-brd:#A98A26;
+--error-bg:#432622;--error-txt:#F4A595;
+--neutro-bg:#2A3A3B;--neutro-txt:#B5C6C4;
+--velo-rgb:6 14 14;--sombra-rgb:0 0 0}
