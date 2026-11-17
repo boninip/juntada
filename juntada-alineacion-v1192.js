@@ -18,7 +18,7 @@ document.head.append(css);
 
 /* Pantalla Cuenta */
 const sec=document.createElement('section');sec.id='miCuenta';sec.className='screen';
-sec.innerHTML='<header><div class="headleft"><button class="back" type="button" id="cuBack" aria-label="Volver">‹</button><span class="screen-title">Cuenta</span></div></header><div class="pad"><div class="cu-card" id="cuBody"></div><div class="cu-card" id="cuTema"><h2>Apariencia</h2><p class="field-hint" style="margin:0 0 10px">Elegí cómo se ve Juntada. «Automático» sigue la configuración de tu celular.</p><div class="cu-chips" role="radiogroup" aria-label="Apariencia"><button type="button" role="radio" data-tema="auto">Automático</button><button type="button" role="radio" data-tema="light">Claro</button><button type="button" role="radio" data-tema="dark">Oscuro</button></div></div><div class="cu-card"><h2>Gastos</h2><p class="field-hint" style="margin:0 0 6px">Los gastos compartidos se manejan en Cuentas.</p><button class="btn secondary" type="button" id="cuIrCuentas">Abrir Cuentas</button></div></div>';
+sec.innerHTML='<header><div class="headleft"><button class="back" type="button" id="cuBack" aria-label="Volver">‹</button><span class="screen-title">Cuenta</span></div></header><div class="pad"><div class="cu-card" id="cuBody"></div><div class="cu-card" id="cuTema"><h2>Apariencia</h2><p class="field-hint" style="margin:0 0 10px">Elegí cómo se ve Juntada. «Automático» sigue la configuración de tu celular.</p><div class="cu-chips" role="radiogroup" aria-label="Apariencia"><button type="button" role="radio" data-tema="auto">Automático</button><button type="button" role="radio" data-tema="light">Claro</button><button type="button" role="radio" data-tema="dark">Oscuro</button></div></div><div class="cu-card"><h2>Gastos</h2><p class="field-hint" style="margin:0 0 6px">Los gastos compartidos se manejan en Cuentas.</p><button class="btn secondary" type="button" id="cuIrCuentas">Abrir Cuentas</button><div id="cuViejos" hidden style="margin-top:14px"><p class="field-hint" id="cuViejosTxt" style="margin:0 0 8px"></p><button class="btn secondary" type="button" id="cuPasar">Pasar gastos viejos a Cuentas</button></div></div></div>';
 (document.getElementById('home').parentNode||document.body).append(sec);
 function pintar(){
  const s=sesion(),b=$('cuBody');
@@ -38,8 +38,10 @@ function pintar(){
  }
 }
 function mostrar(id){document.querySelectorAll('.screen').forEach(x=>x.classList.toggle('active',x.id===id));window.scrollTo(0,0)}
-function abrir(){pintar();mostrar('miCuenta')}
+function viejos(){let n=0;try{n=window.__migGastos?window.__migGastos.plan().total:0}catch(_){}const v=$('cuViejos');if(!v)return;v.hidden=!n;if(n)$('cuViejosTxt').textContent='Tenés '+n+' gasto'+(n===1?'':'s')+' guardado'+(n===1?'':'s')+' solo en este teléfono, de la versión anterior.'}
+function abrir(){pintar();viejos();mostrar('miCuenta')}
 $('cuBack').onclick=()=>mostrar('home');
+$('cuPasar').onclick=()=>{try{go('balances')}catch(_){}};
 $('cuIrCuentas').onclick=()=>{location.href='https://boninip.github.io/cuentas/'};
 
 /* Menú: «Mi perfil» pasa a ser «Cuenta». Avatar abre Cuenta. */
