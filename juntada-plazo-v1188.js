@@ -25,7 +25,7 @@ function pintarInvitado(){
  const e=estado(invDatos);
  if(!e){if(n)n.remove();return}
  if(!n){n=document.createElement('div');n.id='plazoInvitado';n.setAttribute('role','status');n.style.cssText='margin:12px 0;padding:12px 14px;border-radius:14px;font-weight:600';const pad=sec.querySelector('.pad');(pad||sec).prepend(n)}
- n.dataset.e=e.abierta?'a':'c';n.textContent=e.texto;n.style.background=e.abierta?'#eaf4ff':'#fff1e6';n.style.color=e.abierta?'#24518b':'#8a4a12';
+ n.dataset.e=e.abierta?'a':'c';n.textContent=e.texto;n.style.background=e.abierta?'#eafaff':'#fff1e6';n.style.color=e.abierta?'#1f5f6b':'#8a4a12';
  if(!e.abierta&&invDatos.ya_vote===false)n.textContent+=' No llegaste a votar.';
 }
 async function cargarInvitado(){
