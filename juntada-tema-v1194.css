@@ -1,0 +1,251 @@
+/* Juntada V1.19.2 · tema oscuro: generado a partir de la paleta clara (html[data-eff="dark"]). */
+html[data-eff="dark"] body{background:#12201f!important}
+html[data-eff="dark"] .app{background:#1b2d2c!important}
+html[data-eff="dark"] header{background:#1b2d2c!important;border-bottom:1px solid #2f4644!important}
+html[data-eff="dark"] .option{border:1px solid #2f4644!important;background:#1b2d2c!important;box-shadow:0 4px 16px #00000040}
+html[data-eff="dark"] .option.selected{background:#1b2d2c!important}
+html[data-eff="dark"] input,html[data-eff="dark"] textarea,html[data-eff="dark"] select{border:1px solid #2f4644!important;background:#1b2d2c!important}
+html[data-eff="dark"] .btn.secondary{background:#1b2d2c!important}
+html[data-eff="dark"] .btn.outline{background:#1b2d2c!important;border:1px solid #2f4644!important}
+html[data-eff="dark"] .card{background:#1b2d2c!important;border:1px solid #2f4644!important;box-shadow:0 4px 16px #00000040}
+html[data-eff="dark"] .seg button{border:1px solid #2f4644!important;background:#1b2d2c!important}
+html[data-eff="dark"] .rsvp button{background:#1b2d2c!important}
+html[data-eff="dark"] .rsvp button:nth-child(3){background:#244240!important}
+html[data-eff="dark"] .nav{background:#1b2d2c!important;border-top:1px solid #2f4644!important}
+html[data-eff="dark"] .share-preview{border:1px solid #2f4644!important;background:#1b2d2c!important}
+html[data-eff="dark"] .pill{background:#244240!important}
+html[data-eff="dark"] .avatar{background:#244240!important}
+@media(min-width:600px){html[data-eff="dark"] .app{box-shadow:0 4px 16px #00000040}}
+html[data-eff="dark"] body{background:#244240!important}
+html[data-eff="dark"] .app{background:#1b2d2c!important}
+html[data-eff="dark"] header{background:#1b2d2c!important}
+html[data-eff="dark"] .option{box-shadow:0 4px 16px #00000040;border-color:#2f4644!important}
+html[data-eff="dark"] .option.selected{background:#1b2d2c!important}
+html[data-eff="dark"] .ico{background:#1b2d2c!important}
+html[data-eff="dark"] .option.selected .ico{background:#244240!important}
+html[data-eff="dark"] .cover{box-shadow:0 4px 16px #00000040}
+html[data-eff="dark"] .camera{background:#1b2d2c!important}
+html[data-eff="dark"] input,html[data-eff="dark"] textarea,html[data-eff="dark"] select{border-color:#2f4644!important;background:#1b2d2c!important}
+html[data-eff="dark"] .expense-wrap{background:#244240!important}
+html[data-eff="dark"] .expense-select{background:#1b2d2c!important}
+html[data-eff="dark"] .expense-select .ico{background:#1b2d2c!important}
+html[data-eff="dark"] .btn{box-shadow:0 4px 16px #00000040}
+html[data-eff="dark"] .soft{border:1px solid #2f4644!important;background:#1b2d2c!important}
+html[data-eff="dark"] .ready-card .detail{border-bottom:1px solid #2f4644!important}
+html[data-eff="dark"] .card{box-shadow:0 4px 16px #00000040}
+html[data-eff="dark"] .nav{background:#1b2d2c!important;border-top-color:#2f4644!important}
+html[data-eff="dark"] .share-preview{background:#1b2d2c!important}
+html[data-eff="dark"] .date-choice{background:#1b2d2c!important;border:1.5px solid #2f4644!important}
+html[data-eff="dark"] .date-choice.chosen{background:#244240!important}
+html[data-eff="dark"] .date-fields{background:#1b2d2c!important}
+html[data-eff="dark"] .field-hint{color:#9db5b3!important}
+html[data-eff="dark"] .add-date{background:#1b2d2c!important;color:#6fb8c4!important;border:1px solid #2f4644!important}
+html[data-eff="dark"] .vote-option{border-bottom:1px solid #2f4644!important}
+html[data-eff="dark"] .vote-buttons button{background:#203735!important;border:1px solid #2f4644!important;color:#6fb8c4!important}
+html[data-eff="dark"] .vote-buttons button.on{background:#244240!important;border:2px solid #5dadc4!important}
+html[data-eff="dark"] .vote-buttons button[data-vote="yes"].on{background:#244240!important}
+html[data-eff="dark"] .vote-buttons button[data-vote="maybe"].on{background:#4a3f1c!important}
+html[data-eff="dark"] .vote-buttons button[data-vote="no"].on{background:#244240!important}
+html[data-eff="dark"] body{background:#244240!important}
+html[data-eff="dark"] .app,html[data-eff="dark"] header,html[data-eff="dark"] .nav{background:#1b2d2c!important}
+html[data-eff="dark"] header{border-bottom:1px solid #2f4644!important}
+html[data-eff="dark"] .logo span{color:#f2c14e!important}
+html[data-eff="dark"] .option{border-color:#2f4644!important;box-shadow:0 4px 16px #00000040}
+html[data-eff="dark"] .option.selected,html[data-eff="dark"] .date-choice.chosen{background:#244240!important;border:2px solid #5dadc4!important;color:#6fb8c4!important}
+html[data-eff="dark"] .option.selected .ico{background:#244240!important;color:#6fb8c4!important}
+html[data-eff="dark"] .option.selected strong{color:#6fb8c4!important}
+html[data-eff="dark"] .date-fields{background:#203735!important}
+html[data-eff="dark"] .expense-wrap{background:#244240!important}
+html[data-eff="dark"] .expense-select{border-color:#2f4644!important}
+html[data-eff="dark"] .expense-select:focus-within{border:2px solid #5dadc4!important}
+html[data-eff="dark"] .expense-select .ico{background:#244240!important;color:#6fb8c4!important}
+html[data-eff="dark"] input:focus,html[data-eff="dark"] textarea:focus,html[data-eff="dark"] select:focus{outline:2px solid #7cc4cf!important;border-color:#5dadc4!important}
+html[data-eff="dark"] .soft{background:#1b2d2c!important;border-color:#2f4644!important}
+html[data-eff="dark"] .ready-card .detail{border-bottom-color:#2f4644!important}
+html[data-eff="dark"] .card{border-color:#2f4644!important}
+html[data-eff="dark"] .share-preview{background:#244240!important;border:1px solid #2f4644!important}
+html[data-eff="dark"] .btn.green{background:#2a7a89!important}
+html[data-eff="dark"] .btn.secondary{background:#244240!important;color:#6fb8c4!important}
+html[data-eff="dark"] .seg button.on{background:#244240!important;border:2px solid #5dadc4!important}
+html[data-eff="dark"] .rsvp button,html[data-eff="dark"] .rsvp button:nth-child(2),html[data-eff="dark"] .rsvp button:nth-child(3){background:#1b2d2c!important;border:1px solid #2f4644!important;color:#6fb8c4!important}
+html[data-eff="dark"] .rsvp button.on{background:#244240!important;border:2px solid #5dadc4!important}
+html[data-eff="dark"] .vote-buttons button[data-vote="yes"].on{background:#244240!important;border:2px solid #5dadc4!important}
+html[data-eff="dark"] .vote-buttons button[data-vote="maybe"].on{background:#4a3f1c!important;border:2px solid #5dadc4!important}
+html[data-eff="dark"] .vote-buttons button[data-vote="no"].on{background:#12201f!important;border:2px solid #5dadc4!important}
+html[data-eff="dark"] .status,html[data-eff="dark"] .pill{background:#244240!important;color:#6fb8c4!important}
+html[data-eff="dark"] .nav{border-top-color:#2f4644!important}
+html[data-eff="dark"] .nav button.active{color:#6fb8c4!important}
+html[data-eff="dark"] .hero-kicker:before{background:#f2c14e!important}
+html[data-eff="dark"] #create .date-section>label{color:#e8f0ee!important}
+html[data-eff="dark"] #create .date-choices{background:#244240!important}
+html[data-eff="dark"] #create .date-choice{color:#6fb8c4!important}
+html[data-eff="dark"] #create .date-choice.chosen{background:#1b2d2c!important;border:2px solid #5dadc4!important;box-shadow:0 4px 16px #00000040;color:#6fb8c4!important}
+html[data-eff="dark"] #create .date-choice:focus-within{outline:2px solid #7cc4cf!important}
+html[data-eff="dark"] #create .date-fields{background:#1b2d2c!important}
+html[data-eff="dark"] #create .date-help{color:#6fb8c4!important}
+html[data-eff="dark"] #create .optional-title{color:#e8f0ee!important}
+html[data-eff="dark"] #create .optional-title span{color:#9db5b3!important}
+html[data-eff="dark"] #create .expense-row{background:#1b2d2c!important;border:1px solid #2f4644!important}
+html[data-eff="dark"] #create .expense-trigger{background:#1b2d2c!important;color:#6fb8c4!important}
+html[data-eff="dark"] #create .expense-trigger .ico{background:#244240!important}
+html[data-eff="dark"] #create .expense-text>span{color:#9db5b3!important}
+html[data-eff="dark"] #create .expense-arrow{color:#6fb8c4!important}
+html[data-eff="dark"] #create .expense-body select{background:#1b2d2c!important;color:#6fb8c4!important}
+html[data-eff="dark"] #create .optional-details{border-top:1px solid #2f4644!important}
+html[data-eff="dark"] #create .more-trigger{background:#1b2d2c!important;color:#6fb8c4!important}
+html[data-eff="dark"] #create .more-icon{background:#244240!important}
+html[data-eff="dark"] #create .more-icon svg,html[data-eff="dark"] #create .more-chevron svg{stroke:#6fb8c4!important}
+html[data-eff="dark"] #create .more-copy strong{color:#6fb8c4!important}
+html[data-eff="dark"] #create .more-copy small{color:#64868f!important}
+html[data-eff="dark"] #create .more-body{background:#1b2d2c!important}
+html[data-eff="dark"] #create .more-field label{color:#6fb8c4!important}
+html[data-eff="dark"] #create .more-field input,html[data-eff="dark"] #create .more-field select{background:#1b2d2c!important}
+html[data-eff="dark"] .guest-row{border-bottom:1px solid #2f4644!important}
+html[data-eff="dark"] .guest-avatar{background:#244240!important;color:#6fb8c4!important}
+html[data-eff="dark"] .guest-badge.attending{background:#1f4a36!important;color:#7fd1a4!important}
+html[data-eff="dark"] .guest-badge.maybe{background:#4a3f1c!important}
+html[data-eff="dark"] .guest-badge.declined{background:#12201f!important}
+html[data-eff="dark"] .rsvp button{background:#203735!important;border:1px solid #2f4644!important}
+html[data-eff="dark"] .rsvp button.on{border:2px solid #5dadc4!important;background:#1b2d2c!important}
+html[data-eff="dark"] .rsvp button:first-child.on{background:#1f4a36!important}
+html[data-eff="dark"] .rsvp button:nth-child(2).on{background:#4a3f1c!important}
+html[data-eff="dark"] .result-row{border-bottom:1px solid #2f4644!important}
+html[data-eff="dark"] .mini-btn{border:1px solid #5dadc4!important;background:#1b2d2c!important;color:#6fb8c4!important}
+html[data-eff="dark"] .mini-btn.confirmed{background:#1f4a36!important;color:#7fd1a4!important}
+html[data-eff="dark"] .place-option{border:1px solid #2f4644!important;background:#1b2d2c!important}
+html[data-eff="dark"] .place-option.is-winner{border:2px solid #5dadc4!important;background:#244240!important}
+html[data-eff="dark"] .place-option h3{color:#6fb8c4!important}
+html[data-eff="dark"] .place-option small{color:#9db5b3!important}
+html[data-eff="dark"] .place-option .place-meta{color:#9db5b3!important}
+html[data-eff="dark"] .place-actions button{border:1px solid #2f4644!important;background:#244240!important;color:#6fb8c4!important}
+html[data-eff="dark"] .place-actions button.confirmed{background:#244240!important}
+html[data-eff="dark"] .place-add{border-top:1px solid #2f4644!important}
+html[data-eff="dark"] .place-confirmed{background:#1b2d2c!important}
+html[data-eff="dark"] .place-vote-label{border:1px solid #2f4644!important}
+html[data-eff="dark"] .place-vote-label:has(input:checked){background:#244240!important;border-color:#5dadc4!important}
+html[data-eff="dark"] .v1-beta-note{background:#203735!important;border:1px solid #2f4644!important;color:#6fb8c4!important}
+html[data-eff="dark"] .v1-beta-note span{color:#5b6e70!important}
+html[data-eff="dark"] #invite .rsvp-section{background:#203735!important;border:1px solid #2f4644!important}
+html[data-eff="dark"] #invite .rsvp-section{background:#1b2d2c!important;border:1px solid #2f4644!important}
+html[data-eff="dark"] #invite .rsvp-section{background:#203735!important;border-color:#2f4644!important}
+html[data-eff="dark"] #inviteVoting .vote-option{border-bottom:1px solid #2f4644!important}
+html[data-eff="dark"] #dateResults .compact-result{border-bottom:1px solid #2f4644!important}
+html[data-eff="dark"] #dateResults .result-best{color:#6fb8c4!important;background:#1b2d2c!important}
+html[data-eff="dark"] #dateResults .result-meter{background:#1b2d2c!important}
+html[data-eff="dark"] #dateResults .result-meter span{background:#7cc4cf!important}
+html[data-eff="dark"] #voteFields .vote-tool{border:1px solid #2f4644!important;background:#1b2d2c!important;color:#6fb8c4!important}
+html[data-eff="dark"] #voteFields .vote-tool.active{background:#244240!important;border:2px solid #5dadc4!important}
+html[data-eff="dark"] .round-manager{border:1px solid #2f4644!important;background:#162625!important}
+html[data-eff="dark"] .round-title{color:#6fb8c4!important}
+html[data-eff="dark"] .round-title small{color:#9db5b3!important}
+html[data-eff="dark"] .round-tip{background:#1b2d2c!important;color:#6fb8c4!important}
+html[data-eff="dark"] .round-finalists label{background:#1b2d2c!important}
+html[data-eff="dark"] .round-finalists small{color:#9db5b3!important}
+html[data-eff="dark"] .round-dialog{background:#1b2d2c!important;box-shadow:0 4px 16px #00000040;color:#6fb8c4!important}
+html[data-eff="dark"] .round-dialog-icon{background:#1b2d2c!important}
+html[data-eff="dark"] .round-dialog-icon svg{stroke:#6fb8c4!important}
+html[data-eff="dark"] .round-dialog-actions button{border:1px solid #2f4644!important;background:#1b2d2c!important;color:#6fb8c4!important}
+html[data-eff="dark"] .round-dialog-actions button:last-child{background:#2a7a89!important;border-color:#5dadc4!important}
+html[data-eff="dark"] .event-accordion>summary .acc-text strong{color:#6fb8c4!important}
+html[data-eff="dark"] .event-accordion>summary .acc-arrow{color:#6fb8c4!important}
+html[data-eff="dark"] .event-accordion .acc-content{border-top:1px solid #2f4644!important}
+html[data-eff="dark"] .event-accordion:focus-visible{outline:2px solid #5dadc4!important}
+html[data-eff="dark"] .compact-voting{background:#1b2d2c!important;border:1px solid #2f4644!important}
+html[data-eff="dark"] .fold-heading strong{color:#6fb8c4!important}
+html[data-eff="dark"] .fold-chevron{color:#6fb8c4!important}
+html[data-eff="dark"] .organizer-fold-body{border-top:1px solid #2f4644!important}
+html[data-eff="dark"] .organizer-card-fold .fold-heading small{background:#1b2d2c!important;color:#6fb8c4!important}
+html[data-eff="dark"] .organizer-actions .organizer-save-btn{background:#244240!important;color:#6fb8c4!important}
+html[data-eff="dark"] .organizer-actions .btn.outline{background:#1b2d2c!important}
+html[data-eff="dark"] .organizer-card-fold .fold-icon{background:#1b2d2c!important;color:#6fb8c4!important}
+html[data-eff="dark"] .organizer-card-fold .fold-icon svg{stroke:#6fb8c4!important}
+html[data-eff="dark"] #event .organizer-minimal-actions .btn.outline{background:#1b2d2c!important;border:1.5px solid #4a7c8a!important;color:#6fb8c4!important}
+html[data-eff="dark"] #event .organizer-minimal-actions .btn.outline:focus-visible{outline:2px solid #7cc4cf!important}
+html[data-eff="dark"] #event .juntada-close-intro h2{color:#6fb8c4!important}
+html[data-eff="dark"] #event .juntada-close-intro p{color:#9db5b3!important}
+html[data-eff="dark"] #event .juntada-preview-tag{background:#244240!important;color:#6fb8c4!important}
+html[data-eff="dark"] #event .juntada-close-stat:first-child{background:#244240!important}
+html[data-eff="dark"] #event .juntada-close-stat small{color:#9db5b3!important}
+html[data-eff="dark"] #event .juntada-close-stat strong{color:#6fb8c4!important}
+html[data-eff="dark"] #event .juntada-close-stat span{color:#9db5b3!important}
+html[data-eff="dark"] #event .juntada-close-option small{color:#9db5b3!important}
+html[data-eff="dark"] #event .juntada-close-icon{color:#6fb8c4!important;background:#244240!important}
+html[data-eff="dark"] #event .juntada-close-note{color:#9db5b3!important;background:#1b2d2c!important}
+html[data-eff="dark"] #accounts .accounts-hub h1{color:#6fb8c4!important}
+html[data-eff="dark"] #accounts .accounts-hub h2{color:#6fb8c4!important}
+html[data-eff="dark"] #accounts .accounts-inline-link{border:1px solid #4a7c8a!important;background:#244240!important;color:#6fb8c4!important}
+html[data-eff="dark"] #home .juntada-home-shortcuts{border-top:1px solid #2f4644!important}
+html[data-eff="dark"] #home .juntada-home-link{border-bottom:1px solid #2f4644!important;color:#6fb8c4!important}
+html[data-eff="dark"] #home .juntada-home-link small{color:#9db5b3!important}
+html[data-eff="dark"] .accounts-hub .juntada-flow-hint{color:#9db5b3!important}
+html[data-eff="dark"] #home .juntada-home-list-item{border-bottom:1px solid #2f4644!important;color:#6fb8c4!important}
+html[data-eff="dark"] #home .juntada-home-list-icon{background:#244240!important;color:#6fb8c4!important}
+html[data-eff="dark"] #home .juntada-home-list-copy strong{color:#6fb8c4!important}
+html[data-eff="dark"] #home .juntada-home-list-copy small{color:#9db5b3!important}
+html[data-eff="dark"] #home .juntada-home-list-arrow{color:#9db5b3!important}
+html[data-eff="dark"] #home .juntada-home-list-item:focus-visible{outline:2px solid #7cc4cf!important}
+html[data-eff="dark"] .juntada-options-menu .juntada-home-list-item{border-bottom:1px solid #2f4644!important;color:#6fb8c4!important}
+html[data-eff="dark"] .juntada-options-menu .juntada-home-list-icon{background:#244240!important;color:#6fb8c4!important}
+html[data-eff="dark"] .juntada-options-menu .juntada-home-list-copy strong{color:#6fb8c4!important}
+html[data-eff="dark"] .juntada-options-menu .juntada-home-list-copy small{color:#9db5b3!important}
+html[data-eff="dark"] .juntada-options-menu .juntada-home-list-arrow{color:#9db5b3!important}
+html[data-eff="dark"] .juntada-options-menu .juntada-home-list-item:focus-visible{outline:2px solid #7cc4cf!important}
+html[data-eff="dark"] #myEventsList [data-sort-id]{border-bottom:1px solid #2f4644!important}
+html[data-eff="dark"] .j-menu-trigger{color:#6fb8c4!important}
+html[data-eff="dark"] .j-menu-panel{background:#1b2d2c!important;box-shadow:0 4px 16px #00000040}
+html[data-eff="dark"] .j-menu-heading{background:#244240!important;color:#6fb8c4!important}
+html[data-eff="dark"] .j-menu-close{color:#6fb8c4!important}
+html[data-eff="dark"] .j-menu-item{background:#1b2d2c!important;color:#e8f0ee!important}
+html[data-eff="dark"] .j-menu-item:hover,html[data-eff="dark"] .j-menu-item:focus-visible{background:#244240!important}
+html[data-eff="dark"] .j-menu-item[aria-current='page']{background:#244240!important;color:#6fb8c4!important}
+html[data-eff="dark"] .j-menu-item svg{stroke:#6fb8c4!important}
+html[data-eff="dark"] .j-menu-item small{color:#9db5b3!important}
+html[data-eff="dark"] .j-menu-sep{border-top:1px solid #2f4644!important}
+html[data-eff="dark"] .j-invite-section{border-bottom:1px solid #2f4644!important}
+html[data-eff="dark"] .j-invite-section h2{color:#6fb8c4!important}
+html[data-eff="dark"] .j-invite-section p{color:#9db5b3!important}
+html[data-eff="dark"] .j-invite-code button{background:#2a7a89!important}
+html[data-eff="dark"] .j-invite-status{color:#6fb8c4!important}
+html[data-eff="dark"] .j-update-dialog{background:#1b2d2c!important;box-shadow:0 4px 16px #00000040}
+html[data-eff="dark"] .j-update-dialog h2{color:#6fb8c4!important}
+html[data-eff="dark"] .j-update-actions button{border:1px solid #5dadc4!important;color:#6fb8c4!important;background:#244240!important}
+html[data-eff="dark"] .j-update-actions button:last-child{background:#2a7a89!important}
+html[data-eff="dark"] #voteFields .vote-tool{border:2px solid #2f4644!important;background:#1b2d2c!important;color:#6fb8c4!important}
+html[data-eff="dark"] #voteFields .vote-tool.active{background:#244240!important;border-color:#5dadc4!important;box-shadow:0 4px 16px #00000040}
+html[data-eff="dark"] .v117-participants{border-top:1px solid #2f4644!important}
+html[data-eff="dark"] .v117-participants h3{color:#6fb8c4!important}
+html[data-eff="dark"] #v117ActivityRecent .v117-entry{border-bottom:1px solid #2f4644!important}
+html[data-eff="dark"] .juntada-independent-expenses{border:1px solid #2f4644!important}
+html[data-eff="dark"] .juntada-independent-expenses>summary{color:#6fb8c4!important}
+html[data-eff="dark"] #v1174Association select{border:1px solid #2f4644!important;background:#1b2d2c!important;color:#6fb8c4!important}
+html[data-eff="dark"] #v1177EventOptions button{border:1px solid #2f4644!important;background:#1b2d2c!important;color:#6fb8c4!important}
+html[data-eff="dark"] #v1177EventOptions button:focus-visible{outline:3px solid #5dadc4!important}
+html[data-eff="dark"] .v1178-person{border:1px solid #2f4644!important;background:#1b2d2c!important}
+html[data-eff="dark"] .v1178-person button{color:#6fb8c4!important}
+html[data-eff="dark"] #v1178Payer,html[data-eff="dark"] #v1178Split{border:1px solid #2f4644!important;background:#1b2d2c!important;color:#6fb8c4!important}
+html[data-eff="dark"] .v1181-suggestions button{border:1px solid #5dadc4!important;color:#6fb8c4!important;background:#1b2d2c!important}
+html[data-eff="dark"]{color-scheme:dark;--navy:#6fb8c4;--ink:#e8f0ee;--muted:#9db5b3;--pale:#244240;--cream:#3a2f22}
+html[data-eff="dark"] body{background:#12201f!important;color:#e8f0ee}
+html[data-eff="dark"] input,html[data-eff="dark"] textarea,html[data-eff="dark"] select{background:#162625!important;color:#e8f0ee!important;border-color:#2f4644!important}
+html[data-eff="dark"] input::placeholder,html[data-eff="dark"] textarea::placeholder{color:#7f9795}
+html[data-eff="dark"] [style*="color:#1f5f6b"],html[data-eff="dark"] [style*="color:#1f5f6b"]{color:#6fb8c4!important}
+html[data-eff="dark"] [style*="background:#ffffff"],html[data-eff="dark"] [style*="background:white"]{background:#1b2d2c!important}
+html[data-eff="dark"] [style*="background:#f0fafc"],html[data-eff="dark"] [style*="background:#e6f1f0"]{background:#244240!important}
+html[data-eff="dark"] .btn:not(.secondary):not(.outline):not(.green){color:#ffffff}
+html[data-eff="dark"] #miCuenta .cu-card,html[data-eff="dark"] #ingresoOverlay .ing-card{background:#1b2d2c!important}
+
+html[data-eff="dark"] .pinto-invite-details{background:#1b2d2c!important;border-color:#2f4644!important}
+html[data-eff="dark"] .pinto-invite-details>summary{color:#6fb8c4!important}
+html[data-eff="dark"] .pinto-secondary-label{color:#9fbfc8!important}
+html[data-eff="dark"] #plazoInvitado[data-e=a]{background:#244240!important;color:#6fb8c4!important}
+html[data-eff="dark"] #plazoInvitado[data-e=c]{background:#4a3a22!important;color:#f2c58d!important}
+html[data-eff="dark"] .btn:not(.secondary):not(.outline):not(.green){background:#2a7a89!important;color:#ffffff!important}
+html[data-eff="dark"] #ingresoOverlay{background:#12201f!important}
+html[data-eff="dark"] #ingresoOverlay .ing-card{background:#1b2d2c!important;color:#e8f0ee!important;border-color:#2f4644!important}
+html[data-eff="dark"] #ingresoOverlay h1,html[data-eff="dark"] #ingresoOverlay h2,html[data-eff="dark"] #ingresoOverlay b,html[data-eff="dark"] #ingresoOverlay strong{color:#6fb8c4!important}
+html[data-eff="dark"] #ingresoOverlay p,html[data-eff="dark"] #ingresoOverlay small,html[data-eff="dark"] #ingresoOverlay label{color:#cfdcda!important}
+html[data-eff="dark"] #ingCard,html[data-eff="dark"] #ingCard *{border-color:#2f4644!important}
+html[data-eff="dark"] #ingCard{background:#1b2d2c!important;color:#e8f0ee!important}
+html[data-eff="dark"] #ingCard h3,html[data-eff="dark"] #ingCard b,html[data-eff="dark"] #ingCard strong{color:#6fb8c4!important}
+html[data-eff="dark"] #ingCard p,html[data-eff="dark"] #ingCard small,html[data-eff="dark"] #ingCard span{color:#cfdcda}
+html[data-eff="dark"] #ingMiosBox{background:#1b2d2c!important;border-color:#2f4644!important;color:#e8f0ee!important}
