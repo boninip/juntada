@@ -11,7 +11,7 @@ const items=await p.locator('#jMenuOverlay .j-menu-item span').allInnerTexts();o
 ok(await p.locator('#jMenuSalir').isHidden(),'Cerrar sesion oculto sin sesion');
 await p.keyboard.press('Escape');
 await p.click('#home .avatar');await p.waitForTimeout(300);
-ok((await p.locator('#miCuenta .screen-title').innerText())==='Mi perfil','titulo Mi perfil');
+ok((await p.locator('#miCuenta .pg').innerText())==='Mi perfil','titulo Mi perfil');
 await p.fill('#cuNom','Pau');await p.click('#cuNomG');ok(await p.evaluate(()=>localStorage.getItem('juntada_nombre'))==='Pau','nombre guardado');
 await p.click('[data-jts=l]');ok(await p.evaluate(()=>document.documentElement.getAttribute('data-ts'))==='l','tamano Grande aplicado');
 const w1=await p.evaluate(()=>document.querySelector('#miCuenta h2').getBoundingClientRect().height);
