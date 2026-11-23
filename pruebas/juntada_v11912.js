@@ -1,0 +1,25 @@
+const {chromium}=require('playwright');const assert=require('assert');
+(async()=>{const b=await chromium.launch({executablePath:'/usr/bin/google-chrome'});const p=await b.newPage({viewport:{width:360,height:780}});const errs=[];p.on('pageerror',e=>errs.push(e.message));
+await p.route('**/*supabase.co/**',r=>r.fulfill({status:200,contentType:'application/json',body:'[]'}));
+await p.addInitScript(()=>{if(!localStorage.getItem('juntada_v10_events'))localStorage.setItem('juntada_v10_events',JSON.stringify([{id:'a1',saved:{name:'Asado QA',date:'2026-12-20'}},{id:'a2',saved:{name:'Cumple QA',date:''}}]))});
+await p.goto('http://127.0.0.1:8765/juntada/index.html');await p.waitForTimeout(1500);
+const ok=(c,m)=>{assert.ok(c,m);console.log('ok   '+m)};
+ok(await p.locator('#jHomePlanes [data-jhp]').count()===2,'inicio muestra los planes guardados');
+ok((await p.locator('#jHomePlanes').innerText()).includes('Asado QA'),'nombre del plan visible');
+await p.click('#home .j-menu-trigger');await p.waitForTimeout(300);
+const items=await p.locator('#jMenuOverlay .j-menu-item span').allInnerTexts();ok(items.includes('Mi perfil')&&!items.includes('Cuenta'),'menu dice Mi perfil: '+items.join(','));
+ok(await p.locator('#jMenuSalir').isHidden(),'Cerrar sesion oculto sin sesion');
+await p.keyboard.press('Escape');
+await p.click('#home .avatar');await p.waitForTimeout(300);
+ok((await p.locator('#miCuenta .screen-title').innerText())==='Mi perfil','titulo Mi perfil');
+await p.fill('#cuNom','Pau');await p.click('#cuNomG');ok(await p.evaluate(()=>localStorage.getItem('juntada_nombre'))==='Pau','nombre guardado');
+await p.click('[data-jts=l]');ok(await p.evaluate(()=>document.documentElement.getAttribute('data-ts'))==='l','tamano Grande aplicado');
+const w1=await p.evaluate(()=>document.querySelector('#miCuenta h2').getBoundingClientRect().height);
+await p.click('[data-jts=m]');const w2=await p.evaluate(()=>document.querySelector('#miCuenta h2').getBoundingClientRect().height);ok(w1>w2,'Grande agranda el texto ('+w1.toFixed(1)+' > '+w2.toFixed(1)+')');
+ok(await p.evaluate(()=>document.documentElement.scrollWidth<=document.documentElement.clientWidth+1),'sin scroll horizontal');
+await p.evaluate(()=>{localStorage.setItem('planazo_auth_v1',JSON.stringify({refresh_token:'x',email:'a@b.com'}))});await p.reload();await p.waitForTimeout(1500);
+await p.click('#home .j-menu-trigger');await p.waitForTimeout(300);ok(await p.locator('#jMenuSalir').isVisible(),'Cerrar sesion visible con sesion');
+await p.click('#jMenuSalir');await p.waitForTimeout(1200);ok(await p.evaluate(()=>!localStorage.getItem('planazo_auth_v1')),'Cerrar sesion borra la sesion');
+await p.evaluate(()=>go('invite'));await p.waitForTimeout(300);ok(await p.locator('#guestName').inputValue()==='Pau','nombre precargado en la invitacion');
+ok(errs.length===0,'sin errores de pagina '+errs.join(';'));
+await b.close();console.log('TODO OK')})().catch(e=>{console.error(e);process.exit(1)})
