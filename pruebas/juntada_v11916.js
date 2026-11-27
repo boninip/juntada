@@ -6,7 +6,7 @@ async function mk(scenario){const ctx=await b.newContext({viewport:{width:360,he
  return {ctx,p,errs,calls}}
 const en5h=new Date(Date.now()+5*36e5).toISOString();
 // 1) con datos: plazo por vencer + pedidos de ingreso (local con credencial y juntada de otro celular)
-{const {ctx,p,errs,calls}=await mk({juntada_ver:{votacion_hasta:en5h,votacion_cerrada:false,ya_vote:false},juntada_solicitudes:[{estado:'pendiente',nombre:'Ana'},{estado:'aprobada',nombre:'Beto'}],juntada_mis_eventos:[{id:'R9',nombre:'Fiesta de Ana',rol:'coorganizador'}]});
+{const {ctx,p,errs,calls}=await mk({juntada_ver:{id:'R1',fecha:'2026-12-24',votacion_hasta:en5h,votacion_cerrada:false},juntada_mis_invitaciones:[{nombre:'Asado QA',codigo:'C1',votacion_hasta:en5h,votacion_cerrada:false,ya_vote:false,ahora:new Date().toISOString()}],juntada_solicitudes:[{estado:'pendiente',nombre:'Ana'},{estado:'aprobada',nombre:'Beto'}],juntada_mis_eventos:[{id:'R9',nombre:'Fiesta de Ana',rol:'coorganizador'}]});
  await p.addInitScript(()=>{localStorage.setItem('juntada_v10_events',JSON.stringify([{id:'a1',saved:{name:'Asado QA',date:''}}]));localStorage.setItem('juntada_remote_a1',JSON.stringify({id:'R1',codigo:'C1',organizador:'O1'}));localStorage.setItem('planazo_auth_v1',JSON.stringify({refresh_token:'x',access_token:'tok',expires_at:Date.now()+3600000,email:'p@test.com'}))});
  await p.goto('http://127.0.0.1:8765/juntada/index.html');await p.waitForTimeout(4000);
  ok(await p.locator('#home .j-bell').isVisible(),'campanita visible en el inicio');
