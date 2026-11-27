@@ -17,8 +17,12 @@ async function recolectar(){
  const out=[],vistos=new Set(),t=[];
  for(const x of locales().slice(0,8)){
   const c=cred(x.id);if(!c||!c.id)continue;vistos.add(c.id);const nombre=(x.saved&&x.saved.name)||'Juntada';
-  if(c.codigo)t.push(rpc('juntada_ver',{p_codigo:c.codigo}).then(d=>{if(d&&d.votacion_hasta&&!d.votacion_cerrada&&d.ya_vote===false){const ms=new Date(d.votacion_hasta)-Date.now();if(ms>0&&ms<=48*36e5)out.push({t:'plazo',lid:x.id,nombre,ms})}}).catch(()=>{}));
+  if(c.codigo)t.push(rpc('juntada_ver',{p_codigo:c.codigo}).then(d=>{if(d&&d.id&&!d.cancelada&&(d.recordatorio_horas==null||d.recordatorio_horas>0)&&!/^\d{4}-\d{2}-\d{2}$/.test(String(d.fecha_confirmada||d.fecha||'').trim()))out.push({t:'fecha',lid:x.id,nombre})}).catch(()=>{}));
   if(c.organizador)t.push(rpc('juntada_solicitudes',{p_juntada:c.id,p_organizador:c.organizador}).then(s=>{const n=(Array.isArray(s)?s:[]).filter(q=>q.estado==='pendiente').length;if(n)out.push({t:'sol',lid:x.id,nombre,n})}).catch(()=>{}));
+ }
+ if(sesion()){
+  t.push(rpc('juntada_mis_invitaciones',{}).then(arr=>{for(const e of (Array.isArray(arr)?arr:[])){if(e.cancelada||!e.votacion_hasta||e.votacion_cerrada||e.ya_vote!==false)continue;const ms=new Date(e.votacion_hasta)-new Date(e.ahora||Date.now());if(ms>0&&ms<=48*36e5)out.push({t:'plazo',codigo:e.codigo,nombre:e.nombre,ms})}}).catch(()=>{}));
+  t.push(rpc('core_notifications_list',{p_limit:30}).then(arr=>{for(const n of (Array.isArray(arr)?arr:[])){if(n.kind==='event_reminder'&&!n.read_at)out.push({t:'rec',nid:n.id,nombre:(n.data&&n.data.nombre)||'Juntada',inicio:n.data&&n.data.inicio})}}).catch(()=>{}));
  }
  if(sesion())t.push(rpc('juntada_mis_eventos',{}).then(async arr=>{
   for(const e of (Array.isArray(arr)?arr:[]).filter(e=>!e.eliminada_at&&!vistos.has(e.id)).slice(0,6)){
@@ -36,10 +40,14 @@ function abrir(){
  let o=$('jActOverlay');
  if(!o){o=document.createElement('div');o.id='jActOverlay';o.setAttribute('role','dialog');o.setAttribute('aria-modal','true');o.setAttribute('aria-labelledby','jActTitulo');o.hidden=true;document.body.append(o);o.addEventListener('click',e=>{if(e.target===o)cerrar()});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!o.hidden)cerrar()})}
  o.dataset.prev='';
- const filas=items.map((i,k)=>'<button type="button" class="act-item" data-k="'+k+'"><span><b>'+(i.t==='sol'?esc(i.n+(i.n===1?' pedido de ingreso':' pedidos de ingreso')):'Vence en '+esc(cuanto(i.ms)))+'</b><small>'+(i.t==='sol'?'en ':'votá en ')+'«'+esc(i.nombre)+'»</small></span></button>').join('');
- o.innerHTML='<div class="act-panel"><h2 id="jActTitulo">Actividad</h2>'+(filas||'<p class="act-vacio">No tenés nada pendiente. Acá vas a ver pedidos de ingreso por aprobar y votaciones por vencer.'+(sesion()?'':' Ingresá con tu Pintó ID para ver también tus juntadas de otros celulares.')+'</p>')+'<button type="button" class="btn secondary act-cerrar">Cerrar</button></div>';
+ const fila=i=>i.t==='sol'?['<b>'+esc(i.n+(i.n===1?' pedido de ingreso':' pedidos de ingreso'))+'</b>','en «'+esc(i.nombre)+'»']
+  :i.t==='rec'?['<b>Recordatorio: «'+esc(i.nombre)+'»</b>',i.inicio?'empieza '+esc(new Date(i.inicio).toLocaleString('es-AR',{weekday:'long',day:'numeric',month:'long',hour:'2-digit',minute:'2-digit'})):'está por empezar']
+  :i.t==='fecha'?['<b>Sin día concreto</b>','en «'+esc(i.nombre)+'»: no habrá recordatorio hasta fijarlo']
+  :['<b>Vence en '+esc(cuanto(i.ms))+'</b>','votá en «'+esc(i.nombre)+'»'];
+ const filas=items.map((i,k)=>{const f=fila(i);return '<button type="button" class="act-item" data-k="'+k+'"><span>'+f[0]+'<small>'+f[1]+'</small></span></button>'}).join('');
+ o.innerHTML='<div class="act-panel"><h2 id="jActTitulo">Actividad</h2>'+(filas||'<p class="act-vacio">No tenés nada pendiente. Acá vas a ver pedidos de ingreso por aprobar, votaciones por vencer y recordatorios.'+(sesion()?'':' Ingresá con tu Pintó ID para ver también tus juntadas de otros celulares.')+'</p>')+'<button type="button" class="btn secondary act-cerrar">Cerrar</button></div>';
  o.querySelector('.act-cerrar').onclick=cerrar;
- o.querySelectorAll('.act-item').forEach(b=>b.onclick=()=>{const i=items[+b.dataset.k];cerrar();if(i.lid&&typeof openJuntada==='function')openJuntada(i.lid);else if(typeof showMyEvents==='function'){go('myEvents');showMyEvents()}});
+ o.querySelectorAll('.act-item').forEach(b=>b.onclick=()=>{const i=items[+b.dataset.k];cerrar();if(i.t==='rec'){rpc('core_notifications_read',{p_id:i.nid}).catch(()=>{}).then(()=>refrescar(true))}if(i.t==='plazo'&&i.codigo){location.href=location.pathname+'?invite='+encodeURIComponent(i.codigo);return}if(i.lid&&typeof openJuntada==='function')openJuntada(i.lid);else if(typeof showMyEvents==='function'){go('myEvents');showMyEvents()}});
  o.hidden=false;o.dataset.prev=(document.activeElement&&document.activeElement.className)||'';(o.querySelector('.act-item')||o.querySelector('.act-cerrar')).focus();
  refrescar();
 }
