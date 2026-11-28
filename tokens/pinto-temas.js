@@ -115,13 +115,24 @@
    "aun_no_se": "Sin apuro; avisá cuando sepas.",
    "no_voy": "Te mandamos un ladrido de cariño."
   }
+ },
+ "poesia": {
+  "nombre": "Poesía",
+  "escena": "<svg class=\"pt-escena-svg\" aria-hidden=\"true\" viewBox=\"0 0 300 140\" preserveAspectRatio=\"xMidYMid slice\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M150 0L92 126H208Z\" fill=\"currentColor\" fill-opacity=\"0.07\" stroke=\"none\"/><path d=\"M138 34a12 12 0 0 1 24 0v26a12 12 0 0 1-24 0z\" fill=\"currentColor\" fill-opacity=\"0.5\" stroke=\"none\"/><path d=\"M138 34a12 12 0 0 1 24 0v26a12 12 0 0 1-24 0z\" opacity=\"0.9\"/><path d=\"M138 44h24M138 52h24\" opacity=\"0.6\"/><path d=\"M130 54a20 20 0 0 0 40 0\" stroke-width=\"1.6\"/><path d=\"M150 74v40M128 116h44\" stroke-width=\"1.6\"/><path d=\"M188 102l33-9 33 9v22l-33-9-33 9z\" fill=\"currentColor\" fill-opacity=\"0.3\" stroke=\"none\"/><path d=\"M188 102l33-9 33 9v22l-33-9-33 9z\" opacity=\"0.8\"/><path d=\"M221 93v22\" opacity=\"0.8\"/><path d=\"M198 106l16 -4M198 112l16-4M228 102l16 4M228 108l16 4\" opacity=\"0.5\"/><path d=\"M50 124L84 74\" stroke-width=\"1.6\"/><path d=\"M84 74q10-12 18-8-2 12-18 8z\" fill=\"currentColor\" fill-opacity=\"0.8\" stroke=\"none\"/><circle cx=\"48\" cy=\"128\" r=\"2.2\" fill=\"currentColor\" fill-opacity=\"0.8\" stroke=\"none\"/><path d=\"M40 36h42M40 46h28M222 36h36M222 46h24\" opacity=\"0.5\"/><circle cx=\"110\" cy=\"30\" r=\"1.5\" fill=\"currentColor\" fill-opacity=\"0.6\" stroke=\"none\"/><circle cx=\"196\" cy=\"26\" r=\"1.5\" fill=\"currentColor\" fill-opacity=\"0.6\" stroke=\"none\"/><circle cx=\"70\" cy=\"96\" r=\"1.3\" fill=\"currentColor\" fill-opacity=\"0.6\" stroke=\"none\"/></svg>",
+  "frase": {
+   "inicio": "Una noche para escuchar y para decir.",
+   "voy": "Anotado. Traé algo para leer.",
+   "aun_no_se": "Sin apuro; avisá cuando sepas.",
+   "no_voy": "Te guardamos un verso."
+  }
  }
 };
   var PALABRAS = { cumple: ['cumple', 'cumpleaños', 'birthday'], asado: ['asado', 'parrilla', 'choripán', 'chori'],
     previa: ['previa', 'joda', 'boliche', 'fiesta'], playa: ['playa', 'mar', 'costa', 'pileta'],
     ruta: ['ruta', 'roadtrip', 'viaje en auto'], montana: ['montaña', 'montana', 'sierra', 'cerro', 'trekking'],
     ochentas: ['80s', '80\'s', 'ochentas', 'años 80', 'retro'], noventas: ['90s', '90\'s', 'noventas', 'años 90'],
-    rock: ['rock', 'recital', 'banda', 'metal'], futbol: ['fútbol', 'futbol', 'partido', 'mundial', 'cancha', 'picado'], perrito: ['perro', 'perrito', 'mascota', 'peludo'] };
+    rock: ['rock', 'recital', 'banda', 'metal'], futbol: ['fútbol', 'futbol', 'partido', 'mundial', 'cancha', 'picado'], perrito: ['perro', 'perrito', 'mascota', 'peludo'],
+    poesia: ['poesía', 'poesia', 'poema', 'spoken word', 'lectura', 'micrófono abierto', 'microfono abierto'] };
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
   function temaAutomatico(texto) {
     var t = String(texto || '').toLowerCase();
