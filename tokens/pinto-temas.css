@@ -1,22 +1,22 @@
 /* pinto-temas.css v3 «editorial sobrio» · PROPUESTA (28/11/2026), pendiente de aprobación de Pau para todo el ecosistema.
  * Va DESPUÉS de pinto-tokens.css y pinto-ui.css. Sin sticker, sin confeti, sin tipografías de juguete: una sola serif, paleta apagada, líneas finas. */
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&display=swap');
-.pt-tema{position:relative;border-radius:14px;overflow:hidden;background:var(--pt-bg);color:var(--pt-tx);display:flex;flex-direction:column;border:1px solid color-mix(in srgb,var(--pt-tx) 14%,transparent);--pt-font:'Fraunces',Georgia,'Times New Roman',serif}
+.pt-tema{position:relative;border-radius:18px;overflow:hidden;box-shadow:0 10px 30px -12px color-mix(in srgb,var(--pt-tx) 35%,transparent);background:var(--pt-bg);color:var(--pt-tx);display:flex;flex-direction:column;border:1px solid color-mix(in srgb,var(--pt-tx) 14%,transparent);--pt-font:'Fraunces',Georgia,'Times New Roman',serif}
 .pt-tema[data-tema="cumple"]{--pt-bg:#F6EEEA;--pt-tx:#2B1D1F;--pt-ac:#8C3B4F;--pt-on:#fff}
 .pt-tema[data-tema="asado"]{--pt-bg:#2E2420;--pt-tx:#F2E8DC;--pt-ac:#D39A66;--pt-on:#2E2420}
 .pt-tema[data-tema="previa"]{--pt-bg:#1D1C2B;--pt-tx:#ECE9F4;--pt-ac:#C4B07A;--pt-on:#1D1C2B}
 .pt-tema[data-tema="playa"]{--pt-bg:#EEF3F2;--pt-tx:#1D2F33;--pt-ac:#2F6670;--pt-on:#fff}
 .pt-tema[data-tema="ruta"]{--pt-bg:#EFE8DB;--pt-tx:#2B2A26;--pt-ac:#9C4A2F;--pt-on:#fff}
 .pt-tema[data-tema="montana"]{--pt-bg:#E8EDE8;--pt-tx:#1F2B25;--pt-ac:#3E5E4C;--pt-on:#fff}
-.pt-escena-svg{display:block;width:100%;height:84px;color:var(--pt-ac);background:color-mix(in srgb,var(--pt-ac) 9%,var(--pt-bg))}
-.pt-tema__cuerpo{padding:18px 20px 20px;display:flex;flex-direction:column;gap:10px}
-.pt-tema__kicker{font:600 11px/1.2 var(--font-sans,system-ui);letter-spacing:.14em;text-transform:uppercase;color:var(--pt-ac)}
-.pt-tema__titulo{font-family:var(--pt-font);font-weight:400;font-size:30px;line-height:1.12;letter-spacing:-.01em;margin:0;overflow-wrap:anywhere}
-.pt-regla{width:44px;height:0;border:0;border-top:1px solid var(--pt-ac);margin:2px 0 0}
+.pt-escena-svg{display:block;width:100%;height:120px;color:var(--pt-ac);background:radial-gradient(120% 140% at 50% 0%,color-mix(in srgb,var(--pt-ac) 22%,var(--pt-bg)) 0%,color-mix(in srgb,var(--pt-ac) 8%,var(--pt-bg)) 70%);border-bottom:1px solid color-mix(in srgb,var(--pt-ac) 30%,transparent)}
+.pt-tema__cuerpo{padding:22px;display:flex;flex-direction:column;gap:10px}
+.pt-tema__kicker{font:600 11px/1.2 var(--font-sans,system-ui);letter-spacing:.2em;text-transform:uppercase;color:var(--pt-ac)}
+.pt-tema__titulo{font-family:var(--pt-font);font-weight:400;font-size:36px;line-height:1.08;letter-spacing:-.015em;margin:0;overflow-wrap:anywhere}
+.pt-regla{width:56px;height:0;border:0;border-top:2px solid var(--pt-ac);margin:4px 0;border-radius:2px}
 .pt-tema__frase{font-family:var(--pt-font);font-style:italic;font-size:15px;line-height:1.4;margin:0;animation:pt-in .3s ease-out}
 .pt-tema__frase:empty{display:none}
 .pt-tema__botones{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:8px;margin-top:4px}
-.pt-btn{min-height:46px;border-radius:10px;font:600 14px/1 var(--font-sans,system-ui);cursor:pointer;padding:0 6px;background:transparent;color:var(--pt-tx);border:1px solid color-mix(in srgb,var(--pt-tx) 45%,transparent);transition:background .15s,color .15s}
+.pt-btn{min-height:48px;border-radius:12px;font:600 14px/1 var(--font-sans,system-ui);cursor:pointer;padding:0 6px;background:transparent;color:var(--pt-tx);border:1px solid color-mix(in srgb,var(--pt-tx) 45%,transparent);transition:background .15s,color .15s}
 .pt-btn:active{opacity:.8}
 .pt-btn:focus-visible{outline:3px solid var(--pt-ac);outline-offset:2px}
 .pt-btn.is-cta{background:var(--pt-ac);color:var(--pt-on);border-color:var(--pt-ac)}
