@@ -204,15 +204,15 @@ for(const esquema of ['light','dark']){
  await ctx.close()}
 
 // ===== I) Temáticas nuevas (V1.19.22) =====
-for(const t of ['ochentas','noventas','rock','futbol','perrito','poesia']){
+for(const t of ['ochentas','noventas','rock','futbol','perrito','vintage']){
  const {ctx,p,errs}=await mk({juntada_ver:VER({tema:t}),juntada_asistentes:ASIS()},{url:INV,viewport:{width:360,height:740}});
  ok(await p.locator('#temaInv[data-tema="'+t+'"] svg.pt-escena-svg').count()===1,'I1 '+t+': se pinta con su ilustración');
  ok(await p.locator('#temaInv .pt-sticker').count()===0&&errs.length===0,'I2 '+t+': sin sticker ni errores');
  ok(await p.evaluate(()=>{const b=document.querySelector('#temaInv .pt-btn[data-r="voy"]').getBoundingClientRect();return b.bottom<=innerHeight}),'I3 '+t+': botones visibles sin scrollear');
  await ctx.close()}
 {const {ctx,p}=await mk({},{url:INV});
- const r=await p.evaluate(()=>[PintoTemas.temaAutomatico('Picado de fútbol'),PintoTemas.temaAutomatico('Noche 80s'),PintoTemas.temaAutomatico('Recital de rock'),PintoTemas.temaAutomatico('Paseo con el perro'),PintoTemas.temaAutomatico('Noche de poesía')]);
- ok(r.join()==='futbol,ochentas,rock,perrito,poesia','I5 sugerencia automática por nombre: '+r.join());await ctx.close()}
+ const r=await p.evaluate(()=>[PintoTemas.temaAutomatico('Picado de fútbol'),PintoTemas.temaAutomatico('Noche 80s'),PintoTemas.temaAutomatico('Recital de rock'),PintoTemas.temaAutomatico('Paseo con el perro'),PintoTemas.temaAutomatico('Merienda vintage')]);
+ ok(r.join()==='futbol,ochentas,rock,perrito,vintage','I5 sugerencia automática por nombre: '+r.join());await ctx.close()}
 
 // ===== J) Diseño (V1.19.24): fecha editorial, corte y escenas ricas =====
 {const {ctx,p,errs}=await mk({juntada_ver:VER({tema:'cumple',fecha:'2026-12-24',hora:'21:00:00',lugar:'Casa'}),juntada_asistentes:ASIS()},{url:INV,viewport:{width:360,height:740}});

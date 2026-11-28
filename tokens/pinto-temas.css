@@ -13,8 +13,8 @@
 .pt-tema[data-tema="rock"]{--pt-bg:#141414;--pt-tx:#F1EDE6;--pt-ac:#D6322E;--pt-on:#fff;--pt-font:'Bebas Neue',Impact,sans-serif;--pt-caso:uppercase;--pt-tam:38px;--pt-fecha:system-ui}
 .pt-tema[data-tema="futbol"]{--pt-bg:#0E3A2B;--pt-tx:#F4F7F2;--pt-ac:#E9C46A;--pt-on:#0E3A2B;--pt-font:'Oswald',Impact,sans-serif;--pt-caso:uppercase;--pt-tam:30px;--pt-fecha:system-ui}
 .pt-tema[data-tema="perrito"]{--pt-bg:#FBF3E4;--pt-tx:#2A2A33;--pt-ac:#4F6D9A;--pt-on:#fff;--pt-font:'Nunito',system-ui,sans-serif;--pt-tam:34px;--pt-fecha:system-ui}
-.pt-tema[data-tema="poesia"]{--pt-bg:#F4EEE8;--pt-tx:#25201C;--pt-ac:#6A3D5C;--pt-on:#fff}
-.pt-tema[data-tema="poesia"] .pt-tema__titulo{font-style:italic}
+.pt-tema[data-tema="vintage"]{--pt-bg:#FBF4DC;--pt-tx:#3A3326;--pt-ac:#4F7A9E;--pt-on:#fff}
+.pt-tema[data-tema="vintage"] .pt-tema__titulo{font-style:italic}
 .pt-escena-svg{display:block;width:100%;height:150px;color:var(--pt-ac);background:radial-gradient(120% 140% at 50% 0%,color-mix(in srgb,var(--pt-ac) 22%,var(--pt-bg)) 0%,color-mix(in srgb,var(--pt-ac) 8%,var(--pt-bg)) 70%);border-bottom:1px solid color-mix(in srgb,var(--pt-ac) 30%,transparent)}
 .pt-tema__cuerpo{padding:22px;display:flex;flex-direction:column;gap:10px}
 .pt-tema__kicker{font:600 11px/1.2 var(--font-sans,system-ui);letter-spacing:.2em;text-transform:uppercase;color:var(--pt-ac)}
