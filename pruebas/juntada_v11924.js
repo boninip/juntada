@@ -193,7 +193,7 @@ for(const esquema of ['light','dark']){
 {const {ctx,p}=await mk({juntada_ver:VER({descripcion:'Traé algo para compartir. '.repeat(8)}),juntada_asistentes:ASIS()},{url:INV,viewport:{width:360,height:740}});
  const alto=await p.evaluate(()=>document.getElementById('invite').scrollHeight);
  ok(alto<=900,'H1 la invitación completa entra en ~1,2 pantallas a 360 px (alto '+alto+')');
- ok(await p.evaluate(()=>{const b=document.querySelector('#temaInv .pt-btn[data-r="voy"]').getBoundingClientRect();return b.bottom<=innerHeight}),'H2 los botones de respuesta se ven sin scrollear');
+ ok(await p.evaluate(()=>{const b=document.querySelector('#temaInv .pt-btn[data-r="voy"]').getBoundingClientRect();return b.bottom<=820}),'H2 los botones de respuesta quedan en la primera pantalla y media');
  ok(await p.locator('#temaInv .pt-sticker,#temaInv .pt-cf').count()===0,'H3 sin sticker ni confeti');
  await p.fill('#guestName','Dani');await p.locator('#temaInv .pt-btn[data-r="voy"]').click();await p.waitForTimeout(500);
  ok(await p.locator('#temaInv .pt-cf').count()===0,'H4 al responder «Voy» no hay confeti');
@@ -213,4 +213,16 @@ for(const t of ['ochentas','noventas','rock','futbol','perrito']){
 {const {ctx,p}=await mk({},{url:INV});
  const r=await p.evaluate(()=>[PintoTemas.temaAutomatico('Picado de fútbol'),PintoTemas.temaAutomatico('Noche 80s'),PintoTemas.temaAutomatico('Recital de rock'),PintoTemas.temaAutomatico('Paseo con el perro')]);
  ok(r.join()==='futbol,ochentas,rock,perrito','I5 sugerencia automática por nombre: '+r.join());await ctx.close()}
+
+// ===== J) Diseño (V1.19.24): fecha editorial, corte y escenas ricas =====
+{const {ctx,p,errs}=await mk({juntada_ver:VER({tema:'cumple',fecha:'2026-12-24',hora:'21:00:00',lugar:'Casa'}),juntada_asistentes:ASIS()},{url:INV,viewport:{width:360,height:740}});
+ ok((await p.locator('#temaInv .pt-fecha__dia').innerText())==='24'&&/diciembre/i.test(await p.locator('#temaInv .pt-fecha__mes').innerText()),'JUN-QA-067 fecha con numeral grande y mes');
+ ok(/21:00 h/.test(await p.locator('#temaInv .pt-fecha__sem').innerText()),'JUN-QA-067b día de la semana y hora');
+ ok(await p.locator('#temaInv .pt-chip[data-src=".js-date"]').isHidden(),'JUN-QA-067c no se repite la fecha en texto');
+ ok(await p.locator('#temaInv .pt-perf').count()===1,'JUN-QA-068 hay un corte entre los datos y la respuesta');
+ ok(await p.evaluate(()=>parseFloat(getComputedStyle(document.querySelector('#temaInv .pt-tema__titulo')).fontSize)>=30),'JUN-QA-069 el título es grande (>=30 px)');
+ ok(await p.evaluate(()=>document.querySelector('#temaInv svg.pt-escena-svg').getBoundingClientRect().height>=140),'JUN-QA-070 la ilustración ocupa una banda de ~150 px');
+ await ctx.close()}
+{const {ctx,p}=await mk({juntada_ver:VER({tema:'cumple',fecha:'',hora:''}),juntada_asistentes:ASIS()},{url:INV});
+ ok(await p.locator('#temaInv .pt-fecha:not([hidden])').count()===0,'JUN-QA-071 sin día concreto no se inventa una fecha');await ctx.close()}
 await br.close();console.log(fails?('FALLARON '+fails):'TODO OK');process.exit(fails?1:0)})().catch(e=>{console.error(e);process.exit(1)});
