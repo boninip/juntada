@@ -1,4 +1,4 @@
-/* pinto-temas.js v1 · capa expresiva (temas v2 aprobados 27/11/2026).
+/* pinto-temas.js v1 (copia de Juntada con 10 <rect> de las escenas corregidos: les faltaban width/height) · capa expresiva (temas v2 aprobados 27/11/2026).
  * Uso: PintoTemas.render(contenedor, {tema, titulo, kicker, respuesta, asistentes, conteo, onResponder})
  * respuesta: 'voy' | 'aun_no_se' | 'no_voy' | null. El servidor sigue siendo la autoridad: esto solo pinta.
  */
@@ -8,7 +8,7 @@
  "cumple": {
   "nombre": "Cumple",
   "sticker": "¡Pintó torta!",
-  "escena": "<svg aria-hidden=\"true\" viewBox=\"0 0 300 160\" style=\"display:block;width:100%;height:auto;background:#FFC9DA\"><circle cx=\"40\" cy=\"36\" r=\"9\" fill=\"#C2185B\"/><circle cx=\"250\" cy=\"120\" r=\"12\" fill=\"#F2C14E\"/><circle cx=\"150\" cy=\"110\" r=\"44\" fill=\"#FFE3EC\"/><rect x=\"128\" y=\"92\" rx=\"6\" fill=\"#C2185B\"/><rect x=\"146\" y=\"72\" rx=\"3\" fill=\"#F2C14E\"/><rect x=\"80\" y=\"60\" rx=\"3\" fill=\"#1F5F6B\" transform=\"rotate(30 87 63)\"/><circle cx=\"60\" cy=\"120\" r=\"6\" fill=\"#1F5F6B\"/><rect x=\"210\" y=\"100\" rx=\"3\" fill=\"#C2185B\" transform=\"rotate(-25 217 103)\"/></svg>",
+  "escena": "<svg aria-hidden=\"true\" viewBox=\"0 0 300 160\" style=\"display:block;width:100%;height:auto;background:#FFC9DA\"><circle cx=\"40\" cy=\"36\" r=\"9\" fill=\"#C2185B\"/><circle cx=\"250\" cy=\"120\" r=\"12\" fill=\"#F2C14E\"/><circle cx=\"150\" cy=\"110\" r=\"44\" fill=\"#FFE3EC\"/><rect x=\"128\" y=\"92\" width=\"44\" height=\"34\" rx=\"6\" fill=\"#C2185B\"/><rect x=\"146\" y=\"72\" width=\"8\" height=\"20\" rx=\"3\" fill=\"#F2C14E\"/><rect x=\"80\" y=\"60\" width=\"14\" height=\"6\" rx=\"3\" fill=\"#1F5F6B\" transform=\"rotate(30 87 63)\"/><circle cx=\"60\" cy=\"120\" r=\"6\" fill=\"#1F5F6B\"/><rect x=\"210\" y=\"100\" width=\"14\" height=\"6\" rx=\"3\" fill=\"#C2185B\" transform=\"rotate(-25 217 103)\"/></svg>",
   "frase": {
    "inicio": "Vení con ganas de festejar.",
    "voy": "¡Sos de los que van! Prepará la voz para el feliz cumple.",
@@ -19,7 +19,7 @@
  "asado": {
   "nombre": "Asado",
   "sticker": "¡Pintó asado!",
-  "escena": "<svg aria-hidden=\"true\" viewBox=\"0 0 300 160\" style=\"display:block;width:100%;height:auto;background:#2A190F\"><path d=\"M150 30 C175 60 182 80 168 104 C160 90 156 84 150 80 C146 90 140 96 132 104 C118 82 126 58 150 30Z\" fill=\"#F2A65A\"/><path d=\"M150 66 C160 82 162 92 156 104 C152 98 150 96 150 96 C148 98 146 100 144 104 C138 94 140 82 150 66Z\" fill=\"#F2C14E\"/><rect x=\"70\" y=\"112\" rx=\"3\" fill=\"#8A5A3B\"/><rect x=\"70\" y=\"124\" rx=\"3\" fill=\"#8A5A3B\"/><circle cx=\"96\" cy=\"60\" r=\"3\" fill=\"#F2A65A\"/><circle cx=\"80\" cy=\"88\" r=\"2.5\" fill=\"#F2C14E\"/><circle cx=\"226\" cy=\"96\" r=\"2.5\" fill=\"#F2C14E\"/></svg>",
+  "escena": "<svg aria-hidden=\"true\" viewBox=\"0 0 300 160\" style=\"display:block;width:100%;height:auto;background:#2A190F\"><path d=\"M150 30 C175 60 182 80 168 104 C160 90 156 84 150 80 C146 90 140 96 132 104 C118 82 126 58 150 30Z\" fill=\"#F2A65A\"/><path d=\"M150 66 C160 82 162 92 156 104 C152 98 150 96 150 96 C148 98 146 100 144 104 C138 94 140 82 150 66Z\" fill=\"#F2C14E\"/><rect x=\"70\" y=\"112\" width=\"160\" height=\"5\" rx=\"3\" fill=\"#8A5A3B\"/><rect x=\"70\" y=\"124\" width=\"160\" height=\"5\" rx=\"3\" fill=\"#8A5A3B\"/><circle cx=\"96\" cy=\"60\" r=\"3\" fill=\"#F2A65A\"/><circle cx=\"80\" cy=\"88\" r=\"2.5\" fill=\"#F2C14E\"/><circle cx=\"226\" cy=\"96\" r=\"2.5\" fill=\"#F2C14E\"/></svg>",
   "frase": {
    "inicio": "El fuego se prende temprano. Llegá con hambre.",
    "voy": "¡Adentro! Ya te guardamos un choripán.",
@@ -30,7 +30,7 @@
  "previa": {
   "nombre": "Previa",
   "sticker": "¡Pintó previa!",
-  "escena": "<svg aria-hidden=\"true\" viewBox=\"0 0 300 160\" style=\"display:block;width:100%;height:auto;background:#15122B\"><circle cx=\"60\" cy=\"52\" r=\"24\" fill=\"#F2C14E\"/><circle cx=\"72\" cy=\"44\" r=\"22\" fill=\"#15122B\"/><path d=\"M150 40 L154 52 L166 56 L154 60 L150 72 L146 60 L134 56 L146 52Z\" fill=\"#F4F0FF\"/><path d=\"M220 84 L223 93 L232 96 L223 99 L220 108 L217 99 L208 96 L217 93Z\" fill=\"#F2C14E\"/><circle cx=\"110\" cy=\"100\" r=\"2\" fill=\"#F4F0FF\"/><circle cx=\"270\" cy=\"40\" r=\"2\" fill=\"#F4F0FF\"/><rect x=\"0\" y=\"136\" fill=\"#2B2650\"/><rect x=\"40\" y=\"120\" fill=\"#2B2650\"/><rect x=\"200\" y=\"112\" fill=\"#2B2650\"/></svg>",
+  "escena": "<svg aria-hidden=\"true\" viewBox=\"0 0 300 160\" style=\"display:block;width:100%;height:auto;background:#15122B\"><circle cx=\"60\" cy=\"52\" r=\"24\" fill=\"#F2C14E\"/><circle cx=\"72\" cy=\"44\" r=\"22\" fill=\"#15122B\"/><path d=\"M150 40 L154 52 L166 56 L154 60 L150 72 L146 60 L134 56 L146 52Z\" fill=\"#F4F0FF\"/><path d=\"M220 84 L223 93 L232 96 L223 99 L220 108 L217 99 L208 96 L217 93Z\" fill=\"#F2C14E\"/><circle cx=\"110\" cy=\"100\" r=\"2\" fill=\"#F4F0FF\"/><circle cx=\"270\" cy=\"40\" r=\"2\" fill=\"#F4F0FF\"/><rect x=\"0\" y=\"136\" width=\"300\" height=\"24\" fill=\"#2B2650\"/><rect x=\"40\" y=\"120\" width=\"36\" height=\"40\" fill=\"#2B2650\"/><rect x=\"200\" y=\"112\" width=\"44\" height=\"48\" fill=\"#2B2650\"/></svg>",
   "frase": {
    "inicio": "Calentamos motores antes de salir.",
    "voy": "¡Esa! Arranca la previa con vos.",
@@ -52,7 +52,7 @@
  "ruta": {
   "nombre": "Ruta",
   "sticker": "¡Pintó ruta!",
-  "escena": "<svg aria-hidden=\"true\" viewBox=\"0 0 300 160\" style=\"display:block;width:100%;height:auto;background:#F6D9A8\"><circle cx=\"90\" cy=\"54\" r=\"26\" fill=\"#F2C14E\"/><rect x=\"0\" y=\"80\" fill=\"#C9B48C\"/><path d=\"M130 80 L170 80 L250 160 L50 160Z\" fill=\"#4A4540\"/><path d=\"M150 86 L150 96 M150 106 L150 120 M150 132 L150 152\" stroke=\"#F3E9D7\" stroke-width=\"4\" stroke-linecap=\"round\"/><path d=\"M0 80 L60 60 L110 80Z M190 80 L250 56 L300 76 L300 80Z\" fill=\"#BE4B2C\"/></svg>",
+  "escena": "<svg aria-hidden=\"true\" viewBox=\"0 0 300 160\" style=\"display:block;width:100%;height:auto;background:#F6D9A8\"><circle cx=\"90\" cy=\"54\" r=\"26\" fill=\"#F2C14E\"/><rect x=\"0\" y=\"80\" width=\"300\" height=\"80\" fill=\"#C9B48C\"/><path d=\"M130 80 L170 80 L250 160 L50 160Z\" fill=\"#4A4540\"/><path d=\"M150 86 L150 96 M150 106 L150 120 M150 132 L150 152\" stroke=\"#F3E9D7\" stroke-width=\"4\" stroke-linecap=\"round\"/><path d=\"M0 80 L60 60 L110 80Z M190 80 L250 56 L300 76 L300 80Z\" fill=\"#BE4B2C\"/></svg>",
   "frase": {
    "inicio": "Cargamos nafta y arrancamos.",
    "voy": "¡Subiste! Vos elegís la primera canción.",
