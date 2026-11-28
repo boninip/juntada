@@ -51,6 +51,7 @@ css.textContent=[
 '.ic-foto{display:flex;gap:12px;align-items:center;flex-wrap:wrap}.ic-foto img{width:96px;height:64px;object-fit:cover;border-radius:10px;border:1px solid var(--borde,#c9d6d8)}.ic-foto-vacia{width:96px;height:64px;border-radius:10px;border:2px dashed var(--borde,#c9d6d8);display:grid;place-items:center;font-size:12px;color:var(--texto-suave,#5b6b6f)}',
 '#invConfigCard .ic-aviso{margin:10px 0 0;padding:10px 12px;border-radius:12px;background:#fff1e6;color:#8a4a12;font-weight:600}#invConfigCard .ic-aviso[hidden]{display:none}',
 '#icPrev{margin-top:14px;max-width:420px}#icPrev:empty{display:none}',
+'#invDisenoCard{margin:14px 0;text-align:left}#invDisenoCard h3{margin:0 0 4px}#invDisenoCard .ic-tiles{margin-top:10px}#disPrev{margin-top:14px}#disPrev:empty{display:none}#share.con-diseno .share-preview>.card{display:none}',
 '#icGuardar{margin-top:14px;width:100%}#icGuardar[disabled]{opacity:.55}'
 ].join('\n');
 document.head.append(css);
@@ -374,8 +375,44 @@ async function cargarCfg(){
  if(typeof remoteEvent==='undefined'||!remoteEvent||!remoteEvent.organizador||!remoteEvent.codigo||(typeof isGuestLink!=='undefined'&&isGuestLink))return;
  try{cfg=await rpc('juntada_ver',{p_codigo:remoteEvent.codigo});pintarCfg()}catch(_){}
 }
+/* ---------- Diseño de la invitación al compartir (pantallas «¡Tu juntada está lista!» y «Compartir invitación») ---------- */
+async function cargarDiseno(){
+ if(typeof remoteEvent==='undefined'||!remoteEvent||!remoteEvent.organizador||!remoteEvent.codigo)return false;
+ try{cfg=await rpc('juntada_ver',{p_codigo:remoteEvent.codigo});return true}catch(_){return false}
+}
+function previaDiseno(){
+ const p=$('disPrev'),sh=$('share');if(!p||!cfg)return;
+ const t=(document.querySelector('#invDisenoCard input[name="disTema"]:checked')||{}).value||'';
+ if(sh)sh.classList.toggle('con-diseno',!!t);
+ if(!t){p.className='';p.removeAttribute('data-tema');p.innerHTML='';return}
+ armarHero(p,{tema:t,titulo:cfg.nombre||'Tu juntada',kicker:'Así la van a ver',respuesta:null,iso:cfg.fecha_confirmada||cfg.fecha,hora:cfg.hora,fecha:bonita(cfg.fecha_confirmada||cfg.fecha),lugar:cfg.lugar||'',fotoPath:cfg.foto_path,fotoModo:cfg.foto_modo});
+}
+async function elegirDiseno(k){
+ const m=$('disMsg');if(m)m.textContent='Guardando…';
+ try{
+  const r=await rpc('juntada_configurar_invitacion',{p_juntada:remoteEvent.id,p_organizador:remoteEvent.organizador,p_tema:k||null,p_ocultar_asistentes:cfg.ocultar_asistentes===true,p_recordatorio_horas:cfg.recordatorio_horas==null?24:cfg.recordatorio_horas});
+  cfg={...cfg,tema:r.tema};if(m)m.textContent=k?'✓ Guardado. Es el diseño que van a ver tus invitados.':'✓ Guardado. Se ve la invitación sobria de siempre.';
+ }catch(e){
+  const t=cfg.tema||'';const rd=document.querySelector('#invDisenoCard input[name="disTema"][value="'+t+'"]');if(rd)rd.checked=true;
+  if(m)m.textContent=MSG_CFG[codigoDe(e)]||'No se pudo guardar. Probá de nuevo.';
+ }
+ previaDiseno();
+}
+function pintarDiseno(id){
+ const sc=$(id);if(!sc||!cfg||!window.PintoTemas)return;
+ const anchor=id==='share'?sc.querySelector('.share-preview'):sc.querySelector('.ready-card');if(!anchor)return;
+ let c=$('invDisenoCard');if(!c){c=document.createElement('div');c.id='invDisenoCard';c.className='card'}
+ const T=window.PintoTemas.TEMAS,sug=window.PintoTemas.temaAutomatico(cfg.nombre||'');
+ const tiles=[['','Sin tema']].concat(Object.keys(T).map(k=>[k,T[k].nombre])).map(([k,n])=>{
+  const col=COLORES[k];const sw=col?'background:linear-gradient(135deg,'+col[0]+' 60%,'+col[1]+' 60%);border-color:'+col[1]:'background:var(--superficie,#fff)';
+  return '<label class="ic-tile"><input class="vh" type="radio" name="disTema" value="'+k+'"'+((cfg.tema||'')===k?' checked':'')+'><span class="sw" style="'+sw+'"></span><span class="nm">'+esc(n)+(k&&k===sug&&k!==(cfg.tema||'')?' ✨':'')+'</span></label>'}).join('');
+ c.innerHTML='<h3>Diseño de la invitación</h3><p class="sub" style="margin:0">Elegí cómo la van a ver tus invitados.</p><div class="ic-tiles" role="radiogroup" aria-label="Diseño de la invitación">'+tiles+'</div><div id="disPrev" aria-label="Vista previa"></div><p class="field-hint" id="disMsg" role="status"></p>';
+ if(c.previousElementSibling!==anchor)anchor.after(c);
+ c.querySelectorAll('input[name="disTema"]').forEach(i=>i.addEventListener('change',()=>elegirDiseno(i.value)));
+ previaDiseno();
+}
 const go0=window.go;
-if(typeof go0==='function')window.go=function(id){const r=go0.apply(this,arguments);if(id==='event')setTimeout(cargarCfg,50);if(id==='invite')setTimeout(()=>{pintarInvitacion();pintarQuienVa()},0);return r};
+if(typeof go0==='function')window.go=function(id){const r=go0.apply(this,arguments);if(id==='event')setTimeout(cargarCfg,50);if(id==='share'||id==='ready')setTimeout(async()=>{if(await cargarDiseno())pintarDiseno(id)},60);if(id==='invite')setTimeout(()=>{pintarInvitacion();pintarQuienVa()},0);return r};
 
 if(new URLSearchParams(location.search).get('invite'))iniciarInvitado();
 })();
