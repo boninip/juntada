@@ -225,4 +225,21 @@ for(const t of ['ochentas','noventas','rock','futbol','perrito','vintage']){
  await ctx.close()}
 {const {ctx,p}=await mk({juntada_ver:VER({tema:'cumple',fecha:'',hora:''}),juntada_asistentes:ASIS()},{url:INV});
  ok(await p.locator('#temaInv .pt-fecha:not([hidden])').count()===0,'JUN-QA-071 sin día concreto no se inventa una fecha');await ctx.close()}
+
+// ===== K) Diseño al compartir (V1.19.26) =====
+for(const pantalla of ['ready','share']){
+ const {ctx,p,calls,errs}=await abrirOrg({juntada_configurar_invitacion:b=>({tema:b.p_tema,ocultar_asistentes:b.p_ocultar_asistentes,recordatorio_horas:b.p_recordatorio_horas})});
+ await p.evaluate(s=>go(s),pantalla);await p.waitForTimeout(900);
+ ok(await p.locator('#'+pantalla+' #invDisenoCard').count()===1,'JUN-QA-072 '+pantalla+': aparece «Diseño de la invitación»');
+ ok(await p.locator('#invDisenoCard input[name="disTema"]').count()===13,'JUN-QA-072b '+pantalla+': Sin tema + 12 temas');
+ await p.locator('#invDisenoCard label.ic-tile',{hasText:'Playa'}).click();await p.waitForTimeout(600);
+ const c=calls.filter(x=>x.fn==='juntada_configurar_invitacion');
+ ok(c.length===1&&c[0].body.p_tema==='playa'&&c[0].body.p_recordatorio_horas===24,'JUN-QA-073 '+pantalla+': elegir un diseño lo guarda y no pisa el recordatorio');
+ ok(await p.locator('#disPrev[data-tema="playa"] svg.pt-escena-svg').count()===1,'JUN-QA-074 '+pantalla+': vista previa con el diseño elegido');
+ ok(errs.length===0,'sin errores de página '+errs.join(';'));await ctx.close()}
+{const {ctx,p}=await abrirOrg({juntada_configurar_invitacion:{__err:'Tema inválido',__det:'JUN_TEMA_INVALIDO'}});
+ await p.evaluate(()=>go('share'));await p.waitForTimeout(900);
+ await p.locator('#invDisenoCard label.ic-tile',{hasText:'Rock'}).click();await p.waitForTimeout(600);
+ ok(/todavía no está activada/.test(await p.locator('#disMsg').innerText()),'JUN-QA-075 tema no activado en la base: aviso claro');
+ ok(await p.locator('#invDisenoCard input[name="disTema"]:checked').count()===1&&(await p.locator('#invDisenoCard input[name="disTema"]:checked').getAttribute('value'))==='','JUN-QA-075b vuelve a la selección anterior');await ctx.close()}
 await br.close();console.log(fails?('FALLARON '+fails):'TODO OK');process.exit(fails?1:0)})().catch(e=>{console.error(e);process.exit(1)});
