@@ -71,18 +71,28 @@ function armarHero(box,o){
  if(cuerpo&&h){
   const chips=document.createElement('div');chips.className='pt-chips';
   chips.innerHTML='<span class="pt-chip" data-src=".js-date" hidden>'+ICO.cal+'<span></span></span><span class="pt-chip" data-src=".js-place" hidden>'+ICO.pin+'<span></span></span><span class="pt-chip" data-src=".js-expense" hidden>'+ICO.gasto+'<span></span></span>';
-  h.after(chips);
+  const fb=document.createElement('div');fb.className='pt-fecha';fb.hidden=true;fb.innerHTML='<span class="pt-fecha__dia"></span><span class="pt-fecha__col"><span class="pt-fecha__mes"></span><span class="pt-fecha__sem"></span></span>';
+  const iso=String(o.iso||'').trim();
+  if(/^\d{4}-\d{2}-\d{2}$/.test(iso)){
+   const dt=new Date(iso+'T12:00:00'),hh=String(o.hora||'').slice(0,5);
+   fb.querySelector('.pt-fecha__dia').textContent=String(dt.getDate());
+   fb.querySelector('.pt-fecha__mes').textContent=dt.toLocaleDateString('es-AR',{month:'long'});
+   fb.querySelector('.pt-fecha__sem').textContent=dt.toLocaleDateString('es-AR',{weekday:'long'})+(/^\d{2}:\d{2}$/.test(hh)?' · '+hh+' h':'');
+   fb.hidden=false;chips.dataset.sinFecha='1';
+  }
+  h.after(fb);fb.after(chips);
   const d=document.createElement('p');d.className='pt-desc';d.hidden=true;chips.after(d);
   const m=document.createElement('button');m.type='button';m.className='pt-mas';m.textContent='Ver más';m.hidden=true;m.setAttribute('aria-expanded','false');d.after(m);
   m.onclick=()=>{const ab=d.classList.toggle('abierta');m.textContent=ab?'Ver menos':'Ver más';m.setAttribute('aria-expanded',String(ab))};
-  if(o.fecha!=null||o.lugar!=null){const v=[o.fecha,o.lugar];chips.querySelectorAll('.pt-chip').forEach((c,i)=>{if(v[i]){c.querySelector('span').textContent=v[i];c.hidden=false}})}
+  if(o.fecha!=null||o.lugar!=null){const v=[o.fecha,o.lugar];chips.querySelectorAll('.pt-chip').forEach((c,i)=>{if(v[i]&&!(i===0&&chips.dataset.sinFecha)){c.querySelector('span').textContent=v[i];c.hidden=false}})}
+  const perf=document.createElement('div');perf.className='pt-perf';perf.setAttribute('aria-hidden','true');const bots=box.querySelector('.pt-tema__botones');(box.querySelector('.guest-identity')||bots).before(perf);
   const est=document.createElement('p');est.className='pt-estado';est.setAttribute('aria-live','polite');cuerpo.append(est);
  }
  return true;
 }
 function refrescarChips(){
  const box=$('temaInv');if(!box)return;
- box.querySelectorAll('.pt-chip[data-src]').forEach(c=>{const f=document.querySelector('#invite '+c.dataset.src),t=f?f.textContent.trim():'';c.querySelector('span').textContent=t;c.hidden=!t});
+ box.querySelectorAll('.pt-chip[data-src]').forEach(c=>{const f=document.querySelector('#invite '+c.dataset.src),t=f?f.textContent.trim():'';c.querySelector('span').textContent=t;c.hidden=!t||(c.dataset.src==='.js-date'&&!!c.parentNode.dataset.sinFecha)});
  const d=box.querySelector('.pt-desc'),f=document.querySelector('#invite .js-description'),t=f?f.textContent.trim():'';
  if(d){d.textContent=t;d.hidden=!t;const m=box.querySelector('.pt-mas');if(m)m.hidden=!t||t.length<90}
 }
@@ -156,7 +166,7 @@ function pintarInvitacion(){
   if(!(box&&box.dataset.k===key)){
    devolverNombre();
    if(!box){box=document.createElement('div');box.id='temaInv';pad.prepend(box)}
-   armarHero(box,{tema:ver.tema,titulo:ver.nombre,respuesta:resp,onResponder:k=>responder(k),fotoPath:ver.foto_path,fotoModo:ver.foto_modo});
+   armarHero(box,{tema:ver.tema,titulo:ver.nombre,iso:ver.fecha_confirmada||ver.fecha,hora:ver.hora,respuesta:resp,onResponder:k=>responder(k),fotoPath:ver.foto_path,fotoModo:ver.foto_modo});
    box.dataset.k=key;moverNombre(box);
    if(resp&&nombreActual())estado('✓ Anotado como «'+ES[resp]+'». Podés cambiarlo cuando quieras.');
   }
@@ -261,7 +271,7 @@ function previa(){
  const p=$('icPrev');if(!p||!cfg)return;
  const t=valTema();
  if(!t){p.className='';p.removeAttribute('data-tema');p.innerHTML='';return}
- armarHero(p,{tema:t,titulo:cfg.nombre||(typeof saved!=='undefined'&&saved&&saved.name)||'Tu juntada',kicker:'Así se ve',respuesta:null,fotoSrc:fotoLocal||'',fotoPath:cfg.foto_path,fotoModo:valModo(),fecha:bonita(cfg.fecha_confirmada||cfg.fecha),lugar:cfg.lugar||''});
+ armarHero(p,{tema:t,titulo:cfg.nombre||(typeof saved!=='undefined'&&saved&&saved.name)||'Tu juntada',kicker:'Así se ve',respuesta:null,fotoSrc:fotoLocal||'',fotoPath:cfg.foto_path,fotoModo:valModo(),iso:cfg.fecha_confirmada||cfg.fecha,hora:cfg.hora,fecha:bonita(cfg.fecha_confirmada||cfg.fecha),lugar:cfg.lugar||''});
 }
 function dirty(){const b=$('icGuardar');if(!b)return;const d=estadoForm()!==snap;b.disabled=!d;b.textContent=d?'Guardar invitación':'Sin cambios por guardar';avisoFecha();previa()}
 function seccionFoto(){
