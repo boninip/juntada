@@ -19,6 +19,27 @@ const en5h=new Date(Date.now()+5*36e5).toISOString();
  await p.evaluate(()=>go('miCuenta'));await p.waitForTimeout(1200);ok(await p.locator('#miCuenta .j-bell').count()===1,'campanita tambien en Mi perfil');
  ok(await p.evaluate(()=>document.documentElement.scrollWidth<=document.documentElement.clientWidth+1),'sin scroll horizontal');
  ok(errs.length===0,'sin errores de pagina '+errs.join(';'));await ctx.close()}
+// 1b) descartar avisos y distancia al perfil
+{const {ctx,p,errs}=await mk({juntada_ver:{id:'R1',fecha:'2026-12-24',votacion_hasta:en5h,votacion_cerrada:false},juntada_mis_invitaciones:[{nombre:'Asado QA',codigo:'C1',votacion_hasta:en5h,votacion_cerrada:false,ya_vote:false,ahora:new Date().toISOString()}],juntada_solicitudes:[{estado:'pendiente'}]});
+ await p.addInitScript(()=>{localStorage.setItem('juntada_v10_events',JSON.stringify([{id:'a1',saved:{name:'Asado QA',date:''}}]));localStorage.setItem('juntada_remote_a1',JSON.stringify({id:'R1',codigo:'C1',organizador:'O1'}));localStorage.setItem('planazo_auth_v1',JSON.stringify({access_token:'t',refresh_token:'r',expires_at:Date.now()+3600000,email:'p@test.com'}))});
+ await p.goto('http://127.0.0.1:8765/juntada/index.html');await p.waitForTimeout(4000);
+ const g=await p.evaluate(()=>{const b=document.querySelector('#home .j-bell').getBoundingClientRect(),a=document.querySelector('#home header .avatar').getBoundingClientRect();return a.left-b.right});
+ ok(g>=0&&g<=16,'JUN-QA-062 la campanita queda pegada al perfil (separación '+Math.round(g)+' px)');
+ const n0=+(await p.locator('#home .j-bell i').innerText()).replace('+','');
+ await p.click('#home .j-bell');await p.waitForTimeout(400);
+ const antes=await p.locator('#jActOverlay .act-fila').count();
+ ok(antes>=2&&await p.locator('#jActOverlay .act-x').count()===antes,'JUN-QA-063 cada aviso tiene su botón para descartarlo');
+ await p.locator('#jActOverlay .act-x').first().click();await p.waitForTimeout(300);
+ ok(await p.locator('#jActOverlay .act-fila').count()===antes-1,'JUN-QA-064 descartar saca ese aviso');
+ ok(+(await p.locator('#home .j-bell i').innerText().catch(()=>'0')||0)<n0,'JUN-QA-064b baja el contador');
+ await p.keyboard.press('Escape');await p.reload();await p.waitForTimeout(4000);await p.click('#home .j-bell');await p.waitForTimeout(400);
+ ok(await p.locator('#jActOverlay .act-fila').count()===antes-1,'JUN-QA-065 al recargar el aviso descartado no vuelve');
+ if(await p.locator('#jActOverlay .act-limpiar').count()){await p.locator('#jActOverlay .act-limpiar').click();await p.waitForTimeout(300)}
+ else await p.locator('#jActOverlay .act-x').first().click();
+ await p.waitForTimeout(300);
+ ok(await p.locator('#jActOverlay .act-fila').count()===0&&(await p.locator('#jActOverlay').innerText()).includes('nada pendiente'),'JUN-QA-066 «Limpiar todo» deja la lista vacía');
+ ok(await p.locator('#home .j-bell i').isHidden(),'JUN-QA-066b sin contador al limpiar');
+ ok(errs.length===0,'sin errores de página '+errs.join(';'));await ctx.close()}
 // 2) sin nada: sin contador y con texto vacio
 {const {ctx,p,errs}=await mk({});await p.goto('http://127.0.0.1:8765/juntada/index.html');await p.waitForTimeout(1500);
  ok(await p.locator('#home .j-bell i').isHidden(),'sin pendientes no hay contador');
