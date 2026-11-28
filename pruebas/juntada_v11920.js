@@ -1,4 +1,4 @@
-// V1.19.18 · temas de invitación, «Quién va», reacciones, ajustes del organizador, campanita (recordatorios). Supabase SIMULADO.
+// V1.19.20 · invitación en una tarjeta, estilo editorial sobrio, «Quién va» plegado. Supabase SIMULADO.
 // Servir /home/claude en 127.0.0.1:8765 (el repo queda bajo /juntada/).
 const {chromium}=require('playwright');
 const B='http://127.0.0.1:8765/juntada/index.html';
@@ -12,6 +12,7 @@ async function mk(sc,{url=B,init=()=>{},session=false,viewport={width:390,height
  await p.addInitScript(init);
  await p.route('**/*',async r=>{const u=r.request().url();
   if(u.includes('fonts.googleapis.com')||u.includes('fonts.gstatic.com'))return r.fulfill({status:200,contentType:'text/css',body:''});
+  if(u.includes('/storage/v1/object/public/'))return r.fulfill({status:200,contentType:'image/png',body:Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR4nGP4z8DwHwAFAAH/q842iQAAAABJRU5ErkJggg==','base64')});
   if(!u.includes('supabase.co'))return r.continue();
   const fn=(u.split('/rpc/')[1]||'').split('?')[0];let body={};try{body=JSON.parse(r.request().postData()||'{}')}catch(_){}
   calls.push({fn,body});const h=sc[fn];const res=h===undefined?{}:(typeof h==='function'?h(body):h);
@@ -32,13 +33,19 @@ const nlast=(calls,fn)=>calls.filter(c=>c.fn===fn);
  // sin nombre no responde
  await p.locator('#temaInv .pt-btn[data-r="voy"]').click();await p.waitForTimeout(300);
  ok(nlast(calls,'juntada_responder').length===0,'A5 sin nombre no se llama a juntada_responder');
+ ok(await p.locator('#nombreErr').isVisible()&&/Escribí tu nombre/.test(await p.locator('#nombreErr').innerText()),'A5b falta el nombre: error en línea (no solo un aviso que se va)');
+ ok(await p.locator('#temaInv #guestName').count()===1,'A5c el campo de nombre queda dentro de la tarjeta, antes de los botones');
+ ok((await p.locator('#temaInv .pt-chip:not([hidden])').count())>=1,'A5d fecha y lugar aparecen como chips en la tarjeta');
+ ok(await p.locator('#invite .detail').first().isHidden(),'A5e no se repiten fecha y lugar debajo');
  await p.fill('#guestName','Dani');
+ await p.waitForTimeout(100);ok(await p.locator('#nombreErr').isHidden(),'A5f al escribir, el error desaparece');
  const mapa=[['voy','voy'],['aun_no_se','tal_vez'],['no_voy','no_puedo']];
  for(const [k,v] of mapa){const antes=nlast(calls,'juntada_responder').length;await p.locator('#temaInv .pt-btn[data-r="'+k+'"]').click();await p.waitForTimeout(500);
   const c=nlast(calls,'juntada_responder');ok(c.length===antes+1&&c[c.length-1].body.p_asistencia===v&&c[c.length-1].body.p_nombre==='Dani'&&c[c.length-1].body.p_codigo===CODE,'A6 '+k+' → p_asistencia '+v);}
  ok(await p.locator('#temaInv .pt-btn[data-r="no_voy"]').getAttribute('aria-pressed')==='true','A7 queda marcada la última respuesta');
  ok((await p.locator('#temaInv .pt-tema__frase').innerText()).includes('Brindamos'),'A8 la frase del tema cambia con la respuesta');
  ok(JSON.parse(await p.evaluate(c=>localStorage.getItem('juntada_guest_progress_'+c),CODE)).attendance==='No voy','A9 se guarda la respuesta en este navegador');
+ ok(/Anotado como «No voy»/.test(await p.locator('#temaInv .pt-estado').innerText()),'A9b el estado queda escrito en la tarjeta');
  ok(errs.length===0,'A10 sin errores de página '+errs.join(';'));await ctx.close()}
 
 // ===== B) Sin tema: base sobria =====
@@ -50,6 +57,9 @@ const nlast=(calls,fn)=>calls.filter(c=>c.fn===fn);
 
 // ===== C) Quién va y reacciones =====
 {const {ctx,p,calls}=await mk({juntada_ver:VER(),juntada_asistentes:ASIS(),juntada_responder:{ok:true,id:'R1'},juntada_reaccionar:b=>b.p_emoji==='❤️'?{__err:'Primero respondé si vas',__det:'JUN_SIN_RESPUESTA'}:{ok:true,emoji:b.p_emoji}},{url:INV});
+ ok(await p.evaluate(()=>document.getElementById('quienVa').tagName==='DETAILS'&&!document.getElementById('quienVa').open),'C0 «Quién va» arranca plegado (invitación corta)');
+ ok(/2 van/.test(await p.locator('#quienVa summary').innerText()),'C0b el resumen plegado ya dice cuántos van');
+ await p.locator('#quienVa summary').click();
  const t=await p.locator('#quienVa').innerText();
  ok(/2 van/.test(t)&&/1 aún no sabe/.test(t)&&/1 no va/.test(t),'C1 los conteos se muestran siempre');
  ok(/Beto/.test(t)&&/🎉/.test(t)&&/Cami/.test(t),'C2 con lista visible: nombres y emoji');
@@ -66,6 +76,7 @@ const nlast=(calls,fn)=>calls.filter(c=>c.fn===fn);
  ok(/Primero respondé/.test(await p.locator('#toast, .toast').first().innerText().catch(()=>'')),'C9 el error JUN_SIN_RESPUESTA se explica por código');
  await ctx.close()}
 {const {ctx,p}=await mk({juntada_ver:VER(),juntada_asistentes:ASIS({oculta:true,asistentes:null})},{url:INV});
+ await p.locator('#quienVa summary').click();
  const t=await p.locator('#quienVa').innerText();
  ok(/2 van/.test(t)&&!/Beto/.test(t)&&/no mostrar los nombres/.test(t),'C10 lista oculta: solo números');await ctx.close()}
 {const {ctx,p,calls}=await mk({juntada_ver:VER({acceso:'iniciar_sesion'}),juntada_asistentes:ASIS()},{url:INV});
@@ -77,23 +88,29 @@ async function abrirOrg(sc,over={}){const o=await mk(Object.assign({juntada_ver:
  await o.p.evaluate(()=>openJuntada('j1'));await o.p.waitForTimeout(1500);return o}
 {const {ctx,p,calls,errs}=await abrirOrg({juntada_configurar_invitacion:b=>({tema:b.p_tema,ocultar_asistentes:b.p_ocultar_asistentes,recordatorio_horas:b.p_recordatorio_horas})});
  ok(await p.locator('#invConfigCard').count()===1,'D1 aparece la tarjeta «Invitación» del organizador');
- ok(await p.locator('#icRec').inputValue()==='24','D2 recordatorio: 24 h por defecto');
+ ok(await p.locator('#invConfigCard input[name="icTema"]').count()===7,'D1b selector visual: Sin tema + 6 temas');
+ ok(await p.locator('#invConfigCard input[name="icRec"]:checked').getAttribute('value')==='24','D2 recordatorio: 24 h por defecto');
+ ok(await p.locator('#icGuardar').isDisabled(),'D2b sin cambios, el botón de guardar está apagado');
+ ok(await p.locator('#invConfigCard input[name="icTema"]:checked').getAttribute('value')==='','D2c arranca en «Sin tema»');
  ok((await p.locator('#icSug').innerText()).includes('Cumple'),'D3 sugiere el tema según el nombre («Cumple de Ana» → Cumple)');
- await p.click('#icUsar');ok(await p.locator('#icTema').inputValue()==='cumple','D4 «Usar» elige el tema sugerido');
+ await p.click('#icUsar');ok(await p.locator('#invConfigCard input[name="icTema"]:checked').getAttribute('value')==='cumple','D4 «Usar» elige el tema sugerido');
  ok(await p.locator('#icPrev[data-tema="cumple"]').count()===1,'D5 hay vista previa del tema');
- await p.check('#icOcultar');await p.selectOption('#icRec','0');await p.click('#icGuardar');await p.waitForTimeout(600);
+ ok(await p.locator('#icGuardar').isEnabled(),'D5b al cambiar algo, se habilita guardar');
+ await p.locator('#icOcultar').check();await p.locator('label.ic-chip:has(input[name="icRec"][value="0"])').click();await p.click('#icGuardar');await p.waitForTimeout(600);
  const c=nlast(calls,'juntada_configurar_invitacion');
  ok(c.length===1&&c[0].body.p_juntada===ID&&c[0].body.p_organizador===TOK&&c[0].body.p_tema==='cumple'&&c[0].body.p_ocultar_asistentes===true&&c[0].body.p_recordatorio_horas===0,'D6 guarda tema, ocultar y recordatorio 0 (apagado)');
+ ok(await p.locator('#icGuardar').isDisabled(),'D6b tras guardar vuelve a «sin cambios»');
+ ok(await p.locator('#invConfigCard input[name="icModo"]').count()===0,'D6c sin migración de foto en la base (no viene foto_path): no aparecen controles de foto');
  ok(errs.length===0,'D7 sin errores de página '+errs.join(';'));await ctx.close()}
 {const {ctx,p}=await abrirOrg({juntada_ver:VER({tema:null,nombre:'Cumple de Ana',fecha:'sábado a la noche',recordatorio_horas:24})});
  ok(await p.locator('#icAviso').isVisible(),'D8 fecha no concreta + recordatorio: se avisa que no habrá recordatorio');
- await p.selectOption('#icRec','0');ok(await p.locator('#icAviso').isHidden(),'D9 con recordatorio apagado no hay aviso');
- await p.selectOption('#icRec','48');ok(await p.locator('#icAviso').isVisible(),'D10 al volver a prenderlo, vuelve el aviso');await ctx.close()}
+ await p.locator('label.ic-chip:has(input[name="icRec"][value="0"])').click();ok(await p.locator('#icAviso').isHidden(),'D9 con recordatorio apagado no hay aviso');
+ await p.locator('label.ic-chip:has(input[name="icRec"][value="48"])').click();ok(await p.locator('#icAviso').isVisible(),'D10 al volver a prenderlo, vuelve el aviso');await ctx.close()}
 {const {ctx,p}=await abrirOrg({juntada_ver:VER({tema:'playa',nombre:'Cumple de Ana',fecha:'sábado',fecha_confirmada:'2026-12-24'})});
  ok(await p.locator('#icAviso').isHidden(),'D11 con fecha_confirmada concreta no hay aviso');
- ok(await p.locator('#icTema').inputValue()==='playa','D12 muestra el tema actual');await ctx.close()}
+ ok(await p.locator('#invConfigCard input[name="icTema"]:checked').getAttribute('value')==='playa','D12 muestra el tema actual');await ctx.close()}
 {const {ctx,p}=await abrirOrg({juntada_configurar_invitacion:{__err:'Acceso no autorizado',__det:'JUN_NO_AUTORIZADO'}});
- await p.click('#icGuardar');await p.waitForTimeout(500);
+ await p.locator('label.ic-tile:has(input[value="ruta"])').click();await p.click('#icGuardar');await p.waitForTimeout(500);
  ok(/Solo quien organiza/.test(await p.locator('#icMsg').innerText()),'D13 error JUN_NO_AUTORIZADO explicado por código');await ctx.close()}
 
 // ===== E) Campanita: recordatorios, plazo, fecha =====
@@ -120,6 +137,47 @@ const en5h=new Date(Date.now()+5*36e5).toISOString();
 {const {ctx,p,calls}=await mk({core_notifications_list:[{id:'N1',kind:'event_reminder',read_at:null,data:{nombre:'X'}}]},{});
  await p.waitForTimeout(2500);ok(nlast(calls,'core_notifications_list').length===0,'E7 sin sesión no se piden notificaciones');await ctx.close()}
 
+// ===== G) Foto de portada (base con la migración propuesta SIMULADA) =====
+const FOTO=ID+'/aaaaaaaaaaaaaaaa.jpg';
+{const {ctx,p}=await mk({juntada_ver:VER({tema:'cumple',foto_path:FOTO,foto_modo:'reemplaza'}),juntada_asistentes:ASIS()},{url:INV});
+ ok(await p.locator('#temaInv img.pt-foto').count()===1&&(await p.locator('#temaInv img.pt-foto').getAttribute('src')).includes('/storage/v1/object/public/juntada-fotos/'+ID),'G1 modo «reemplaza»: la foto ocupa el lugar de la ilustración');
+ ok(await p.locator('#temaInv svg').count()===0||await p.locator('#temaInv .pt-escena svg').count()===0,'G1b la ilustración no se ve');await ctx.close()}
+{const {ctx,p}=await mk({juntada_ver:VER({tema:'cumple',foto_path:FOTO,foto_modo:'dentro'}),juntada_asistentes:ASIS()},{url:INV});
+ ok(await p.locator('#temaInv .pt-escena.marco img.pt-foto').count()===1,'G2 modo «dentro»: la foto va con marco fino');
+ const bb=await p.locator('#temaInv .pt-escena.marco img.pt-foto').boundingBox(),eb=await p.locator('#temaInv .pt-escena').boundingBox();
+ ok(bb.x>eb.x+8&&bb.x+bb.width<eb.x+eb.width-8,'G2b el marco deja margen a los costados');await ctx.close()}
+{const {ctx,p}=await mk({juntada_ver:VER({tema:null,foto_path:FOTO}),juntada_asistentes:ASIS()},{url:INV});
+ ok(await p.locator('#invite.con-foto .banner img').count()===1,'G3 sin tema pero con foto: la foto va como encabezado de la invitación sobria');await ctx.close()}
+{const {ctx,p}=await mk({juntada_ver:VER({tema:'cumple',foto_path:null}),juntada_asistentes:ASIS()},{url:INV});
+ ok(await p.locator('#temaInv img').count()===0&&await p.locator('#temaInv svg').count()>=1,'G4 sin foto: queda la ilustración del tema');await ctx.close()}
+{const png=Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR4nGP4z8DwHwAFAAH/q842iQAAAABJRU5ErkJggg==','base64');
+ let subidas=[];
+ const {ctx,p,calls}=await abrirOrg({juntada_ver:VER({tema:null,nombre:'Cumple de Ana',foto_path:null,foto_modo:'reemplaza'}),juntada_configurar_foto:b=>({foto_path:b.p_path,foto_modo:b.p_modo||'reemplaza'})});
+ await p.route('**/storage/v1/object/juntada-fotos/**',r=>{subidas.push({url:r.request().url(),ct:r.request().headers()['content-type'],n:(r.request().postDataBuffer()||Buffer.alloc(0)).length});r.fulfill({status:200,contentType:'application/json',body:'{}'})});
+ ok(await p.locator('#icFotoArchivo').count()===1&&await p.locator('input[name="icModo"]').count()===2,'G5 con la migración (viene foto_path) aparecen los controles de foto y los dos modos');
+ await p.locator('label.ic-chip:has(input[name="icModo"][value="dentro"])').click();
+ await p.setInputFiles('#icFotoArchivo',{name:'cumple.png',mimeType:'image/png',buffer:png});await p.waitForTimeout(1500);
+ const cf=nlast(calls,'juntada_configurar_foto');
+ ok(subidas.length===1&&subidas[0].ct==='image/jpeg'&&subidas[0].url.includes('/juntada-fotos/'+ID+'/')&&/\.jpg$/.test(subidas[0].url),'G6 sube un JPEG a la carpeta de la juntada con nombre aleatorio');
+ ok(cf.length===1&&cf[0].body.p_path.startsWith(ID+'/')&&cf[0].body.p_modo==='dentro'&&cf[0].body.p_organizador===TOK,'G7 después de subir, pide al servidor asignarla (con el modo elegido)');
+ ok(await p.locator('#icFotoQuitar').count()===1&&/Foto guardada/.test(await p.locator('#icFotoMsg').innerText()),'G8 queda la foto y el aviso «Foto guardada»');
+ await p.locator('label.ic-chip:has(input[name="icModo"][value="reemplaza"])').click();await p.waitForTimeout(500);
+ const cf2=nlast(calls,'juntada_configurar_foto');ok(cf2.length===2&&cf2[1].body.p_modo==='reemplaza'&&cf2[1].body.p_path===cf[0].body.p_path,'G9 cambiar el modo reasigna la misma foto');
+ await p.click('#icFotoQuitar');await p.waitForTimeout(500);
+ const cf3=nlast(calls,'juntada_configurar_foto');ok(cf3.length===3&&cf3[2].body.p_path===null,'G10 quitar la foto manda p_path null');await ctx.close()}
+{const png=Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR4nGP4z8DwHwAFAAH/q842iQAAAABJRU5ErkJggg==','base64');
+ const {ctx,p,calls}=await abrirOrg({juntada_ver:VER({tema:null,nombre:'Cumple de Ana',foto_path:null})});
+ await p.route('**/storage/v1/object/juntada-fotos/**',r=>r.fulfill({status:403,contentType:'application/json',body:'{"message":"nope"}'}));
+ await p.setInputFiles('#icFotoArchivo',{name:'a.png',mimeType:'image/png',buffer:png});await p.waitForTimeout(1200);
+ ok(nlast(calls,'juntada_configurar_foto').length===0&&/No se pudo subir/.test(await p.locator('#icFotoMsg').innerText()),'G11 si falla la subida, no se asigna nada y se explica');
+ await p.setInputFiles('#icFotoArchivo',{name:'a.txt',mimeType:'text/plain',buffer:Buffer.from('hola')});await p.waitForTimeout(500);
+ ok(/archivo de imagen/.test(await p.locator('#icFotoMsg').innerText()),'G12 un archivo que no es imagen se rechaza antes de subir');await ctx.close()}
+{const {ctx,p}=await mk({juntada_ver:VER(),juntada_asistentes:ASIS(),juntada_responder:{__err:'Respuesta inválida'}},{url:INV});
+ await p.fill('#guestName','Dani');await p.locator('#temaInv .pt-btn[data-r="voy"]').click();await p.waitForTimeout(600);
+ ok(await p.locator('#temaInv .pt-btn[aria-pressed="true"]').count()===0,'G13 si la respuesta falla, el botón vuelve a su estado (no queda como confirmada)');await ctx.close()}
+{global.window={};require('/home/claude/juntada/tokens/pinto-temas.js');const T=window.PintoTemas.TEMAS;
+ ok(Object.values(T).every(t=>(t.escena.match(/<rect[^>]*>/g)||[]).every(r=>/width=/.test(r)&&/height=/.test(r))),'G14 ninguna escena tiene <rect> sin tamaño');}
+
 // ===== F) Pantalla chica, claro y oscuro =====
 for(const esquema of ['light','dark']){
  const ctx=await br.newContext({viewport:{width:360,height:780},colorScheme:esquema});const p=await ctx.newPage();
@@ -130,4 +188,18 @@ for(const esquema of ['light','dark']){
  const bb=await p.locator('#temaInv .pt-btn').first().boundingBox();ok(bb.height>=44,'F '+esquema+': botones de 44 px');
  await p.screenshot({path:'/tmp/inv-'+esquema+'.png',fullPage:true});await ctx.close()}
 
+
+// ===== H) Invitación corta y editorial (V1.19.20) =====
+{const {ctx,p}=await mk({juntada_ver:VER({descripcion:'Traé algo para compartir. '.repeat(8)}),juntada_asistentes:ASIS()},{url:INV,viewport:{width:360,height:740}});
+ const alto=await p.evaluate(()=>document.getElementById('invite').scrollHeight);
+ ok(alto<=900,'H1 la invitación completa entra en ~1,2 pantallas a 360 px (alto '+alto+')');
+ ok(await p.evaluate(()=>{const b=document.querySelector('#temaInv .pt-btn[data-r="voy"]').getBoundingClientRect();return b.bottom<=innerHeight}),'H2 los botones de respuesta se ven sin scrollear');
+ ok(await p.locator('#temaInv .pt-sticker,#temaInv .pt-cf').count()===0,'H3 sin sticker ni confeti');
+ await p.fill('#guestName','Dani');await p.locator('#temaInv .pt-btn[data-r="voy"]').click();await p.waitForTimeout(500);
+ ok(await p.locator('#temaInv .pt-cf').count()===0,'H4 al responder «Voy» no hay confeti');
+ ok(/serif|Fraunces|Georgia/i.test(await p.evaluate(()=>getComputedStyle(document.querySelector('#temaInv .pt-tema__titulo')).fontFamily)),'H5 el título usa serif editorial');
+ ok(await p.locator('#temaInv .pt-desc').isVisible()&&await p.locator('#temaInv .pt-mas').isVisible(),'H6 la descripción larga va recortada con «Ver más»');
+ await p.locator('#temaInv .pt-mas').click();ok(await p.locator('#temaInv .pt-desc.abierta').count()===1,'H7 «Ver más» la despliega');
+ ok(await p.locator('#invite .js-description').isHidden(),'H8 no se repite la descripción fuera de la tarjeta');
+ await ctx.close()}
 await br.close();console.log(fails?('FALLARON '+fails):'TODO OK');process.exit(fails?1:0)})().catch(e=>{console.error(e);process.exit(1)});
